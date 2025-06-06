@@ -28,7 +28,7 @@ export default function Login(){
             <div className="flex justify-center items-center relative mt-20 mb-20">
                 
                 <h1 className="font-pixelify text-[#FF3D00] text-[40px] font-bold ">
-                    Informações
+                    Login
                 </h1>
             </div>
             
@@ -44,8 +44,8 @@ export default function Login(){
                         <label className="text-[#FF7D02] col-span-1 font-poppins text-[16px] font-bold ml-5">Email</label>
                         <input type="text" placeholder="Inserir Email" className=" placeholder-[#ff7c0287] font-poppins col-span-3 h-14 rounded-full px-8 py-5 text-[10px] font-bold border-2 border-[#ff5a0179] focus:border-[#ff5a01c9] focus:outline-none" />
                     </div>
-                        
-                        <button className="font-poppins rounded-full bg-[#ff5a01c3] col-start-2 h-12">Enviar</button>
+                        <div className="font-poppins text-[#FF9633] font-extrabold underline text-[12px] col-start-2">Esqueci minha senha</div>
+                        <button className="font-poppins rounded-full bg-[#ff5a01c3] col-start-2 h-12 mt-10">Enviar</button>
 
                 </div>
 
