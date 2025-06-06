@@ -12,7 +12,7 @@ const pixelify = Pixelify_Sans({
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["800"],
+  weight: ["400"],
 });
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${pixelify.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${pixelify.variable} ${poppins.variable} antialiased`}
       >
         {children}
       </body>
