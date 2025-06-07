@@ -11,20 +11,21 @@ export default function Home() {
             width={40}
             height={40}
           />
-          <div className="flex flex-col">
-            <h1 className="font-pixelify-sans text-4xl text-[#FF3D00]">
-              CONPECOME
-            </h1>
-            <p className="text-sm text-[#FF3D00]">Já pode aomossar?</p>
-          </div>
+          <a href="/">
+            <div className="flex flex-col">
+              <h1 className="font-pixelify-sans text-4xl text-[#FF3D00]">
+                CONPECOME
+              </h1>
+              <p className="text-sm text-[#FF3D00]">Já pode aomossar?</p>
+            </div>
+          </a>
         </div>
-
         <div className="flex-1 max-w-xl mx-8">
           <div className="relative">
             <input
               type="text"
               placeholder="Pesquisar"
-              className="w-full px-4 py-2 pl-10 rounded-full border border-gray-300"
+              className="w-full px-4 py-2 pl-10 rounded-full border border-gray-300 text-black"
             />
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
               <Image
