@@ -4,35 +4,35 @@
       "id": 1,
       "name": "biscoito de arroz",
       "price": 100,
-      "category": "doces",
+      "category_id": "1",
       "imgUrl": "arroz.png"
     },
     {
       "id": 2,
       "name": "arroz doce",
       "price": 200,
-      "category": "doces",
+      "category_id": "1",
       "imgUrl": "arroz.png"
     },
     {
       "id": 3,
       "name": "pudim de arroz",
       "price": 400,
-      "category": "doces",
+      "category_id": "1",
       "imgUrl": "arroz.png"
     },
     {
       "id": 4,
       "name": "chips de arroz",
       "price": 800,
-      "category": "salgados",
+      "category_id": "2",
       "imgUrl": "arroz.png"
     },
     {
       "id": 5,
       "name": "leite de arroz",
       "price": 1600,
-      "category": "bebidas",
+      "category_id": "3",
       "imgUrl": "arroz.png"
     }
   ]
