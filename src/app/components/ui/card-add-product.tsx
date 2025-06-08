@@ -39,7 +39,7 @@ export default function CardAddProduct({ onDelete }: { onDelete: () => void }) {
           <Image src={EditIcon} alt="Edit" width={10} />
         </button>
         <div className="flex items-center justify-between mt-4">
-          <div className="flex items-center gap-2 sm:gap-5">
+          <div className="flex items-center gap-3 sm:gap-5">
             <button
               onClick={decrementQuantity}
               className="w-6 h-6 rounded-full bg-[#FF9633] hover:bg-[#F54B00] hover:scale-105 transition-all flex items-center justify-center text-white"

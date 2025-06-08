@@ -1,7 +1,7 @@
 "use client";
 import CardAddProduct from "@/app/components/ui/card-add-product";
 import Header from "@/app/components/ui/header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function AddProduct() {
   const [products, setProducts] = useState([{ id: 0 }]);
@@ -19,8 +19,49 @@ export default function AddProduct() {
     setShowConfirmPopUp(false);
   };
 
+  // Scrollbar visible
+  const [scrollbarVisible, setScrollbarVisible] = useState(true);
+
+  //Verify if the scrollbar is visible when adding or removing products
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollbarVisible(window.innerWidth > document.documentElement.clientWidth);
+    };
+
+    window.addEventListener("resize", handleScroll);
+    handleScroll(); // Initial check
+
+    return () => {
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [products]);
+
+  /**
+   * Get the width of the scrollbar in pixels.
+   */
+  const getScrollbarWidth = () => {
+    const outer = document.createElement('div');
+    outer.style.visibility = 'hidden';
+    outer.style.overflow = 'scroll';
+    outer.style.position = 'absolute';
+    outer.style.top = '-9999px';
+    outer.style.width = '100px';
+    document.body.appendChild(outer);
+
+    const inner = document.createElement('div');
+    inner.style.width = '100%';
+    outer.appendChild(inner);
+
+    const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+    outer.remove();
+
+    return scrollbarWidth;
+  };
+
+
   return (
-    <div className="bg-[#FFF4EF] w-full min-h-screen flex flex-col px-10 pb-6 overflow-x-hidden">
+    <div className="bg-[#FFF4EF] w-full min-h-screen flex flex-col pl-10 pb-6 overflow-x-hidden"
+      style={{paddingRight: scrollbarVisible ? 0 : getScrollbarWidth()}}>
       <div>
         <Header />
         <div className="text-4xl font-bold text-[#FF3D00] text-center mb-8 font-pixelify-sans">
