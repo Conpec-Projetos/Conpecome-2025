@@ -1,8 +1,46 @@
+'use client'
 import Image from "next/image";
+import products from "./products.json";
+import productTypes from "./product_types.json";
+import { useState } from "react";
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  category_id: string;
+  imgUrl: string;
+}
+
+const formatToBRL = (cents: number) => {
+  return `R$ ${(cents / 100).toFixed(2).replace('.', ',')}`;
+};
 
 export default function Home() {
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  const [cartTotal, setCartTotal] = useState(0); // Value in cents
+
+  const handleQuantityChange = (productId: number, delta: number) => {
+    setQuantities(prev => ({
+      ...prev,
+      [productId]: Math.max(0, (prev[productId] || 0) + delta)
+    }));
+
+    // Update cart total when quantity changes
+    const product = products.products.find(p => p.id === productId);
+    if (product) {
+      setCartTotal(prev => Math.max(0, prev + (delta * product.price)));
+    }
+  };
+
+  const filteredProducts = selectedCategory === "all"
+    ? products.products
+    : products.products.filter(p => p.category_id === selectedCategory);
+
   return (
-    <div className="min-h-screen bg-[#FFF5EF]">
+    <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('/assets/background.png')] bg-center bg-repeat">
+      {/* navbar */}
       <header className="flex items-center justify-between px-4 py-6 bg-[#FFE8DE] rounded-b-3xl">
         <div className="flex items-center gap-2">
           <Image
@@ -45,13 +83,85 @@ export default function Home() {
             width={24}
             height={24}
           />
-          <span id="cart_total">R$ 23,1</span>
+          <span id="cart_total">{formatToBRL(cartTotal)}</span>
         </div>
       </header>
 
       <main className="flex flex-col gap-8 items-center sm:items-start p-8">
-        <div className="text-5xl text-black font-pixelify-sans">
-          Carrossel 🦣
+        {/* Category filters */}
+        <div className="flex gap-4 w-full overflow-x-auto pb-4">
+          <button
+            onClick={() => setSelectedCategory("all")}
+            className={`flex items-center gap-2 px-6 py-3 rounded-xl ${selectedCategory === "all"
+              ? "bg-[#FF3D00] text-white"
+              : "bg-[#FFE8DE] text-[#FF3D00]"
+              }`}
+          >
+            <Image
+              src="/carrossel/assets/todos.png"
+              alt="Todos"
+              width={24}
+              height={24}
+            />
+            Todos
+          </button>
+          {productTypes.product_types.map((type) => (
+            <button
+              key={type.id}
+              onClick={() => setSelectedCategory(type.id.toString())}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl ${selectedCategory === type.id.toString()
+                ? "bg-[#FF3D00] text-white"
+                : "bg-[#FFE8DE] text-[#FF3D00]"
+                }`}
+            >
+              <Image
+                src={`/carrossel/assets/${type.name}.png`}
+                alt={type.name}
+                width={24}
+                height={24}
+              />
+              {type.name.charAt(0).toUpperCase() + type.name.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* Products grid */}
+        <div className="grid grid-cols-3  gap-6 w-full">
+          {filteredProducts.map((product) => (
+            <div
+              key={product.id}
+              className="bg-[FFECE4] rounded-2xl p-6 flex flex-col items-center gap-2 shadow-md"
+            >
+              <Image
+                src={`/carrossel/${product.imgUrl}`}
+                alt={product.name}
+                width={200}
+                height={200}
+                className="w-full h-48 object-contain"
+              />
+              <h3 className="text-xl text-[#FF3D00] font-semibold">{product.name.charAt(0).toUpperCase() + product.name.slice(1)}</h3>
+              <p className="text-[#FF3D00] font-semibold">
+                R$ {(product.price / 100).toFixed(2)}
+              </p>
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => handleQuantityChange(product.id, -1)}
+                  className="w-8 h-8 rounded-full bg-[#FFE8DE] text-[#FF3D00] flex items-center justify-center text-2xl"
+                >
+                  -
+                </button>
+                <span className="w-8 text-[#FF3D00] font-semibold text-center">
+                  {quantities[product.id] || 0}
+                </span>
+                <button
+                  onClick={() => handleQuantityChange(product.id, 1)}
+                  className="w-8 h-8 rounded-full bg-[#FFE8DE] text-[#FF3D00] flex items-center justify-center text-2xl"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </main>
     </div>
