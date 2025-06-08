@@ -4,13 +4,6 @@ import products from "./products.json";
 import productTypes from "./product_types.json";
 import { useState } from "react";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  category_id: string;
-  imgUrl: string;
-}
 
 const formatToBRL = (cents: number) => {
   return `R$ ${(cents / 100).toFixed(2).replace('.', ',')}`;
@@ -133,7 +126,7 @@ export default function Home() {
               className="w-80 bg-[#FFECE4] border border-[#FF9633] rounded-2xl p-6 flex flex-col items-center gap-2 justify-between"
             >
               <Image
-                src={`/carrossel/${product.imgUrl}`}
+                src={`/carrossel/assets/${product.imgUrl}`}
                 alt={product.name}
                 width={200}
                 height={200}
@@ -141,7 +134,7 @@ export default function Home() {
               />
               <h3 className="text-xl font-semibold">{product.name.charAt(0).toUpperCase() + product.name.slice(1)}</h3>
               <p className="font-semibold">
-                R$ {(product.price / 100).toFixed(2)}
+                {formatToBRL(product.price)}
               </p>
               <div className="flex items-center gap-4">
                 <button

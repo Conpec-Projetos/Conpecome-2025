@@ -34,6 +34,13 @@
       "price": 1600,
       "category_id": "3",
       "imgUrl": "arroz.png"
+    },
+    {
+      "id": 6,
+      "name": "BigMac dos Calouros",
+      "price": 0,
+      "category_id": "2",
+      "imgUrl": "lanche.png"
     }
   ]
 }
