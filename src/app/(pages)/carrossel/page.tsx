@@ -50,8 +50,8 @@ export default function Home() {
             height={40}
           />
           <a href="/">
-            <div className="flex flex-col">
-              <h1 className="font-pixelify-sans text-4xl text-[#FF3D00]">
+            <div className="flex flex-col font-bold">
+              <h1 className="font-pixelify-sans text-5xl text-[#FF3D00]">
                 CONPECOME
               </h1>
               <p className="text-sm text-[#FF3D00]">Já pode aomossar?</p>
@@ -76,61 +76,61 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-4 py-2 rounded-full text-[#F54B00]">
+        <div className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-6 py-3 rounded-3xl text-[#F54B00]">
           <Image
             src="/carrossel/assets/shopping_cart.png"
             alt="Shopping Cart"
-            width={24}
-            height={24}
+            width={40}
+            height={40}
           />
           <span id="cart_total">{formatToBRL(cartTotal)}</span>
         </div>
       </header>
 
-      <main className="flex flex-col gap-8 items-center sm:items-start p-8">
+      <main className="flex flex-col sm:items-start p-8">
         {/* Category filters */}
         <div className="flex gap-4 w-full overflow-x-auto pb-4">
           <button
             onClick={() => setSelectedCategory("all")}
-            className={`flex items-center gap-2 px-6 py-3 rounded-xl ${selectedCategory === "all"
-              ? "bg-[#FF3D00] text-white"
-              : "bg-[#FFE8DE] text-[#FF3D00]"
+            className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl ${selectedCategory === "all"
+              ? "bg-[#FF9633]"
+              : "bg-white"
               }`}
           >
             <Image
               src="/carrossel/assets/todos.png"
               alt="Todos"
-              width={24}
-              height={24}
+              width={52}
+              height={52}
             />
-            Todos
+            <span>Todos</span>
           </button>
           {productTypes.product_types.map((type) => (
             <button
               key={type.id}
               onClick={() => setSelectedCategory(type.id.toString())}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl ${selectedCategory === type.id.toString()
-                ? "bg-[#FF3D00] text-white"
-                : "bg-[#FFE8DE] text-[#FF3D00]"
+              className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl ${selectedCategory === type.id.toString()
+                ? "bg-[#FF9633]"
+                : "bg-white"
                 }`}
             >
               <Image
                 src={`/carrossel/assets/${type.name}.png`}
                 alt={type.name}
-                width={24}
-                height={24}
+                width={52}
+                height={52}
               />
-              {type.name.charAt(0).toUpperCase() + type.name.slice(1)}
+              <span>{type.name.charAt(0).toUpperCase() + type.name.slice(1)}</span>
             </button>
           ))}
         </div>
 
         {/* Products grid */}
-        <div className="grid grid-cols-3  gap-6 w-full">
+        <div className="grid grid-cols-3 text-[#FF9633] place-items-center gap-10 w-full px-8">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-[FFECE4] rounded-2xl p-6 flex flex-col items-center gap-2 shadow-md"
+              className="w-80 bg-[#FFECE4] border border-[#FF9633] rounded-2xl p-6 flex flex-col items-center gap-2 justify-between"
             >
               <Image
                 src={`/carrossel/${product.imgUrl}`}
@@ -139,23 +139,23 @@ export default function Home() {
                 height={200}
                 className="w-full h-48 object-contain"
               />
-              <h3 className="text-xl text-[#FF3D00] font-semibold">{product.name.charAt(0).toUpperCase() + product.name.slice(1)}</h3>
-              <p className="text-[#FF3D00] font-semibold">
+              <h3 className="text-xl font-semibold">{product.name.charAt(0).toUpperCase() + product.name.slice(1)}</h3>
+              <p className="font-semibold">
                 R$ {(product.price / 100).toFixed(2)}
               </p>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => handleQuantityChange(product.id, -1)}
-                  className="w-8 h-8 rounded-full bg-[#FFE8DE] text-[#FF3D00] flex items-center justify-center text-2xl"
+                  className="w-8 h-8 rounded-full bg-[#FF9633] text-white flex items-center justify-center text-2xl"
                 >
                   -
                 </button>
-                <span className="w-8 text-[#FF3D00] font-semibold text-center">
+                <span className="w-8 font-semibold text-center">
                   {quantities[product.id] || 0}
                 </span>
                 <button
                   onClick={() => handleQuantityChange(product.id, 1)}
-                  className="w-8 h-8 rounded-full bg-[#FFE8DE] text-[#FF3D00] flex items-center justify-center text-2xl"
+                  className="w-8 h-8 rounded-full bg-[#FF9633] text-white flex items-center justify-center text-2xl"
                 >
                   +
                 </button>
