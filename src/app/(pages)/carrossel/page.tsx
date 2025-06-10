@@ -32,7 +32,7 @@ export default function Home() {
     : products.products.filter(p => p.category_id === selectedCategory);
 
   return (
-    <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('/assets/background.png')] bg-center bg-repeat">
+    <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('/assets/background.png')] bg-top bg-repeat">
       {/* navbar */}
       <header className="flex items-center justify-between px-4 py-6 bg-[#FFE8DE] rounded-b-3xl">
         <div className="flex items-center gap-2">
