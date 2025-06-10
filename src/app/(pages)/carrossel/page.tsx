@@ -85,7 +85,7 @@ export default function Home() {
         <div className="flex gap-4 w-full overflow-x-auto pb-4">
           <button
             onClick={() => setSelectedCategory("all")}
-            className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl ${selectedCategory === "all"
+            className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${selectedCategory === "all"
               ? "bg-[#FF9633]"
               : "bg-white"
               }`}
@@ -102,7 +102,7 @@ export default function Home() {
             <button
               key={type.id}
               onClick={() => setSelectedCategory(type.id.toString())}
-              className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl ${selectedCategory === type.id.toString()
+              className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${selectedCategory === type.id.toString()
                 ? "bg-[#FF9633]"
                 : "bg-white"
                 }`}
