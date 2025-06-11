@@ -1,21 +1,21 @@
-import Image from "next/image";
+"use client";
+import { useRouter } from "next/navigation";
+
 
 export default function Home() {
-  let lista = Array.from({ length: 25 }, (_, i) => (i + 1) ** 2);
+  const router = useRouter();
 
   return (
     <div className="bg-orange-500 grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="text-5xl">
-          CONPEC 🦣 ?
+          CONPEC 🦣 
         </div>
 
-
-
-        
-        {lista.map((item, index) => {
-          return <ul key={index}>{item}</ul>
-        })}  
+        <div className="flex flex-col gap-4">
+          <button className="bg-slate-100" onClick={() => {router.push("admin/login");}}>ADM</button>
+          <button className="bg-slate-100" onClick={() => {router.push("customer/carrossel");}}>CUSTOMER</button>
+        </div>
         
     
       </main>

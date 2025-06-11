@@ -1,4 +1,9 @@
+"use client";
+import { useRouter } from "next/navigation";
+
 export default function Pagamento() {
+  const router = useRouter();
+
   type Produtos = {
     id: number;
     qtd: number;
@@ -21,7 +26,7 @@ export default function Pagamento() {
         <div className="h-screen w-screen rounded-4xl bg-[#fff4ef] relative flex flex-col gap-5">
             <div className="h-20 w-full flex flex-row justify-between">
                 
-                <button className="h-full w-28 flex justify-center items-center">
+                <button onClick={router.back} className="h-full w-28 flex justify-center items-center">
                   <img src="/img/arrow-left.png" alt="Seta esquerda" className="h-full w-16 object-contain" />
                 </button>
 
@@ -68,7 +73,7 @@ export default function Pagamento() {
                 <span className="flex items-end"> {new Intl.NumberFormat('pt-br', { style: 'currency', currency: 'BRL' }).format(total)}</span>
               </h2>
 
-              <button className="bg-[#FF5C01] h-16 w-32 rounded-full flex justify-center items-center shadow-md m-2 hover:bg-[#F66C0E]"> 
+              <button onClick={()=>{router.push("/");}} className="bg-[#FF5C01] h-16 w-32 rounded-full flex justify-center items-center shadow-md m-2 hover:bg-[#F66C0E]"> 
                 <h1 className="text-white font-Poppins font-bold text-md">Já paguei</h1>
               </button>
               

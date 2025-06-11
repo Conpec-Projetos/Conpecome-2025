@@ -5,6 +5,7 @@ import logo from "../../../../../public/Conpec.png"
 import adicionar from "../../../../../public/Adicionar.png"
 import lupa from "../../../../../public/lupa-conpecome.png"
 import { useState } from 'react';
+import { useRouter } from "next/navigation"
 
 interface Item {
   cliente: string;
@@ -18,6 +19,7 @@ interface Mes {
 }
 
 export default function HistoricoPedidos() {
+  const router = useRouter();
   // dados iniciais
   const [meses] = useState<Mes[]>([
     {
@@ -55,7 +57,7 @@ export default function HistoricoPedidos() {
 
       <header className="flex items-center justify-between px-12 py-8">
         
-        <button className="">
+        <button onClick={router.back} className="">
           <Image 
           src={vector}
           alt="voltar"
@@ -64,7 +66,7 @@ export default function HistoricoPedidos() {
           />
         </button>
         
-        <div className="text-6xl font-Pixelify-Sans text-[#FF3D00] left-32 absolute">
+        <div className="text-6xl font-pixelify text-[#FF3D00] left-32 absolute">
           CONPECOME
         </div>
     
@@ -81,7 +83,7 @@ export default function HistoricoPedidos() {
 
       <div>
 
-        <div className="text-4xl font-Pixelify-Sans text-[#FF3D00] flex flex-row justify-center py-0.5">
+        <div className="text-4xl font-pixelify text-[#FF3D00] flex flex-row justify-center py-0.5">
         Histórico de Pedidos
         </div>
 
@@ -111,7 +113,7 @@ export default function HistoricoPedidos() {
           return (
             <div key={i}>
               {/* cabeçalho do mês */}
-              <h3 className="text-2xl font-Poppins-bold text-[#FF9633] uppercase py-6">
+              <h3 className="text-2xl font-Poppins font-bold text-[#FF9633] uppercase py-6">
                 {mes.label} – {mes.ano}
               </h3>
 
@@ -119,7 +121,7 @@ export default function HistoricoPedidos() {
               <div className="px-10 space-y-2">
                 {mes.itens.map((it, j) => (
                   <div key={j}
-                       className="flex flex-row justify-between font-Poppins-bold text-2xl">
+                       className="flex flex-row justify-between font-Poppins font-bold text-2xl">
                     <span className="text-[#FF9633]">{it.cliente}</span>
                     <span className="text-[#FF9633]">{it.produto}</span>
                     <span className="text-[#FF9633]">
@@ -129,7 +131,7 @@ export default function HistoricoPedidos() {
                 ))}
 
                 {/* total do mês */}
-                <div className="grid grid-cols-[1fr_1fr_auto] font-Poppins-extrabold text-[#FF9633] text-2xl ">
+                <div className="grid grid-cols-[1fr_1fr_auto] font-Poppins font-extrabold text-[#FF9633] text-2xl ">
                   <span>Total</span><span></span>
                   <span>R${total.toFixed(2)}</span>
                 </div>

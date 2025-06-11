@@ -3,6 +3,7 @@ import Image from "next/image";
 import products from "./products.json";
 import productTypes from "./product_types.json";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 
 const formatToBRL = (cents: number) => {
@@ -10,6 +11,8 @@ const formatToBRL = (cents: number) => {
 };
 
 export default function Home() {
+  const router = useRouter();
+
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
   const [cartTotal, setCartTotal] = useState(0); // Value in cents
@@ -69,7 +72,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-6 py-3 rounded-3xl text-[#F54B00]">
+        <button onClick={() => {router.push("./info");}} className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-6 py-3 rounded-3xl text-[#F54B00]">
           <Image
             src="/carrossel/assets/shopping_cart.png"
             alt="Shopping Cart"
@@ -77,7 +80,7 @@ export default function Home() {
             height={40}
           />
           <span id="cart_total">{formatToBRL(cartTotal)}</span>
-        </div>
+        </button>
       </header>
 
       <main className="flex flex-col sm:items-start p-8">
