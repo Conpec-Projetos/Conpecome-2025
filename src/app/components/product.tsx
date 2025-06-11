@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { StaticImageData } from "next/image";
-import { FC } from "react";
+import { FC, useState, useRef } from "react";
 import EditIcon from "@/app/assets/EditIcon.png"
 
 interface Product {
@@ -8,7 +8,7 @@ interface Product {
     nome: string;
     preco: number;
     tipo: string;
-    imagem: StaticImageData;
+    imagem: string;
     quantidade: number
   }
 
@@ -17,23 +17,109 @@ type ProductProps = {
     onDecrement: (id: string) => void
     onIncrement: (id: string) => void
     onRemove: (id: string) => void
+    onEdit: (newProduct: Product) => void
 }
 
-const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove}) => {
+
+const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove, onEdit}) => {
+
+    const [editando, setEditando] = useState<boolean>(false);
+    const [form, setForm] = useState({
+    nome: product.nome,
+    preco: product.preco.toFixed(2),
+    imagem: product.imagem})
+    const fileInputRef = useRef<any>(null);
+    const ClickRef = useRef<any>(null);
+
+    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files != null) {
+            const file = event.target.files[0]
+            if (file) {
+                console.log('cheguei')
+                console.log(file)
+                const reader = new FileReader()
+                reader.onload = (e) => {
+                    console.log('ola mundo')
+                    const result = e.target?.result;
+                    console.log(result)
+                    if (typeof reader.result === 'string') {
+                        setForm({ ...form, imagem: reader.result})
+                        onEdit({
+                        ...product,
+                        nome: form.nome,
+                        preco: parseFloat(form.preco),
+                        imagem: form.imagem,
+                        });
+                    }
+                }
+            }
+        };
+    }
+
+    const handleImageClick = () => {
+        fileInputRef.current?.click();
+    }
+
+    const handleClick = () => {
+        setEditando(true)
+        ClickRef.current?.click()
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent | undefined) => {
+        if (e != undefined)
+            if (e.key === "Enter") {
+            onEdit({
+                ...product,
+                nome: form.nome,
+                preco: parseFloat(form.preco),
+                imagem: form.imagem});
+            setEditando(false);
+                }
+            };
+
     return (
+        
     <div className="bg-[#ffece4] rounded-2xl border-2 border-[#F54B00] h-[250px] w-full flex flex-row">
         <div className="flex items-center justify-center h-full w-1/3 pb-11">
             <Image src={product.imagem} alt={product.nome} width={160} height={160}/>
-            <button className='mb-32'><Image src={EditIcon} width={30} height={30} alt='Editar'/></button>
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept=".jpg, .jpeg, .png"
+              onChange={handleImageChange}
+              className="text-sm text-gray-500"
+              style={{ display: 'none' }}
+            />
+            <button className='mb-32'><Image src={EditIcon} width={30} height={30} alt='Editar' onClick={handleImageClick}/></button>
         </div>
         <div className='h-full w-2/3 pl-14 pt-8 space-y-10'>
             <div className='flex flex-row space-x-7'>
-                <div className='text-[#FF9633] font-poppins font-bold text-2xl'>{product.nome}</div>
-                <button className='pt-1'><Image src={EditIcon} width={26} height={26} alt='Editar'/></button>
+
+                {editando == false ? <div className='text-[#FF9633] font-poppins font-bold text-2xl'>{product.nome}</div> :
+                <input ref={ClickRef}
+                  className='text-[#FF9633] font-poppins font-bold text-2xl border-2 border-[#F54B00] w-52'
+                  value={form.nome}
+                  name='nome'
+                  onChange={handleChange}
+                  onKeyDown={handleKeyPress}>
+                </input>}
+
+                <button className='pt-1'><Image src={EditIcon} width={26} height={26} alt='Editar' onClick={handleClick}/></button>
             </div>
             <div className='flex flex-row space-x-6'>
-                <div className='text-[#FF9633] font-poppins font-bold text-2xl'>R$ {product.preco.toFixed(2).replace('.', ',')}</div>
-                    <button className='pt-1'><Image src={EditIcon} width={26} height={26} alt='Editar'/></button>
+                {editando == false ? <div className='text-[#FF9633] font-poppins font-bold text-2xl'>R$ {product.preco.toFixed(2).replace('.', ',')}</div> : 
+                <input ref={ClickRef}
+                  className='text-[#FF9633] font-poppins font-bold text-2xl border-2 border-[#F54B00] w-52'
+                  value={form.preco}
+                  name='preco'
+                  onChange={handleChange}
+                  onKeyDown={handleKeyPress}>
+                </input>}
+                <button className='pt-1'><Image src={EditIcon} width={26} height={26} alt='Editar' onClick={handleClick}/></button>
             </div>
             <div className='flex flex-row justify-between w-4/5'>
                 <button className='bg-[#FF9633] h-12 w-12 rounded-full text-2xl font-poppins' onClick={() => onDecrement(product.id)}>

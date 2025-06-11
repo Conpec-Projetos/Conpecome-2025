@@ -2,6 +2,7 @@
 import Image, { StaticImageData } from 'next/image'
 import { useState } from 'react';
 
+import Background from '@/app/assets/background.png'
 import Logo from '@/app/assets/Conpec.png'
 import Seta from '@/app/assets/Vector.png'
 import Relogio from '@/app/assets/Group.png'
@@ -25,7 +26,7 @@ export default function Estoque_ADM() {
     nome: string;
     preco: number;
     tipo: string;
-    imagem: StaticImageData
+    imagem: string
     quantidade: number
   }
   
@@ -35,7 +36,7 @@ export default function Estoque_ADM() {
       nome: 'Coxinha',
       preco: 5.5,
       tipo: 'Salgados',
-      imagem: Sanduiche,
+      imagem: '/images/sanduiche.png',
       quantidade: 10
     },
     {
@@ -43,8 +44,16 @@ export default function Estoque_ADM() {
     nome: 'Suco de Laranja',
     preco: 4.0,
     tipo: 'Bebidas',
-    imagem: Sanduiche,  
+    imagem: '/images/sanduiche.png',  
     quantidade: 5,
+    },
+    {
+    id: '3',
+    nome: 'Chocolate',
+    preco: 8.0,
+    tipo: 'Doces',
+    imagem: '/images/sanduiche.png',  
+    quantidade: 7,
     },
   ]
 
@@ -69,6 +78,12 @@ export default function Estoque_ADM() {
     setEstoqueAlterado(produtos => produtos.filter((produto) => produto.id != id))
   }
 
+  const edit = (newProduct: Product) => {
+    setEstoqueInicial((produtos) => produtos.map(produto => (produto.id === newProduct.id ? newProduct : produto)))
+    setEstoqueAlterado((produtos) => produtos.map(produto => (produto.id === newProduct.id ? newProduct : produto)))
+    console.log(newProduct)
+  }
+
   const handleFoodButtonClick = (tipo: string) => {
     if (tipo == 'Todos')
       setEstoqueAlterado(() => estoqueInicial)
@@ -84,10 +99,11 @@ export default function Estoque_ADM() {
  
 
   return (
-    <main className='bg-[#fff4ef] h-screen w-full overflow-x-hidden'>
+    <main className="bg-[#fff4ef] bg-[url(/images/background.png)] h-screen w-full overflow-x-hidden">
      <header className='rounded-2xl h-[151px] w-screen bg-[#FFE8D7] flex flex-row items-center'>
-        <Image src={Logo} alt='Logo' width={65} height={63} unoptimized={true}/>
-
+        <button className='w-32 h-[63px]'>
+          <Image src={Logo} alt='Logo' width={70} height={70} unoptimized={true}/>
+        </button>
         <div className='flex flex-col m-5'>
           <h1 className='text-6xl text-[#FF3D00] font-pixelify-sans font-bold'>CONPECOME</h1>
           <div className='text-[#FF3D00] font-poppins font-bold'>Já pode aomossar?</div>
@@ -124,7 +140,7 @@ export default function Estoque_ADM() {
 
     <div className='w-2/5 mb-2 ml-36 space-y-3'>
       {estoqueAlterado.map((produto) => (
-        <Product key={produto.id} product={produto} onIncrement={increment} onDecrement={decrement} onRemove={remove}></Product>
+        <Product key={produto.id} product={produto} onIncrement={increment} onDecrement={decrement} onRemove={remove} onEdit={edit}></Product>
       ))}
     </div>
 
