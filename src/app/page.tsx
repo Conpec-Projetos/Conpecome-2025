@@ -17,6 +17,7 @@ export default function Home() {
           return <ul key={index}>{item}</ul>
         })}  
         
+    
       </main>
     </div>
   );
