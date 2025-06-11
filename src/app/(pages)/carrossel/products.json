@@ -1,0 +1,46 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "biscoito de arroz",
+      "price": 100,
+      "category_id": "1",
+      "imgUrl": "arroz.png"
+    },
+    {
+      "id": 2,
+      "name": "arroz doce",
+      "price": 200,
+      "category_id": "1",
+      "imgUrl": "arroz.png"
+    },
+    {
+      "id": 3,
+      "name": "pudim de arroz",
+      "price": 400,
+      "category_id": "1",
+      "imgUrl": "arroz.png"
+    },
+    {
+      "id": 4,
+      "name": "chips de arroz",
+      "price": 800,
+      "category_id": "2",
+      "imgUrl": "arroz.png"
+    },
+    {
+      "id": 5,
+      "name": "leite de arroz",
+      "price": 1600,
+      "category_id": "3",
+      "imgUrl": "arroz.png"
+    },
+    {
+      "id": 6,
+      "name": "BigMac dos Calouros",
+      "price": 0,
+      "category_id": "2",
+      "imgUrl": "lanche.png"
+    }
+  ]
+}
