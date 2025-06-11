@@ -1,5 +1,7 @@
 'use client'; 
-import Image, { StaticImageData } from 'next/image';
+import Image, { StaticImageData } from 'next/image'
+import { useState } from 'react';
+
 import Logo from '@/app/assets/Conpec.png'
 import Seta from '@/app/assets/Vector.png'
 import Relogio from '@/app/assets/Group.png'
@@ -8,18 +10,18 @@ import BotaoSair from '@/app/assets/Sair.png'
 import IconTodos from '@/app/assets/IconTodos.png'
 import IconDoces from '@/app/assets/IconDoces.png'
 import IconBebidas from '@/app/assets/IconBebidas.png'
-import IconSalgados from '@/app/assets/streamline-emojis_pizza-2.png'
-import FoodButton from '@/app/components/foodbutton'
+import IconSalgados from '@/app/assets/IconSalgados.png'
 import Sanduiche from '@/app/assets/sanduiche.png'
+
+import FoodButton from '@/app/components/foodbutton'
 import Product from '@/app/components/product'
 import { useRouter } from 'next/navigation';
+
 
 export default function Estoque_ADM() {
   const router = useRouter();
   
-  const handleBotaoClick = (id: string) => {
-
-  }
+  const handleBotaoClick = (id: string) => {}
 
   interface Product {
     id: string;
@@ -29,20 +31,63 @@ export default function Estoque_ADM() {
     imagem: StaticImageData
     quantidade: number
   }
-
-  const estoqueInicial: Product[] = [
+  
+  const estoqueFicticio: Product[] = [
     {
       id: '1',
       nome: 'Coxinha',
       preco: 5.5,
-      tipo: 'salgado',
+      tipo: 'Salgados',
       imagem: Sanduiche,
       quantidade: 10
-    }
+    },
+    {
+    id: '2',
+    nome: 'Suco de Laranja',
+    preco: 4.0,
+    tipo: 'Bebidas',
+    imagem: Sanduiche,  
+    quantidade: 5,
+    },
   ]
 
+  const [estoqueInicial, setEstoqueInicial] = useState<Product[]>(estoqueFicticio)
+
+  const [estoqueAlterado, setEstoqueAlterado] = useState<Product[]>(estoqueInicial)
+
+
+  const increment = (id: string) => {
+    setEstoqueInicial(produtos => produtos.map((produto) => produto.id === id ? { ...produto, quantidade: produto.quantidade + 1 } : produto))
+    setEstoqueAlterado(produtos => produtos.map((produto) => produto.id === id ? { ...produto, quantidade: produto.quantidade + 1 } : produto))
+  }
+
+  const decrement = (id: string) => {
+    // Estou usando operadores ternários para verificar se estou decrementando a quantidade do produto com id certo e se sua quantidade já não está em zero.
+    setEstoqueInicial(produtos => produtos.map((produto) => produto.id === id ? produto.quantidade == 0 ? produto : { ...produto, quantidade: produto.quantidade - 1 } : produto))
+    setEstoqueAlterado(produtos => produtos.map((produto) => produto.id === id ? produto.quantidade == 0 ? produto : { ...produto, quantidade: produto.quantidade - 1 } : produto))
+  }
+
+  const remove = (id: string) => {
+    setEstoqueInicial(produtos => produtos.filter((produto) => produto.id != id))
+    setEstoqueAlterado(produtos => produtos.filter((produto) => produto.id != id))
+  }
+
+  const handleFoodButtonClick = (tipo: string) => {
+    if (tipo == 'Todos')
+      setEstoqueAlterado(() => estoqueInicial)
+    else
+      if (tipo == 'Salgados')
+        setEstoqueAlterado(() => estoqueInicial.filter((produto) => produto.tipo === 'Salgados'))
+    else
+      if (tipo == 'Bebidas')
+        setEstoqueAlterado(() => estoqueInicial.filter((produto) => produto.tipo === 'Bebidas'))
+    else
+      setEstoqueAlterado(() => estoqueInicial.filter(produto => produto.tipo === 'Doces')) 
+  }
+ 
+
   return (
-    <main className='bg-[#fff4ef] h-screen w-screen'>
+    <main className='bg-[#fff4ef] h-screen w-full overflow-x-hidden'>
      <header className='rounded-2xl h-[151px] w-screen bg-[#FFE8D7] flex flex-row items-center'>
         <Image src={Logo} alt='Logo' width={65} height={63} unoptimized={true}/>
 
@@ -74,15 +119,17 @@ export default function Estoque_ADM() {
 
     </header>
 
-    <div className='h-1/6 mb-6 mt-6 ml-36 flex flex-row space-x-2'>
-      <FoodButton image={IconTodos} id='Todos' onClick={handleBotaoClick}></FoodButton>
-      <FoodButton image={IconSalgados} id='Salgados' onClick={handleBotaoClick}></FoodButton>
-      <FoodButton image={IconDoces} id='Doces' onClick={handleBotaoClick}></FoodButton>
-      <FoodButton image={IconBebidas} id='Bebidas' onClick={handleBotaoClick}></FoodButton>
+    <div className='h-1/6 mb-1 mt-6 ml-36 flex flex-row space-x-2'>
+      <FoodButton image={IconTodos} tipo='Todos' onClick={handleFoodButtonClick}></FoodButton>
+      <FoodButton image={IconSalgados} tipo='Salgados' onClick={handleFoodButtonClick}></FoodButton>
+      <FoodButton image={IconDoces} tipo='Doces' onClick={handleFoodButtonClick}></FoodButton>
+      <FoodButton image={IconBebidas} tipo='Bebidas' onClick={handleFoodButtonClick}></FoodButton>
     </div>
 
-    <div className='w-2/5 ml-36'>
-      <Product product={estoqueInicial[0]}></Product>
+    <div className='w-2/5 mb-2 ml-36 space-y-3'>
+      {estoqueAlterado.map((produto) => (
+        <Product key={produto.id} product={produto} onIncrement={increment} onDecrement={decrement} onRemove={remove}></Product>
+      ))}
     </div>
 
     </main>

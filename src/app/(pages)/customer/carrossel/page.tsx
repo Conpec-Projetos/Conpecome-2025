@@ -5,6 +5,9 @@ import productTypes from "./product_types.json";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import logoConpec from "../../../../assets/images/logo-conpec.svg";
+
+
 
 const formatToBRL = (cents: number) => {
   return `R$ ${(cents / 100).toFixed(2).replace('.', ',')}`;
@@ -54,7 +57,7 @@ export default function Home() {
       <header className="flex items-center justify-between px-4 py-6 bg-[#FFE8DE] rounded-b-3xl">
         <div className="flex items-center gap-2">
           <Image
-            src="/assets/logo-conpec.svg"
+            src={logoConpec.src}
             alt="Conpec Logo"
             width={40}
             height={40}
