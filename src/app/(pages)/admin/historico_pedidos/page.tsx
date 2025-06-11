@@ -1,9 +1,9 @@
 'use client'
 import Image from "next/image"
-import vector from "../../../../../public/Vector.png"
-import logo from "../../../../../public/Conpec.png"
-import adicionar from "../../../../../public/Adicionar.png"
-import lupa from "../../../../../public/lupa-conpecome.png"
+import vector from "../../../../assets/images/Vector.png"
+import logo from "../../../../assets/images/Conpec.png"
+import adicionar from "../../../../assets/images/Adicionar.png"
+import lupa from "../../../../assets/images/lupa-conpecome.png"
 import { useState } from 'react';
 import { useRouter } from "next/navigation"
 

@@ -1,6 +1,14 @@
 "use client";
 import { useRouter } from "next/navigation";
 
+import arrowLeft from '../../../../assets/images/arrow-left.png';
+import Conpecome from '../../../../assets/images/CONPECOME.png';
+import Conpec from '../../../../assets/images/Conpec.png';
+import pedido from '../../../../assets/images/Pedido.png';
+
+
+
+
 export default function Pagamento() {
   const router = useRouter();
 
@@ -27,21 +35,21 @@ export default function Pagamento() {
             <div className="h-20 w-full flex flex-row justify-between">
                 
                 <button onClick={router.back} className="h-full w-28 flex justify-center items-center">
-                  <img src="/img/arrow-left.png" alt="Seta esquerda" className="h-full w-16 object-contain" />
+                  <img src={arrowLeft.src} alt="Seta esquerda" className="h-full w-16 object-contain" />
                 </button>
 
                 <div className="h-20 w-72 flex justify-center items-center ">
-                  <img src="/img/Conpecome.png" alt="Conpecome" className="h-full w-5/6 object-contain"/>
+                  <img src={Conpecome.src} alt="Conpecome" className="h-full w-5/6 object-contain"/>
                 </div>
 
                 <div className="h-18 w-28 flex justify-center items-center">
-                  <img src="/img/Conpec.png" alt="Logo" className="h-5/6 w-3/4 object-contain" />
+                  <img src={Conpec.src} alt="Logo" className="h-5/6 w-3/4 object-contain" />
                 </div>
             </div>
 
             <div className="h-48 w-full ">
                 <div className="h-full w-full flex justify-center items-center">
-                    <img src="/img/Pedido.png" alt="Pedido" className="h-full w-full object-contain" />
+                    <img src={pedido.src} alt="Pedido" className="h-full w-full object-contain" />
                 </div>
             </div>
 
