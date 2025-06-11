@@ -86,7 +86,7 @@ export default function Home() {
           <button
             onClick={() => setSelectedCategory("all")}
             className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${selectedCategory === "all"
-              ? "bg-[#FF9633]"
+              ? "bg-[#FFECE4]"
               : "bg-white"
               }`}
           >
@@ -103,7 +103,7 @@ export default function Home() {
               key={type.id}
               onClick={() => setSelectedCategory(type.id.toString())}
               className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${selectedCategory === type.id.toString()
-                ? "bg-[#FF9633]"
+                ? "bg-[#FFECE4]"
                 : "bg-white"
                 }`}
             >
