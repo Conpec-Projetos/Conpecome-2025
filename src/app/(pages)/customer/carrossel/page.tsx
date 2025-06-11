@@ -15,7 +15,14 @@ export default function Home() {
 
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
-  const [cartTotal, setCartTotal] = useState(0); // Value in cents
+  const [cartTotal, setCartTotal] = useState(0);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const clearCart = () => {
+    setQuantities({});
+    setCartTotal(0);
+    setIsCartOpen(false);
+  };
 
   const handleQuantityChange = (productId: number, delta: number) => {
     setQuantities(prev => ({
@@ -29,6 +36,13 @@ export default function Home() {
       setCartTotal(prev => Math.max(0, prev + (delta * product.price)));
     }
   };
+
+  const cartItems = products.products
+    .filter(product => quantities[product.id] > 0)
+    .map(product => ({
+      ...product,
+      quantity: quantities[product.id]
+    }));
 
   const filteredProducts = selectedCategory === "all"
     ? products.products
@@ -72,7 +86,8 @@ export default function Home() {
           </div>
         </div>
 
-        <button onClick={() => {router.push("./info");}} className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-6 py-3 rounded-3xl text-[#F54B00]">
+        <div className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-6 py-3 rounded-3xl text-[#F54B00] cursor-pointer relative"
+          onClick={() => setIsCartOpen(!isCartOpen)}>
           <Image
             src="/carrossel/assets/shopping_cart.png"
             alt="Shopping Cart"
@@ -80,7 +95,73 @@ export default function Home() {
             height={40}
           />
           <span id="cart_total">{formatToBRL(cartTotal)}</span>
-        </button>
+
+          {/* Cart Window */}
+          {isCartOpen && (
+            <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-[#FF9633] rounded-2xl shadow-lg z-50 p-4">
+              <div className="flex flex-col gap-4">
+                <h3 className="text-xl font-bold text-[#FF3D00] border-b border-[#FF9633] pb-2">
+                  Carrinho
+                </h3>
+
+                {cartItems.length === 0 ? (
+                  <p className="text-center text-[#FF3D00] py-4">Seu carrinho está vazio</p>
+                ) : (
+                  <>
+                    <div className="max-h-64 overflow-y-auto">
+                      {cartItems.map(item => (
+                        <div key={item.id} className="flex items-center justify-between py-2 border-b border-[#FFE8DE]">
+                          <div className="flex items-center gap-2">
+                            <Image
+                              src={`/carrossel/assets/${item.imgUrl}`}
+                              alt={item.name}
+                              width={40}
+                              height={40}
+                              className="object-contain"
+                            />
+                            <div>
+                              <p className="font-semibold text-[#FF3D00]">
+                                {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
+                              </p>
+                              <p className="text-sm text-[#FF9633]">
+                                {item.quantity}x {formatToBRL(item.price)}
+                              </p>
+                            </div>
+                          </div>
+                          <p className="font-semibold text-[#FF3D00]">
+                            {formatToBRL(item.price * item.quantity)}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="border-t border-[#FF9633] pt-4 mt-2">
+                      <div className="flex justify-between items-center mb-4">
+                        <span className="font-bold text-[#FF3D00]">Total:</span>
+                        <span className="font-bold text-[#FF3D00]">{formatToBRL(cartTotal)}</span>
+                      </div>
+
+                      <div className="flex gap-2">
+                        <button
+                          onClick={clearCart}
+                          className="flex-1 py-2 px-4 bg-white border border-[#FF3D00] text-[#FF3D00] rounded-full hover:bg-[#FFE8DE] transition-colors"
+                        >
+                          Limpar
+                        </button>
+                        <button
+                          className="flex-1 py-2 px-4 bg-[#FF3D00] text-white rounded-full hover:bg-[#FF9633] transition-colors"
+                          onClick={() => {router.push("./info");}}
+                        >
+                          Finalizar Pedido
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </header>
 
       <main className="flex flex-col sm:items-start p-8">
@@ -89,7 +170,7 @@ export default function Home() {
           <button
             onClick={() => setSelectedCategory("all")}
             className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${selectedCategory === "all"
-              ? "bg-[#FF9633]"
+              ? "bg-[#FFECE4]"
               : "bg-white"
               }`}
           >
@@ -106,7 +187,7 @@ export default function Home() {
               key={type.id}
               onClick={() => setSelectedCategory(type.id.toString())}
               className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${selectedCategory === type.id.toString()
-                ? "bg-[#FF9633]"
+                ? "bg-[#FFECE4]"
                 : "bg-white"
                 }`}
             >
