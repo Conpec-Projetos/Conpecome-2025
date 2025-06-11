@@ -1,3 +1,4 @@
+import { Pixelify_Sans } from "next/font/google";
 import type { Config } from "tailwindcss";
 
 const config = {
@@ -11,12 +12,16 @@ const config = {
       fontFamily: {
         pixelify: ['var(--font-pixelify)'],
         poppins: ['var(--font-poppins)'],
+        'Pixelify-Sans': ['Pixelify-Sans'],
+        'Poppins-bold': ['Poppins-bold'],
+        'Poppins-extrabold': ['Poppins-extrabold']
       },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
         brand: "#D95B08",
       },
+      
     },
   },
   plugins: [],
