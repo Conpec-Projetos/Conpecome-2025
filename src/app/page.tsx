@@ -16,7 +16,7 @@ export default function Home() {
         {lista.map((item, index) => {
           return <ul key={index}>{item}</ul>
         })}  
-        
+    
       </main>
     </div>
   );
