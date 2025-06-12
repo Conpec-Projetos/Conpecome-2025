@@ -35,23 +35,19 @@ const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove,
         if (event.target.files != null) {
             const file = event.target.files[0]
             if (file) {
-                console.log('cheguei')
-                console.log(file)
                 const reader = new FileReader()
-                reader.onload = (e) => {
-                    console.log('ola mundo')
-                    const result = e.target?.result;
-                    console.log(result)
+                reader.onload = () => {
                     if (typeof reader.result === 'string') {
                         setForm({ ...form, imagem: reader.result})
                         onEdit({
                         ...product,
                         nome: form.nome,
                         preco: parseFloat(form.preco),
-                        imagem: form.imagem,
+                        imagem: reader.result,
                         });
                     }
                 }
+                reader.readAsDataURL(file);
             }
         };
     }
