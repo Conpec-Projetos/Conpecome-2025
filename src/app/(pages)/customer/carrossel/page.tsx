@@ -1,13 +1,19 @@
 'use client'
 import Image from "next/image";
-import products from "./products.json";
-import productTypes from "./product_types.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { getProducts, getProductTypes, initializeProductTypes } from "../../../../services/productService";
+import type { Product, ProductType } from "../../../../services/productService";
 import logoConpec from "../../../../assets/images/logo-conpec.svg";
+import todosIcon from "../../../../assets/images/todos.png";
+import docesIcon from "../../../../assets/images/doces.png";
+import salgadosIcon from "../../../../assets/images/salgados.png";
+import bebidasIcon from "../../../../assets/images/bebidas.png";
 
-
+// Helper to get category icon
+const getCategoryIcon = (type: ProductType): string => {
+  return typeof type.imgUrl === 'string' && type.imgUrl ? type.imgUrl : todosIcon.src;
+};
 
 const formatToBRL = (cents: number) => {
   return `R$ ${(cents / 100).toFixed(2).replace('.', ',')}`;
@@ -15,11 +21,36 @@ const formatToBRL = (cents: number) => {
 
 export default function Home() {
   const router = useRouter();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [productTypes, setProductTypes] = useState<ProductType[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [quantities, setQuantities] = useState<{ [key: number]: number }>({});
+  const [quantities, setQuantities] = useState<{ [key: string]: number }>({});  // Changed from number to string
   const [cartTotal, setCartTotal] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // First check and initialize product types if needed
+        await initializeProductTypes();
+        
+        const [productsData, typesData] = await Promise.all([
+          getProducts(),
+          getProductTypes()
+        ]);
+        setProducts(productsData);
+        setProductTypes(typesData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const clearCart = () => {
     setQuantities({});
@@ -27,29 +58,36 @@ export default function Home() {
     setIsCartOpen(false);
   };
 
-  const handleQuantityChange = (productId: number, delta: number) => {
+  const handleQuantityChange = (productId: string, delta: number) => {
     setQuantities(prev => ({
       ...prev,
       [productId]: Math.max(0, (prev[productId] || 0) + delta)
     }));
 
     // Update cart total when quantity changes
-    const product = products.products.find(p => p.id === productId);
+    const product = products.find(p => p.id === productId);
     if (product) {
       setCartTotal(prev => Math.max(0, prev + (delta * product.price)));
     }
   };
 
-  const cartItems = products.products
+  const cartItems = products
     .filter(product => quantities[product.id] > 0)
     .map(product => ({
       ...product,
       quantity: quantities[product.id]
     }));
 
+  // Filter products based on selected category
   const filteredProducts = selectedCategory === "all"
-    ? products.products
-    : products.products.filter(p => p.category_id === selectedCategory);
+    ? products
+    : products.filter(p => p.typeData?.name === selectedCategory);
+
+  if (loading) {
+    return <div className="min-h-screen w-screen bg-[#FFF5EF] flex items-center justify-center">
+      <p className="text-[#FF3D00] text-xl">Carregando...</p>
+    </div>;
+  }
 
   return (
     <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('/background.png')] bg-top bg-repeat">
@@ -116,7 +154,7 @@ export default function Home() {
                         <div key={item.id} className="flex items-center justify-between py-2 border-b border-[#FFE8DE]">
                           <div className="flex items-center gap-2">
                             <Image
-                              src={`/carrossel/assets/${item.imgUrl}`}
+                              src={`${item.imgUrl}`}
                               alt={item.name}
                               width={40}
                               height={40}
@@ -172,37 +210,38 @@ export default function Home() {
         <div className="flex gap-4 w-full overflow-x-auto pb-4">
           <button
             onClick={() => setSelectedCategory("all")}
-            className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${selectedCategory === "all"
-              ? "bg-[#FFECE4]"
-              : "bg-white"
-              }`}
+            className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${
+              selectedCategory === "all" ? "bg-[#FFECE4]" : "bg-white"
+            }`}
           >
             <Image
-              src="/carrossel/assets/todos.png"
+              src={todosIcon.src}
               alt="Todos"
               width={52}
               height={52}
             />
             <span>Todos</span>
           </button>
-          {productTypes.product_types.map((type) => (
-            <button
-              key={type.id}
-              onClick={() => setSelectedCategory(type.id.toString())}
-              className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${selectedCategory === type.id.toString()
-                ? "bg-[#FFECE4]"
-                : "bg-white"
+          {productTypes && productTypes.length > 0 && productTypes.map((type) => {
+            return (
+              <button
+                key={type.id}
+                onClick={() => setSelectedCategory(type.name)}
+                className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${
+                  selectedCategory === type.name ? "bg-[#FFECE4]" : "bg-white"
                 }`}
-            >
-              <Image
-                src={`/carrossel/assets/${type.name}.png`}
-                alt={type.name}
-                width={52}
-                height={52}
-              />
-              <span>{type.name.charAt(0).toUpperCase() + type.name.slice(1)}</span>
-            </button>
-          ))}
+              >
+                <Image
+                  src={getCategoryIcon(type)}
+                  alt={type.name}
+                  width={52}
+                  height={52}
+                  unoptimized
+                />
+                <span>{type.name.charAt(0).toUpperCase() + type.name.slice(1)}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Products grid */}
@@ -213,7 +252,7 @@ export default function Home() {
               className="w-80 bg-[#FFECE4] border border-[#FF9633] rounded-2xl p-6 flex flex-col items-center gap-2 justify-between"
             >
               <Image
-                src={`/carrossel/assets/${product.imgUrl}`}
+                src={`${product.imgUrl}`}
                 alt={product.name}
                 width={200}
                 height={200}
