@@ -78,10 +78,10 @@ export default function Home() {
       quantity: quantities[product.id]
     }));
 
-  // Filter products based on selected category
+  // Filter products based on selected category and stock > 0
   const filteredProducts = selectedCategory === "all"
-    ? products
-    : products.filter(p => p.typeData?.name === selectedCategory);
+    ? products.filter(p => typeof p.stock === 'number' && p.stock > 0)
+    : products.filter(p => p.typeData?.name === selectedCategory && typeof p.stock === 'number' && p.stock > 0);
 
   if (loading) {
     return <div className="min-h-screen w-screen bg-[#FFF5EF] flex items-center justify-center">
@@ -272,12 +272,17 @@ export default function Home() {
                 <span className="w-8 font-semibold text-center">
                   {quantities[product.id] || 0}
                 </span>
-                <button
-                  onClick={() => handleQuantityChange(product.id, 1)}
-                  className="w-8 h-8 rounded-full bg-[#FF9633] text-white flex items-center justify-center text-2xl"
-                >
-                  +
-                </button>
+                {/* Only show + button if quantity is less than stock; otherwise, render a placeholder for alignment */}
+                {typeof product.stock === 'number' && (quantities[product.id] || 0) < product.stock ? (
+                  <button
+                    onClick={() => handleQuantityChange(product.id, 1)}
+                    className="w-8 h-8 rounded-full bg-[#FF9633] text-white flex items-center justify-center text-2xl"
+                  >
+                    +
+                  </button>
+                ) : (
+                  <span className="w-8 h-8 inline-block" aria-hidden="true"></span>
+                )}
               </div>
             </div>
           ))}

@@ -8,6 +8,7 @@ export interface Product {
   type: string;
   typeData?: ProductType;
   imgUrl: string;
+  stock: number;
 }
 
 export interface ProductType {
