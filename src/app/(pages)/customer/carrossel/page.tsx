@@ -29,6 +29,7 @@ export default function Home() {
   const [quantities, setQuantities] = useState<{ [key: string]: number }>({});  // Changed from number to string
   const [cartTotal, setCartTotal] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,10 +79,13 @@ export default function Home() {
       quantity: quantities[product.id]
     }));
 
-  // Filter products based on selected category and stock > 0
-  const filteredProducts = selectedCategory === "all"
-    ? products.filter(p => typeof p.stock === 'number' && p.stock > 0)
-    : products.filter(p => p.typeData?.name === selectedCategory && typeof p.stock === 'number' && p.stock > 0);
+  // Filter products based on selected category, stock > 0, and search term
+  const filteredProducts = products.filter(p => {
+    const inStock = typeof p.stock === 'number' && p.stock > 0;
+    const inCategory = selectedCategory === "all" || p.typeData?.name === selectedCategory;
+    const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return inStock && inCategory && matchesSearch;
+  });
 
   if (loading) {
     return <div className="min-h-screen w-screen bg-[#FFF5EF] flex items-center justify-center">
@@ -115,6 +119,8 @@ export default function Home() {
               type="text"
               placeholder="Pesquisar"
               className="w-full px-4 py-2 pl-10 rounded-full border border-gray-300 text-black"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
             />
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
               <Image
