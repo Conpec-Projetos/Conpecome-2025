@@ -80,13 +80,13 @@ export default function AddProduct() {
         <div className="text-white py-4 px-6 flex items-center justify-between w-full max-w-sm">
           <button
             onClick={() => setShowConfirmPopUp(true)}
-            className="bg-[#FF7D02] hover:bg-[#FF3D00] hover:scale-105 transition-all font-poppins font-bold rounded-full px-14 py-3"
+            className="bg-[#FF7D02] hover:bg-[#FF3D00] hover:scale-95 transition-all font-poppins font-bold rounded-full px-14 py-3"
           >
             Confirmar Alterações
           </button>
           <button
             onClick={addProduct}
-            className="bg-[#FF7D02] hover:bg-[#FF3D00] hover:scale-105 rounded-full w-12 h-12 flex items-center justify-center text-2xl"
+            className="bg-[#FF7D02] hover:bg-[#FF3D00] hover:scale-95 rounded-full w-12 h-12 flex items-center justify-center text-2xl"
           >
             +
           </button>
