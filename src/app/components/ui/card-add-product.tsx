@@ -7,7 +7,7 @@ export default function CardAddProduct({ onDelete }: { onDelete: () => void }) {
   const [quantity, setQuantity] = useState(0);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [productName, setProductName] = useState("");
-  const [productPrice, setProductPrice] = useState("");
+  const [productPrice, setProductPrice] = useState(0);
   const [productPricePrice, setproductPricePrice] = useState("");
   const [editField, setEditField] = useState<string | null>(null);
 
@@ -33,6 +33,16 @@ export default function CardAddProduct({ onDelete }: { onDelete: () => void }) {
       const url = URL.createObjectURL(file);
       setImageUrl(url);
     }
+  };
+
+  const formatPriceInBRL = (cents: number): string => {
+    return `R$ ${(cents / 100).toFixed(2).replace('.', ',')}`;
+  };
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g,'');  // Regex to remove non-numeric characters
+    const cents = value ? parseInt(value, 10) : 0;
+    setProductPrice(cents);
   };
 
   const handleEditKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -105,8 +115,8 @@ export default function CardAddProduct({ onDelete }: { onDelete: () => void }) {
           {editField === "price" ? (
             <input
               type="text"
-              value={productPrice}
-              onChange={(e) => setProductPrice(e.target.value)}
+              value={productPrice === 0 ? "" : formatPriceInBRL(productPrice)}
+              onChange={handlePriceChange}
               onBlur={() => setEditField(null)}
               onKeyDown={handleEditKeyDown}
               autoFocus
@@ -119,7 +129,7 @@ export default function CardAddProduct({ onDelete }: { onDelete: () => void }) {
               className="w-full flex items-center hover:text-[#F54B00] transition-colors"
             >
               <div className="truncate text-sm mr-1">
-                {productPrice || "Inserir preço"}
+                {productPrice > 0 ? formatPriceInBRL(productPrice) : "Inserir preço"}
               </div>
               <Image src={EditIcon} alt="Edit" />
             </button>
