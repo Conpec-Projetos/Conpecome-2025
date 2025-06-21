@@ -9,6 +9,8 @@ import todosIcon from "../../../../assets/images/todos.png";
 import docesIcon from "../../../../assets/images/doces.png";
 import salgadosIcon from "../../../../assets/images/salgados.png";
 import bebidasIcon from "../../../../assets/images/bebidas.png";
+import searchIcon from "../../../../assets/images/search.png";
+import cartIcon from "../../../../assets/images/shopping_cart.png";
 
 // Helper to get category icon
 const getCategoryIcon = (type: ProductType): string => {
@@ -124,7 +126,7 @@ export default function Home() {
             />
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
               <Image
-                src="/carrossel/assets/search.png"
+                src={searchIcon.src}
                 alt="Search"
                 width={20}
                 height={20}
@@ -136,7 +138,7 @@ export default function Home() {
         <div className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-6 py-3 rounded-3xl text-[#F54B00] cursor-pointer relative"
           onClick={() => setIsCartOpen(!isCartOpen)}>
           <Image
-            src="/carrossel/assets/shopping_cart.png"
+            src={cartIcon.src}
             alt="Shopping Cart"
             width={40}
             height={40}
