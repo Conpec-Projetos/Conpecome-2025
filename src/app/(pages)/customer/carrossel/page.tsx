@@ -2,19 +2,16 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getProducts, getProductTypes, initializeProductTypes } from "../../../../services/productService";
+import { getProducts, getProductTypes } from "../../../../services/productService";
 import type { Product, ProductType } from "../../../../services/productService";
 import logoConpec from "../../../../assets/images/logo-conpec.svg";
 import todosIcon from "../../../../assets/images/todos.png";
-import docesIcon from "../../../../assets/images/doces.png";
-import salgadosIcon from "../../../../assets/images/salgados.png";
-import bebidasIcon from "../../../../assets/images/bebidas.png";
 import searchIcon from "../../../../assets/images/search.png";
 import cartIcon from "../../../../assets/images/shopping_cart.png";
 
 // Helper to get category icon
 const getCategoryIcon = (type: ProductType): string => {
-  return typeof type.imgUrl === 'string' && type.imgUrl ? type.imgUrl : todosIcon.src;
+  return type.imgUrl || todosIcon.src;
 };
 
 const formatToBRL = (cents: number) => {
@@ -36,9 +33,6 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // First check and initialize product types if needed
-        await initializeProductTypes();
-        
         const [productsData, typesData] = await Promise.all([
           getProducts(),
           getProductTypes()
@@ -84,7 +78,7 @@ export default function Home() {
   // Filter products based on selected category, stock > 0, and search term
   const filteredProducts = products.filter(p => {
     const inStock = typeof p.stock === 'number' && p.stock > 0;
-    const inCategory = selectedCategory === "all" || p.typeData?.name === selectedCategory;
+    const inCategory = selectedCategory === "all" || p.type === selectedCategory;
     const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
     return inStock && inCategory && matchesSearch;
   });
@@ -233,7 +227,7 @@ export default function Home() {
           {productTypes && productTypes.length > 0 && productTypes.map((type) => {
             return (
               <button
-                key={type.id}
+                key={type.name}
                 onClick={() => setSelectedCategory(type.name)}
                 className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${
                   selectedCategory === type.name ? "bg-[#FFECE4]" : "bg-white"
@@ -246,7 +240,7 @@ export default function Home() {
                   height={52}
                   unoptimized
                 />
-                <span>{type.name.charAt(0).toUpperCase() + type.name.slice(1)}</span>
+                <span>{type.displayName}</span>
               </button>
             );
           })}
