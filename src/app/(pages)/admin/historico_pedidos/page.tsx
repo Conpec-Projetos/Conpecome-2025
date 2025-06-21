@@ -2,10 +2,11 @@
 import Image from "next/image"
 import vector from "../../../../assets/images/Vector.png"
 import logo from "../../../../assets/images/Conpec.png"
-import adicionar from "../../../../assets/images/Adicionar.png"
 import lupa from "../../../../assets/images/lupa-conpecome.png"
+import adicionar from "../../../../assets/images/Adicionar.png"
 import { useState } from 'react';
 import { useRouter } from "next/navigation"
+import ExportToExcellButton from "@/app/components/Excel/ExcelComponent"
 
 interface Item {
   cliente: string;
@@ -143,14 +144,16 @@ export default function HistoricoPedidos() {
 
       <section >
         <div className="flex justify-end px-12">
-          <Image 
-            src={adicionar}
-            alt="adicionar"
-            className="py-16"
-            width={80}
-            height={80}
-          />
-      </div>
+          <button>
+            <Image 
+              src={adicionar}
+              alt="adicionar"
+              className="py-16"
+              width={80}
+              height={80}
+            />
+          </button>
+        </div>
       </section>
     </main>
   );
