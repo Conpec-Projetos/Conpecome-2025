@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { getProducts, getProductTypes } from "../../../../services/productService";
 import type { Product, ProductType } from "../../../../services/productService";
 import logoConpec from "../../../../assets/images/logo-conpec.svg";
-import todosIcon from "../../../../assets/images/todos.png";
+import todosIcon from "../../../../assets/images/product_types/todos.png";
 import searchIcon from "../../../../assets/images/search.png";
 import cartIcon from "../../../../assets/images/shopping_cart.png";
 

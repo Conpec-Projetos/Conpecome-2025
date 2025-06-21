@@ -1,8 +1,8 @@
 import { collection, getDocs, query } from 'firebase/firestore';
 import { db } from '../firebase/firebase-config';
-import docesIcon from "../assets/images/doces.png";
-import salgadosIcon from "../assets/images/salgados.png";
-import bebidasIcon from "../assets/images/bebidas.png";
+import docesIcon from "../assets/images/product_types/doces.png";
+import salgadosIcon from "../assets/images/product_types/salgados.png";
+import bebidasIcon from "../assets/images/product_types/bebidas.png";
 
 export interface Product {
   id: string;
