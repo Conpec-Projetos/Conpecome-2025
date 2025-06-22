@@ -4,9 +4,18 @@ import vector from "../../../../assets/images/Vector.png"
 import logo from "../../../../assets/images/Conpec.png"
 import lupa from "../../../../assets/images/lupa-conpecome.png"
 import adicionar from "../../../../assets/images/Adicionar.png"
-import { useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useRouter } from "next/navigation"
 import ExportToExcellButton from "@/app/components/Excel/ExcelComponent"
+import { db } from "@/firebase/firebase-config"
+import { collection, getDocs } from "firebase/firestore"
+
+interface pedido {
+  id: string;
+  Nome: string;
+  Produto: string;
+  Valor: number;
+}
 
 interface Item {
   cliente: string;
@@ -20,6 +29,24 @@ interface Mes {
 }
 
 export default function HistoricoPedidos() {
+
+  const [Pedidos, setPedidos] = useState<pedido[]>([]);
+
+  const HistoricoCollectionRef = collection(db, "historico_teste");
+  
+  useEffect(() => {
+    const getPedidos = async () => {
+      const data = await getDocs(HistoricoCollectionRef);
+      console.log(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+      setPedidos(data.docs.map((doc) => ({...doc.data(), id: doc.id})) as pedido[]);
+    }
+    getPedidos();
+  },[])
+
+  const totalGeralPedidos = useMemo(() => {
+      return Pedidos.reduce((acumulador, pedido) => acumulador + pedido.Valor, 0);
+    }, [Pedidos]);
+
   const router = useRouter();
   // dados iniciais
   const [meses] = useState<Mes[]>([
@@ -27,7 +54,7 @@ export default function HistoricoPedidos() {
       label: 'Fevereiro',
       ano: 2025,
       itens: [
-        { cliente: 'João',  produto: 'Paçoquinha',    valor: 0.85 },
+        
         { cliente: 'João',  produto: 'Sonho de Valsa', valor: 1.50 },
         { cliente: 'João',  produto: 'Toddynho',       valor: 0.89 },
         { cliente: 'Maria', produto: 'KitKat',         valor: 1.20 },
@@ -120,21 +147,19 @@ export default function HistoricoPedidos() {
 
               {/* grid de itens */}
               <div className="px-10 space-y-2">
-                {mes.itens.map((it, j) => (
-                  <div key={j}
+                {Pedidos.map((pedido) => (
+                  <div key={pedido.id}
                        className="flex flex-row justify-between font-Poppins font-bold text-2xl">
-                    <span className="text-[#FF9633]">{it.cliente}</span>
-                    <span className="text-[#FF9633]">{it.produto}</span>
-                    <span className="text-[#FF9633]">
-                      R${it.valor.toFixed(2)}
-                    </span>
+                    <span className="text-[#FF9633]">{pedido.Nome}</span>
+                    <span className="text-[#FF9633]">{pedido.Produto}</span>
+                    <span className="text-[#FF9633]">R${pedido.Valor.toFixed(2)}</span>
                   </div>
                 ))}
 
                 {/* total do mês */}
                 <div className="grid grid-cols-[1fr_1fr_auto] font-Poppins font-extrabold text-[#FF9633] text-2xl ">
                   <span>Total</span><span></span>
-                  <span>R${total.toFixed(2)}</span>
+                  <span>R${totalGeralPedidos.toFixed(2)}</span>
                 </div>
               </div>
             </div>
