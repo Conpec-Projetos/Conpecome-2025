@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getProducts, getProductTypes } from "../../../../services/dataAcess/productService";
-import type { Product, ProductType } from "../../../../services/dataAcess/productService";
+import type { ProductItem, ProductType } from "../../../../services/dataAcess/productService";
 import logoConpec from "../../../../assets/images/logo-conpec.svg";
 import todosIcon from "../../../../assets/images/product_types/todos.png";
 import searchIcon from "../../../../assets/images/search.png";
@@ -20,7 +20,7 @@ const formatToBRL = (cents: number) => {
 
 export default function Home() {
   const router = useRouter();
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductItem[]>([]);
   const [productTypes, setProductTypes] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -80,6 +80,7 @@ export default function Home() {
     const inStock = typeof p.stock === 'number' && p.stock > 0;
     const inCategory = selectedCategory === "all" || p.type === selectedCategory;
     const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
+
     return inStock && inCategory && matchesSearch;
   });
 
