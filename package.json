@@ -21,7 +21,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
-    "@types/react": "^19",
+    "@types/react": "^19.1.8",
     "@types/react-dom": "^19",
     "@types/xlsx": "^0.0.35",
     "eslint": "^9",

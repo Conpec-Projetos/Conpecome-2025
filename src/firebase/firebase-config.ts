@@ -3,6 +3,10 @@ import { initializeApp } from "firebase/app";
 import { Analytics, getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+
+//Now import this 
+import 'firebase/firestore';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
