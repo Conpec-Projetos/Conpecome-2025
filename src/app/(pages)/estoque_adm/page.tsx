@@ -22,15 +22,6 @@ export default function Estoque_ADM() {
   const router = useRouter()
   
 
-interface Product {
-    id: string
-    name: string
-    price: number
-    type: string
-    imgURL: string
-    stock: number
-  }
-
 
   // addProductsAction({
   //       imgURL: "https://firebasestorage.googleapis.com/v0/b/conpecome-fbs.appspot.com/o/images%2Fproducts%2Farroz.png?alt=media&token=f5d4886b-4d32-4760-a8af-5d2debd98724",

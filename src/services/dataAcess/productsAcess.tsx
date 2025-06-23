@@ -3,7 +3,7 @@ import { db } from "@/firebase/firebase-config";
 import { query, collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore'; // Importe os métodos necessários do Firestore
 
 
-const productsReference = collection(db, 'products_teste');
+const productsReference = collection(db, 'products');
 
 export async function getProductsAcess(){
     const response = await getDocs(productsReference);
@@ -16,7 +16,7 @@ export async function addProductsAcess(body: Product){
 }
 
 export async function updateProductsAcess(body: Product){
-    const response = await updateDoc(doc(db, 'products_teste', body.id), {name: body.name, imgURL: body.imgURL, stock: body.stock, price: body.price * 100, type: body.type})
+    const response = await updateDoc(doc(db, 'products_teste', body.id), {name: body.name, imgURL: body.imageURL, stock: body.stock, price: body.price * 100, type: body.type})
     return response
 }
 

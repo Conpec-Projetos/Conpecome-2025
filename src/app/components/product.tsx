@@ -2,15 +2,7 @@ import Image from 'next/image';
 import { StaticImageData } from "next/image";
 import { FC, useState, useRef } from "react";
 import EditIcon from "@/app/assets/EditIcon.png"
-
-interface Product {
-    id: string;
-    name: string;
-    price: number;
-    type: string;
-    imgURL: string;
-    stock: number
-  }
+import type { Product } from '@/services/actions/productsAction'
 
 type ProductProps = {
     product: Product;
@@ -27,7 +19,7 @@ const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove,
     const [form, setForm] = useState({
     name: product.name,
     price: product.price.toFixed(2),
-    imgURL: product.imgURL})
+    imgURL: product.imageURL})
     const fileInputRef = useRef<any>(null);
     const ClickRef = useRef<any>(null);
 
@@ -43,7 +35,7 @@ const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove,
                         ...product,
                         name: form.name,
                         price: parseFloat(form.price),
-                        imgURL: reader.result,
+                        imageURL: reader.result,
                         });
                     }
                 }
@@ -72,7 +64,7 @@ const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove,
                 ...product,
                 name: form.name,
                 price: parseFloat(form.price),
-                imgURL: form.imgURL});
+                imageURL: form.imgURL});
             setEditando(false);
                 }
             };
@@ -81,7 +73,7 @@ const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove,
         
     <div className="bg-[#ffece4] rounded-2xl border-2 border-[#F54B00] h-[250px] w-full flex flex-row">
         <div className="flex items-center justify-center h-full w-1/3 pb-11">
-            <Image src={product.imgURL} alt={product.name} width={160} height={160}/>
+            <Image src={product.imageURL} alt={product.name} width={160} height={160}/>
             <input
               type="file"
               ref={fileInputRef}

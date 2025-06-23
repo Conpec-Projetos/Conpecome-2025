@@ -1,13 +1,13 @@
 import { addProductsAcess, getProductsAcess, removeProductsAcess, updateProductsAcess } from "../dataAcess/productsAcess";
 
-interface Product {
+export interface Product {
     id: string;
     name: string;
     price: number;
     type: string;
-    imgURL: string;
+    imageURL: string;
     stock: number
-  }
+}
 
 export async function getProductsAction(){
     const response = await getProductsAcess()
