@@ -1,15 +1,16 @@
 import Image from 'next/image';
 import { StaticImageData } from "next/image";
 import { FC, useState, useRef } from "react";
-import EditIcon from "@/app/assets/EditIcon.png"
-import type { Product } from '@/services/actions/productsAction'
+import EditIcon from "@/app/assets/EditIcon.png";
+// Update the path below to the correct relative path if needed
+import { ProductItem } from '@/services/dataAcess/productService';
 
 type ProductProps = {
-    product: Product;
+    product: ProductItem;
     onDecrement: (id: string) => void
     onIncrement: (id: string) => void
     onRemove: (id: string) => void
-    onEdit: (newProduct: Product) => void
+    onEdit: (newProduct: ProductItem) => void
 }
 
 

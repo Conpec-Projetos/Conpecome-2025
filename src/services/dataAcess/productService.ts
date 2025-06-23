@@ -1,10 +1,10 @@
 import { collection, getDocs, query } from 'firebase/firestore';
-import { db } from '../firebase/firebase-config';
-import docesIcon from "../assets/images/product_types/doces.png";
-import salgadosIcon from "../assets/images/product_types/salgados.png";
-import bebidasIcon from "../assets/images/product_types/bebidas.png";
+import { db } from '../../firebase/firebase-config';
+import docesIcon from "../../assets/images/product_types/doces.png";
+import salgadosIcon from "../../assets/images/product_types/salgados.png";
+import bebidasIcon from "../../assets/images/product_types/bebidas.png";
 
-export interface Product {
+export interface ProductItem {
   id: string;
   name: string;
   price: number;
@@ -38,7 +38,7 @@ const productTypes: ProductType[] = [
   }
 ];
 
-export const getProducts = async (): Promise<Product[]> => {
+export const getProducts = async (): Promise<ProductItem[]> => {
   const productsRef = collection(db, 'products');
   const snapshot = await getDocs(query(productsRef));
   return snapshot.docs.map((docSnap) => {
@@ -49,7 +49,7 @@ export const getProducts = async (): Promise<Product[]> => {
       ...data,
       id: docSnap.id,
       typeData: typeData
-    } as Product;
+    } as ProductItem;
   });
 };
 

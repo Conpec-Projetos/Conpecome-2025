@@ -2,8 +2,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getProducts, getProductTypes } from "../../../../services/productService";
-import type { Product, ProductType } from "../../../../services/productService";
+import { getProducts, getProductTypes } from "../../../../services/dataAcess/productService";
+import type { Product, ProductType } from "../../../../services/dataAcess/productService";
 import logoConpec from "../../../../assets/images/logo-conpec.svg";
 import todosIcon from "../../../../assets/images/product_types/todos.png";
 import searchIcon from "../../../../assets/images/search.png";

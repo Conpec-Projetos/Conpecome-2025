@@ -1,19 +1,14 @@
 import { addProductsAcess, getProductsAcess, removeProductsAcess, updateProductsAcess } from "../dataAcess/productsAcess";
 
-export interface Product {
-    id: string;
-    name: string;
-    price: number;
-    type: string;
-    imageURL: string;
-    stock: number
-}
+import Product from '@/app/components/product'
+import { ProductItem } from "../dataAcess/productService";
+
 
 export async function getProductsAction(){
     const response = await getProductsAcess()
-    const products: Product[] = []
+    const products: ProductItem[] = []
     response.forEach((doc) => {
-        const productData = doc.data() as Product
+        const productData = doc.data() as ProductItem
         products.push({...productData, price: productData.price / 100, id: doc.id})
     })
 

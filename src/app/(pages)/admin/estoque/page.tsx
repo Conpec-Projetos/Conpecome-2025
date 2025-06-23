@@ -16,6 +16,7 @@ import Product from '@/app/components/product'
 
 import { useRouter } from 'next/navigation'
 import { addProductsAction, getProductsAction, removeProductsAction, updateProductsAction } from '@/services/actions/productsAction'
+import { ProductItem } from '@/services/dataAcess/productService'
 
 
 export default function Estoque_ADM() {
@@ -57,9 +58,9 @@ export default function Estoque_ADM() {
   //     stock: 7,
   //   },
   // ]
-  const [estoqueInicial, setEstoqueInicial] = useState<Product[]>([])
-  const [estoqueAlterado, setEstoqueAlterado] = useState<Product[]>([])
-  const [estoqueDebounced, setEstoqueDebounced] = useState<Product[]>([])
+  const [estoqueInicial, setEstoqueInicial] = useState<ProductItem[]>([])
+  const [estoqueAlterado, setEstoqueAlterado] = useState<ProductItem[]>([])
+  const [estoqueDebounced, setEstoqueDebounced] = useState<ProductItem[]>([])
   const removeIDRef = useRef<string>('')
 
   useEffect(() => {
@@ -107,7 +108,7 @@ export default function Estoque_ADM() {
     removeIDRef.current = id
   }
 
-  const edit = (newProduct: Product) => {
+  const edit = (newProduct: ProductItem) => {
     setEstoqueInicial((products) => products.map(product => (product.id === newProduct.id ? newProduct : product)))
     setEstoqueAlterado((products) => products.map(product => (product.id === newProduct.id ? newProduct : product)))
   }
