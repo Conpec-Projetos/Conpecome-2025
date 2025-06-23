@@ -1,22 +1,100 @@
 "use client";
 import CardAddProduct from "@/app/components/ui/card-add-product";
 import Header from "@/app/components/ui/header";
+import { addProductsAction } from "@/firebase/services/actions/productsAction";
+import { LocalProduct, ProductType } from "@/interfaces/productsInterfaces";
 import { useState, useEffect } from "react";
 
 export default function AddProduct() {
-  const [products, setProducts] = useState([{ id: 0 }]);
+  const [products, setProducts] = useState<LocalProduct[]>([
+    {
+      id: Date.now(),
+      imageURL: "",
+      name: "",
+      price: 0,
+      stock: 0,
+      type: "",
+    },
+  ]);
   const [showConfirmPopUp, setShowConfirmPopUp] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const addProduct = () => {
-    setProducts([...products, { id: products.length + 1 }]);
+    setProducts([
+      ...products,
+      {
+        id: Date.now(),
+        imageURL: "",
+        name: "",
+        price: 0,
+        stock: 0,
+        type: "",
+      },
+    ]);
   };
 
   const removeProduct = (id: number) => {
     setProducts(products.filter((product) => product.id !== id));
   };
 
-  const handleConfirmChanges = () => {
-    setShowConfirmPopUp(false);
+  const updateProduct = (
+    id: number,
+    field: string,
+    value: string | number | boolean | File | null
+  ) => {
+    setProducts(
+      products.map((product) =>
+        product.id === id ? { ...product, [field]: value } : product
+      )
+    );
+  };
+
+  const allProductsValid = () => {
+    return products.every(
+      (product) =>
+        product.name &&
+        product.name.trim() !== "" &&
+        product.price > 0 &&
+        product.stock > 0 &&
+        product.type &&
+        product.type.trim() !== "" &&
+        product.imageFile instanceof File
+    );
+  };
+
+  const handleConfirmChanges = async () => {
+    try {
+      setIsSubmitting(true);
+      for (const product of products) {
+        const productData = {
+          uuid: "", // Will be set by Firebase
+          imageURL: product.imageURL,
+          imageFile: product.imageFile,
+          name: product.name,
+          price: product.price,
+          stock: product.stock,
+          type: product.type,
+        };
+        await addProductsAction(productData as ProductType);
+      }
+      setShowConfirmPopUp(false);
+      setProducts([
+        {
+          id: Date.now(),
+          imageURL: "",
+          name: "",
+          price: 0,
+          stock: 0,
+          type: "",
+        },
+      ]);
+      alert("Produtos adicionados com sucesso!");
+    } catch (error) {
+      console.error("Error adding products:", error);
+      alert("Erro ao adicionar produtos.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Scrollbar visible
@@ -25,7 +103,9 @@ export default function AddProduct() {
   //Verify if the scrollbar is visible when adding or removing products
   useEffect(() => {
     const handleScroll = () => {
-      setScrollbarVisible(window.innerWidth > document.documentElement.clientWidth);
+      setScrollbarVisible(
+        window.innerWidth > document.documentElement.clientWidth
+      );
     };
 
     window.addEventListener("resize", handleScroll);
@@ -40,16 +120,16 @@ export default function AddProduct() {
    * Get the width of the scrollbar in pixels.
    */
   const getScrollbarWidth = () => {
-    const outer = document.createElement('div');
-    outer.style.visibility = 'hidden';
-    outer.style.overflow = 'scroll';
-    outer.style.position = 'absolute';
-    outer.style.top = '-9999px';
-    outer.style.width = '100px';
+    const outer = document.createElement("div");
+    outer.style.visibility = "hidden";
+    outer.style.overflow = "scroll";
+    outer.style.position = "absolute";
+    outer.style.top = "-9999px";
+    outer.style.width = "100px";
     document.body.appendChild(outer);
 
-    const inner = document.createElement('div');
-    inner.style.width = '100%';
+    const inner = document.createElement("div");
+    inner.style.width = "100%";
     outer.appendChild(inner);
 
     const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
@@ -58,10 +138,11 @@ export default function AddProduct() {
     return scrollbarWidth;
   };
 
-
   return (
-    <div className="bg-[#FFF4EF] w-full min-h-screen flex flex-col pl-10 pb-6 overflow-x-hidden"
-      style={{paddingRight: scrollbarVisible ? 0 : getScrollbarWidth()}}>
+    <div
+      className="bg-[#FFF4EF] w-full min-h-screen flex flex-col pl-10 pb-6 overflow-x-hidden"
+      style={{ paddingRight: scrollbarVisible ? 0 : getScrollbarWidth() }}
+    >
       <div>
         <Header />
         <div className="text-4xl font-bold text-[#FF3D00] text-center mb-8 font-pixelify-sans">
@@ -71,7 +152,10 @@ export default function AddProduct() {
           {products.map((product) => (
             <CardAddProduct
               key={product.id}
+              product={product}
+              onUpdate={updateProduct}
               onDelete={() => removeProduct(product.id)}
+              disableDelete={products.length === 1}
             />
           ))}
         </div>
@@ -79,14 +163,19 @@ export default function AddProduct() {
       <div className="mt-auto flex justify-center">
         <div className="text-white py-4 px-6 flex items-center justify-between w-full max-w-sm">
           <button
-            onClick={() => setShowConfirmPopUp(true)}
-            className="bg-[#FF7D02] hover:bg-[#FF3D00] hover:scale-105 transition-all font-poppins font-bold rounded-full px-14 py-3"
+            onClick={() => allProductsValid() && setShowConfirmPopUp(true)}
+            disabled={!allProductsValid()}
+            className={`bg-[#FF7D02] ${
+              !allProductsValid()
+                ? "bg-[#8A8A8A] cursor-not-allowed transition-colors"
+                : "hover:bg-[#FF3D00] hover:scale-95 transition-all"
+            } font-poppins font-bold rounded-full px-14 py-3`}
           >
             Confirmar Alterações
           </button>
           <button
             onClick={addProduct}
-            className="bg-[#FF7D02] hover:bg-[#FF3D00] hover:scale-105 rounded-full w-12 h-12 flex items-center justify-center text-2xl"
+            className="bg-[#FF7D02] hover:bg-[#FF3D00] hover:scale-95 rounded-full w-12 h-12 flex items-center justify-center text-2xl"
           >
             +
           </button>
@@ -106,7 +195,14 @@ export default function AddProduct() {
               <div className="flex-1 border-r border-white">
                 <button
                   onClick={handleConfirmChanges}
-                  className="rounded-bl-xl w-full h-10 text-white hover:bg-white hover:text-[#FFAA54] transition-colors"
+                  disabled={isSubmitting}
+                  className={`rounded-bl-xl w-full h-10 text-white
+                              ${
+                                isSubmitting
+                                  ? "bg-[#8A8A8A] cursor-not-allowed transition-colors"
+                                  : "hover:bg-white hover:text-[#FFAA54]"
+                              } 
+                              transition-colors`}
                 >
                   Sim, confirmar
                 </button>
@@ -114,6 +210,7 @@ export default function AddProduct() {
               <div className="flex-1">
                 <button
                   onClick={() => setShowConfirmPopUp(false)}
+                  disabled={isSubmitting}
                   className="rounded-br-xl w-full h-10 text-white hover:bg-white hover:text-[#FFAA54] transition-colors"
                 >
                   Não, voltar

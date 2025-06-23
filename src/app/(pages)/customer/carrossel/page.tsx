@@ -156,7 +156,7 @@ export default function Home() {
                         <div key={item.id} className="flex items-center justify-between py-2 border-b border-[#FFE8DE]">
                           <div className="flex items-center gap-2">
                             <Image
-                              src={`${item.imgUrl}`}
+                              src={`${item.imageURL}`}
                               alt={item.name}
                               width={40}
                               height={40}
@@ -255,7 +255,7 @@ export default function Home() {
               className="w-80 bg-[#FFECE4] border border-[#FF9633] rounded-2xl p-6 flex flex-col items-center gap-2 justify-between"
             >
               <Image
-                src={product.imgUrl}
+                src={product.imageURL}
                 alt={product.name}
                 width={200}
                 height={200}

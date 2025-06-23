@@ -10,7 +10,7 @@ export interface Product {
   price: number;
   type: string;
   typeData?: ProductType;
-  imgUrl: string;
+  imageURL: string;
   stock: number;
 }
 
