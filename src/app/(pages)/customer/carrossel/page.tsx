@@ -247,6 +247,7 @@ export default function Home() {
         </div>
 
         {/* Products grid */}
+        
         <div className="grid grid-cols-3 text-[#FF9633] place-items-center gap-10 w-full px-8">
           {filteredProducts.map((product) => (
             <div
@@ -254,7 +255,7 @@ export default function Home() {
               className="w-80 bg-[#FFECE4] border border-[#FF9633] rounded-2xl p-6 flex flex-col items-center gap-2 justify-between"
             >
               <Image
-                src={`${product.imgUrl}`}
+                src={product.imgUrl}
                 alt={product.name}
                 width={200}
                 height={200}
