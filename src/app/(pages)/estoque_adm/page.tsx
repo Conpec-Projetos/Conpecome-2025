@@ -2,7 +2,6 @@
 import Image, { StaticImageData } from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 
-import Background from '@/app/assets/background.png'
 import Logo from '@/app/assets/Conpec.png'
 import Seta from '@/app/assets/Vector.png'
 import Relogio from '@/app/assets/Group.png'
@@ -11,24 +10,10 @@ import IconTodos from '@/app/assets/IconTodos.png'
 import IconDoces from '@/app/assets/IconDoces.png'
 import IconBebidas from '@/app/assets/IconBebidas.png'
 import IconSalgados from '@/app/assets/IconSalgados.png'
-import Sanduiche from '@/app/assets/sanduiche.png'
 
 import FoodButton from '@/app/components/foodbutton'
 import Product from '@/app/components/product'
 
-<<<<<<< Updated upstream:src/app/(pages)/estoque_adm/page.tsx
-
-
-export default function Estoque_ADM() {
-
-  interface Product {
-    id: string;
-    nome: string;
-    preco: number;
-    tipo: string;
-    imagem: string
-    quantidade: number
-=======
 import { useRouter } from 'next/navigation'
 import { addProductsAction, getProductsAction, removeProductsAction, updateProductsAction } from '@/services/actions/productsAction'
 
@@ -44,7 +29,6 @@ interface Product {
     type: string
     imgURL: string
     stock: number
->>>>>>> Stashed changes:src/app/(pages)/admin/estoque/page.tsx
   }
 
 
@@ -55,35 +39,6 @@ interface Product {
   //       stock: 7,
   //       type: 'salgado'})
   
-<<<<<<< Updated upstream:src/app/(pages)/estoque_adm/page.tsx
-  const estoqueFicticio: Product[] = [
-    {
-      id: '1',
-      nome: 'Coxinha',
-      preco: 5.5,
-      tipo: 'Salgados',
-      imagem: '/images/sanduiche.png',
-      quantidade: 10
-    },
-    {
-    id: '2',
-    nome: 'Suco de Laranja',
-    preco: 4.0,
-    tipo: 'Bebidas',
-    imagem: '/images/sanduiche.png',  
-    quantidade: 5,
-    },
-    {
-    id: '3',
-    nome: 'Chocolate',
-    preco: 8.0,
-    tipo: 'Doces',
-    imagem: '/images/sanduiche.png',  
-    quantidade: 7,
-    },
-  ]
-=======
->>>>>>> Stashed changes:src/app/(pages)/admin/estoque/page.tsx
 
   // const estoqueFicticio: Product[] = [
   //   {
@@ -162,22 +117,12 @@ interface Product {
   }
 
   const edit = (newProduct: Product) => {
-<<<<<<< Updated upstream:src/app/(pages)/estoque_adm/page.tsx
-    setEstoqueInicial((produtos) => produtos.map(produto => (produto.id === newProduct.id ? newProduct : produto)))
-    setEstoqueAlterado((produtos) => produtos.map(produto => (produto.id === newProduct.id ? newProduct : produto)))
-    console.log(newProduct)
-  }
-
-  const handleFoodButtonClick = (tipo: string) => {
-    if (tipo == 'Todos')
-=======
     setEstoqueInicial((products) => products.map(product => (product.id === newProduct.id ? newProduct : product)))
     setEstoqueAlterado((products) => products.map(product => (product.id === newProduct.id ? newProduct : product)))
   }
 
   const handleFoodButtonClick = (type: string) => {
     if (type == 'todos')
->>>>>>> Stashed changes:src/app/(pages)/admin/estoque/page.tsx
       setEstoqueAlterado(() => estoqueInicial)
     else
       if (type == 'salgados') {
@@ -192,15 +137,9 @@ interface Product {
 
 
   return (
-<<<<<<< Updated upstream:src/app/(pages)/estoque_adm/page.tsx
-    <main className="bg-[#fff4ef] bg-[url(/images/background.png)] h-screen w-full overflow-x-hidden">
-     <header className='rounded-2xl h-[151px] w-screen bg-[#FFE8D7] flex flex-row items-center'>
-        <button className='w-32 h-[63px]'>
-=======
     <main className="bg-[#fff4ef] bg-[url('/assets/images/background.png')] h-screen w-full overflow-x-hidden">
      <header className='rounded-2xl h-[151px] w-screen bg-[#FFE8D7] flex flex-row items-center'>
         <button className='w-32 h-[63px]' onClick={() => {router.push("..");}}>
->>>>>>> Stashed changes:src/app/(pages)/admin/estoque/page.tsx
           <Image src={Logo} alt='Logo' width={70} height={70} unoptimized={true}/>
         </button>
         <div className='flex flex-col m-5'>
@@ -209,13 +148,6 @@ interface Product {
         </div>
 
         <div className='h-full w-3/6 flex items-center pt-14 ml-10 justify-around'>
-<<<<<<< Updated upstream:src/app/(pages)/estoque_adm/page.tsx
-          <button className=' w-[235px] font-poppins underline text-[#FF7D02] justify-between font-bold flex flex-row'>
-            Adicionar Novo Produto <Image src={Seta} alt='' width={25} height={20}/>
-          </button>
-
-          <button className='w-52 font-poppins underline text-[#FF7D02] justify-between font-bold flex flex-row'>
-=======
           <button className=' w-[235px] font-poppins underline text-[#FF7D02] justify-between font-bold flex flex-row'
           onClick={() => {router.push("./add-product");}}>
             Adicionar Novo Produto <Image src={Seta} alt='' width={25} height={20}/>
@@ -223,22 +155,13 @@ interface Product {
 
           <button className='w-52 font-poppins underline text-[#FF7D02] justify-between font-bold flex flex-row'
           onClick={() => {router.push("./historico_pedidos");}}>
->>>>>>> Stashed changes:src/app/(pages)/admin/estoque/page.tsx
             Histórico de pedidos <Image src={Relogio} alt='' width={25} height={20} objectFit='contain'/>
             </button>
         </div>
 
         <div className='h-full w-2/3 flex items-center justify-end pr-16 space-x-10'>
-<<<<<<< Updated upstream:src/app/(pages)/estoque_adm/page.tsx
-          <button>
-          <Image src={BotaoAdicionar} alt='Botão para Adicionar' width={90} height={96} unoptimized={true}/>
-          </button>
-
-          <button>
-=======
           <button
           onClick={router.back}>
->>>>>>> Stashed changes:src/app/(pages)/admin/estoque/page.tsx
           <Image src={BotaoSair} alt='Botão para Sair' width={90} height={96} unoptimized={true}/>
           </button>
         </div>
@@ -253,13 +176,8 @@ interface Product {
     </div>
 
     <div className='w-2/5 mb-2 ml-36 space-y-3'>
-<<<<<<< Updated upstream:src/app/(pages)/estoque_adm/page.tsx
-      {estoqueAlterado.map((produto) => (
-        <Product key={produto.id} product={produto} onIncrement={increment} onDecrement={decrement} onRemove={remove} onEdit={edit}></Product>
-=======
       {estoqueAlterado.map((product) => (
         <Product key={product.id} product={product} onIncrement={increment} onDecrement={decrement} onRemove={remove} onEdit={edit}></Product>
->>>>>>> Stashed changes:src/app/(pages)/admin/estoque/page.tsx
       ))}
     </div>
 
