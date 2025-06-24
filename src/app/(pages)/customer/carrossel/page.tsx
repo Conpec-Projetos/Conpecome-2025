@@ -8,6 +8,7 @@ import logoConpec from "../../../../assets/images/logo-conpec.svg";
 import todosIcon from "../../../../assets/images/product_types/todos.png";
 import searchIcon from "../../../../assets/images/search.png";
 import cartIcon from "../../../../assets/images/shopping_cart.png";
+import TextField from "@/app/components/text-field";
 
 // Helper to get category icon
 const getCategoryIcon = (type: ProductType): string => {
@@ -118,10 +119,9 @@ export default function Home() {
         </div>
         <div className="flex-1 max-w-xl mx-8">
           <div className="relative">
-            <input
-              type="text"
+            <TextField
               placeholder="Pesquisar"
-              className="w-full px-4 py-2 pl-10 rounded-full border border-gray-300 text-black"
+              className="placeholder-gray-300 w-full py-2 pl-10"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
             />

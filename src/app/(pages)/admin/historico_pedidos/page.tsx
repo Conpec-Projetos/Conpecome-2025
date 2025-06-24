@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation"
 import ExportToExcellButton from "@/app/components/Excel/ExcelComponent"
 import { db } from "@/firebase/firebase-config"
 import { collection, getDocs } from "firebase/firestore"
+import TextField from "@/app/components/text-field"
 
 interface pedido {
   id: string;
@@ -115,11 +116,12 @@ export default function HistoricoPedidos() {
         Histórico de Pedidos
         </div>
 
-        <div className="flex items-center left-40 absolute w-1/4 max-w-md border-2 border-orange-300 rounded-full px-4 py-1 bg-white">
-            <input
-              type="text"
+        <div className="flex items-center left-40 absolute w-1/4 max-w-md">
+            <TextField 
               placeholder="Cliente"
-              className="w-full py-2 pl-10 rounded-full"
+              className="placeholder-gray-400 w-full pl-14 text-[15px]"
+              value={search}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             />
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
               <Image

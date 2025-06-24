@@ -4,6 +4,7 @@ import ConpecLogo from "@/assets/images/ConpecLogo.svg";
 import ArrowLeft from "@/assets/images/ArrowLeftIcon.png";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import TextField from "@/app/components/text-field";
 
 export default function Info() {
   const router = useRouter();
@@ -52,13 +53,12 @@ export default function Info() {
             <label className="text-[#FF7D02] col-span-1 font-poppins text-[16px] font-extrabold ml-5">
               Nome
             </label>
-            <input
+            <TextField
               name="nome"
               value={espaco.nome}
               onChange={handleInputChange}
               type="text"
               placeholder="Inserir Nome"
-              className="text-[#ff7c0287] placeholder-[#ff7c0287] font-poppins col-span-3 h-14 rounded-full px-8 py-5 text-[10px] font-extrabold border-2 border-[#ff5a0179] focus:border-[#ff5a01c9] focus:outline-none"
             />
           </div>
 
@@ -66,13 +66,12 @@ export default function Info() {
             <label className="text-[#FF7D02] col-span-1 font-poppins text-[16px] font-extrabold ml-5">
               Email
             </label>
-            <input
+            <TextField
               type="email"
               name="email"
               value={espaco.email}
               onChange={handleInputChange}
               placeholder="Inserir Email"
-              className="text-[#ff7c0287] placeholder-[#ff7c0287] font-poppins col-span-3 h-14 rounded-full px-8 py-5 text-[10px] font-extrabold border-2 border-[#ff5a0179] focus:border-[#ff5a01c9] focus:outline-none"
             />
           </div>
 
