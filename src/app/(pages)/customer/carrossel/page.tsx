@@ -97,7 +97,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('/background.png')] bg-top bg-repeat">
+    <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('@/assets/images/background.png')] bg-top bg-repeat">
       {/* navbar */}
       <header className="flex items-center justify-between px-4 py-6 bg-[#FFE8DE] rounded-b-3xl">
         <div className="flex items-center gap-2">

@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-import arrowLeft from "../../../../assets/images/arrow-left.png";
+import arrowLeft from "@/assets/images/arrow-left.png";
 import Conpecome from "../../../../assets/images/CONPECOME.png";
 import Conpec from "../../../../assets/images/Conpec.png";
 import pedido from "../../../../assets/images/Pedido.png";

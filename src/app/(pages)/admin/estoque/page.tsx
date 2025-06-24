@@ -118,13 +118,13 @@ export default function Estoque_ADM() {
       setEstoqueAlterado(() => estoqueInicial)
     else
       if (type == 'salgados') {
-        setEstoqueAlterado(() => estoqueInicial.filter((product) => product.type === 'salgado'))
+        setEstoqueAlterado(() => estoqueInicial.filter((product) => product.type === 'SALGADO'))
       }
     else
       if (type == 'bebidas')
-        setEstoqueAlterado(() => estoqueInicial.filter((product) => product.type === 'bebida'))
+        setEstoqueAlterado(() => estoqueInicial.filter((product) => product.type === 'BEBIDA'))
     else
-      setEstoqueAlterado(() => estoqueInicial.filter(product => product.type === 'doce')) 
+      setEstoqueAlterado(() => estoqueInicial.filter(product => product.type === 'DOCE')) 
   }
 
 
