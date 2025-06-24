@@ -80,7 +80,6 @@ export default function Home() {
     const inStock = typeof p.stock === 'number' && p.stock > 0;
     const inCategory = selectedCategory === "all" || p.type === selectedCategory;
     const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
-
     return inStock && inCategory && matchesSearch;
   });
 
@@ -89,6 +88,13 @@ export default function Home() {
       <p className="text-[#FF3D00] text-xl">Carregando...</p>
     </div>;
   }
+
+
+  const irParaPaginaDeInfo = () => {
+      localStorage.setItem("carrinho", JSON.stringify(cartItems));
+
+      router.push("./info");
+  };
 
   return (
     <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('/background.png')] bg-top bg-repeat">
@@ -194,7 +200,7 @@ export default function Home() {
                         </button>
                         <button
                           className="flex-1 py-2 px-4 bg-[#FF3D00] text-white rounded-full hover:bg-[#FF9633] transition-colors"
-                          onClick={() => {router.push("./info");}}
+                          onClick={irParaPaginaDeInfo}
                         >
                           Finalizar Pedido
                         </button>
