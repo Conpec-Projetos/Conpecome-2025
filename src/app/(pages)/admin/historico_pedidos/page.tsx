@@ -6,15 +6,16 @@ import lupa from "../../../../assets/images/lupa-conpecome.png"
 import adicionar from "../../../../assets/images/Adicionar.png"
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useRouter } from "next/navigation"
-import ExportToExcellButton from "@/app/components/Excel/ExcelComponent"
 import { db } from "@/firebase/firebase-config"
 import { collection, getDocs } from "firebase/firestore"
+import Header from "../../../components/ui/header"
 
 interface pedido {
   id: string;
-  Nome: string;
-  Produto: string;
-  Valor: number;
+  comprador: string;
+  nome: string;
+  preco: number;
+  quantidade: number;
 }
 
 interface Item {
@@ -32,7 +33,7 @@ export default function HistoricoPedidos() {
 
   const [Pedidos, setPedidos] = useState<pedido[]>([]);
 
-  const HistoricoCollectionRef = collection(db, "historico_teste");
+  const HistoricoCollectionRef = collection(db, "purchases");
   
   useEffect(() => {
     const getPedidos = async () => {
@@ -44,7 +45,7 @@ export default function HistoricoPedidos() {
   },[])
 
   const totalGeralPedidos = useMemo(() => {
-      return Pedidos.reduce((acumulador, pedido) => acumulador + pedido.Valor, 0);
+      return Pedidos.reduce((acumulador, pedido) => acumulador + pedido.preco, 0);
     }, [Pedidos]);
 
   const router = useRouter();
@@ -83,35 +84,11 @@ export default function HistoricoPedidos() {
   return (
     <main className="bg-[#FFF4EF] min-h-screen w-full">
 
-      <header className="flex items-center justify-between px-12 py-8">
-        
-        <button onClick={router.back} className="">
-          <Image 
-          src={vector}
-          alt="voltar"
-          width={40}
-          height={40}
-          />
-        </button>
-        
-        <div className="text-6xl font-pixelify text-[#FF3D00] left-32 absolute">
-          CONPECOME
-        </div>
-    
-        <div className="flex justify-end">
-          <Image
-            src={logo}
-            alt="logo"
-            width={100}
-            height={100}
-          />
-        </div>
-        
-      </header>
+      <Header />
 
       <div>
 
-        <div className="text-4xl font-pixelify text-[#FF3D00] flex flex-row justify-center py-0.5">
+        <div className="text-5xl font-pixelify text-[#FF3D00] flex flex-row justify-center py-1">
         Histórico de Pedidos
         </div>
 
@@ -150,9 +127,9 @@ export default function HistoricoPedidos() {
                 {Pedidos.map((pedido) => (
                   <div key={pedido.id}
                        className="flex flex-row justify-between font-Poppins font-bold text-2xl">
-                    <span className="text-[#FF9633]">{pedido.Nome}</span>
-                    <span className="text-[#FF9633]">{pedido.Produto}</span>
-                    <span className="text-[#FF9633]">R${pedido.Valor.toFixed(2)}</span>
+                    <span className="text-[#FF9633]">{pedido.comprador}</span>
+                    <span className="text-[#FF9633]">{pedido.nome}</span>
+                    <span className="text-[#FF9633]">R${pedido.preco.toFixed(2)}</span>
                   </div>
                 ))}
 

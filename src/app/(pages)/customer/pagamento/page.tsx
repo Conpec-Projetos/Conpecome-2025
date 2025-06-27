@@ -12,6 +12,8 @@ import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "../../../../firebase/firebase-config";
 
+import Header from "../../../components/ui/header"
+
 export default function Pagamento() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -71,32 +73,9 @@ export default function Pagamento() {
 
   return (
     <div className="h-screen w-screen rounded-4xl bg-[#fff4ef] relative flex flex-col gap-5">
-      <div className="h-20 w-full flex flex-row justify-between">
-        <button onClick={() => router.back()} className="h-full w-28 flex justify-center items-center">
-          <img
-            src={arrowLeft.src}
-            alt="Seta esquerda"
-            className="h-full w-16 object-contain"
-          />
-        </button>
-
-        <div className="h-20 w-72 flex justify-center items-center">
-          <img
-            src={Conpecome.src}
-            alt="Conpecome"
-            className="h-full w-5/6 object-contain"
-          />
-        </div>
-
-        <div className="h-18 w-28 flex justify-center items-center">
-          <img
-            src={Conpec.src}
-            alt="Logo"
-            className="h-5/6 w-3/4 object-contain"
-          />
-        </div>
-      </div>
-
+      
+      <Header />
+      
       <div className="h-48 w-full">
         <div className="h-full w-full flex justify-center items-center">
           <img

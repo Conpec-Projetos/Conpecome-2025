@@ -4,6 +4,7 @@ import Image from "next/image";
 import ConpecLogo from "@/assets/images/ConpecLogo.svg"
 import ArrowLeft from "@/assets/images/ArrowLeftIcon.png"
 import { useRouter } from "next/navigation";
+import Header from "../../../components/ui/header"
 
 export default function Login(){
     const router = useRouter();
@@ -12,21 +13,9 @@ export default function Login(){
 
         <main className="min-h-screen w-screen bg-[#FFF4EF]">
 
+            <Header />
 
-            <header className="h-9 flex items-center justify-between top-5 p-9 relative">
-                
-                <Image onClick={router.back} src={ArrowLeft} alt="arrow" className="text-[#FF3D00] h-[40px] w-auto z-10 mb-5"/>
-                {/* Mesma seta do Figma, porem ta cortando um pouco a ponta e não sei o pq, resolver depois ou usar o React Icons */}
-
-                <div className="font-pixelify text-[55px] text-[#FF3D00] left-32 absolute font-bold">
-                    CONPECOME
-                </div>
-                
-                <Image src={ConpecLogo} alt="logo" className="w-20"></Image>
-
-            </header>
-
-            <div className="flex justify-center items-center relative mt-20 mb-20">
+            <div className="flex justify-center items-center relative mt-8 mb-8">
                 
                 <h1 className="font-pixelify text-[#FF3D00] text-[40px] font-bold ">
                     Login

@@ -4,6 +4,7 @@ import ConpecLogo from "@/assets/images/ConpecLogo.svg";
 import ArrowLeft from "@/assets/images/ArrowLeftIcon.png";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Header from "../../../components/ui/header"
 
 export default function Info() {
   const router = useRouter();
@@ -27,20 +28,10 @@ export default function Info() {
 
   return (
     <main className="min-h-screen w-screen bg-[#FFF4EF]">
-      <header className="h-9 flex items-center justify-between top-5 p-9 relative">
-        <Image
-          onClick={router.back}
-          src={ArrowLeft}
-          alt="arrow"
-          className="text-[#FF3D00] h-[40px] w-auto z-10 mb-5 cursor-pointer"
-        />
-        <div className="font-pixelify text-[55px] text-[#FF3D00] left-32 absolute font-bold">
-          CONPECOME
-        </div>
-        <Image src={ConpecLogo} alt="logo" className="w-20" />
-      </header>
+      
+      <Header />
 
-      <div className="flex justify-center items-center relative mt-20 mb-20">
+      <div className="flex justify-center items-center relative mt-8 mb-8">
         <h1 className="font-pixelify text-[#FF3D00] text-[40px] font-bold">
           Informações
         </h1>
