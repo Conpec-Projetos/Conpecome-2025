@@ -2,12 +2,12 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getProducts, getProductTypes } from "../../../../services/dataAcess/productService";
-import type { ProductItem, ProductType } from "../../../../services/dataAcess/productService";
-import logoConpec from "../../../../assets/images/logo-conpec.svg";
-import todosIcon from "../../../../assets/images/product_types/todos.png";
-import searchIcon from "../../../../assets/images/search.png";
-import cartIcon from "../../../../assets/images/shopping_cart.png";
+import { getProducts, getProductTypes } from "@/services/dataAcess/productService";
+import type { ProductItem, ProductType } from "@/services/dataAcess/productService";
+import logoConpec from "@/assets/images/logo-conpec.svg";
+import todosIcon from "@/assets/images/product_types/todos.png";
+import searchIcon from "@/assets/images/search.png";
+import cartIcon from "@/assets/images/shopping_cart.png";
 
 // Helper to get category icon
 const getCategoryIcon = (type: ProductType): string => {
@@ -85,7 +85,7 @@ export default function Home() {
 
   if (loading) {
     return <div className="min-h-screen w-screen bg-[#FFF5EF] flex items-center justify-center">
-      <p className="text-[#FF3D00] text-xl">Carregando...</p>
+      <p className="text-[#f66c0e] text-xl">Carregando...</p>
     </div>;
   }
 
@@ -109,10 +109,10 @@ export default function Home() {
           />
           <a href="/">
             <div className="flex flex-col font-bold">
-              <h1 className="font-pixelify-sans text-5xl text-[#FF3D00]">
+              <h1 className="font-pixelify-sans text-5xl text-[#f66c0e]">
                 CONPECOME
               </h1>
-              <p className="text-sm text-[#FF3D00]">Já pode aomossar?</p>
+              <p className="text-sm text-[#f66c0e]">Já pode aomossar?</p>
             </div>
           </a>
         </div>
@@ -136,7 +136,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-6 py-3 rounded-3xl text-[#F54B00] cursor-pointer relative"
+        <div className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#f66c0e] px-6 py-3 rounded-3xl text-[#f66c0e] cursor-pointer relative"
           onClick={() => setIsCartOpen(!isCartOpen)}>
           <Image
             src={cartIcon.src}
@@ -150,12 +150,12 @@ export default function Home() {
           {isCartOpen && (
             <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-[#FF9633] rounded-2xl shadow-lg z-50 p-4">
               <div className="flex flex-col gap-4">
-                <h3 className="text-xl font-bold text-[#FF3D00] border-b border-[#FF9633] pb-2">
+                <h3 className="text-xl font-bold text-[#f66c0e] border-b border-[#FF9633] pb-2">
                   Carrinho
                 </h3>
 
                 {cartItems.length === 0 ? (
-                  <p className="text-center text-[#FF3D00] py-4">Seu carrinho está vazio</p>
+                  <p className="text-center text-[#f66c0e] py-4">Seu carrinho está vazio</p>
                 ) : (
                   <>
                     <div className="max-h-64 overflow-y-auto">
@@ -170,7 +170,7 @@ export default function Home() {
                               className="object-contain"
                             />
                             <div>
-                              <p className="font-semibold text-[#FF3D00]">
+                              <p className="font-semibold text-[#f66c0e]">
                                 {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
                               </p>
                               <p className="text-sm text-[#FF9633]">
@@ -178,7 +178,7 @@ export default function Home() {
                               </p>
                             </div>
                           </div>
-                          <p className="font-semibold text-[#FF3D00]">
+                          <p className="font-semibold text-[#f66c0e]">
                             {formatToBRL(item.price * item.quantity)}
                           </p>
                         </div>
@@ -187,22 +187,22 @@ export default function Home() {
 
                     <div className="border-t border-[#FF9633] pt-4 mt-2">
                       <div className="flex justify-between items-center mb-4">
-                        <span className="font-bold text-[#FF3D00]">Total:</span>
-                        <span className="font-bold text-[#FF3D00]">{formatToBRL(cartTotal)}</span>
+                        <span className="font-bold text-[#f66c0e]">Total:</span>
+                        <span className="font-bold text-[#f66c0e]">{formatToBRL(cartTotal)}</span>
                       </div>
 
                       <div className="flex gap-2">
                         <button
                           onClick={clearCart}
-                          className="flex-1 py-2 px-4 bg-white border border-[#FF3D00] text-[#FF3D00] rounded-full hover:bg-[#FFE8DE] transition-colors"
+                          className="flex-1 py-2 px-4 bg-white border border-[#f66c0e] text-[#f66c0e] rounded-full hover:bg-[#FFE8DE] transition duration-[175ms]"
                         >
-                          Limpar
+                          <h1 className="font-Poppins font-bold">Limpar</h1>
                         </button>
                         <button
-                          className="flex-1 py-2 px-4 bg-[#FF3D00] text-white rounded-full hover:bg-[#FF9633] transition-colors"
+                          className="flex-1 py-2 px-4 bg-[#f66c0e] shadow-md text-white rounded-full hover:bg-[#FF3D00] transition duration-[175ms]"
                           onClick={irParaPaginaDeInfo}
                         >
-                          Finalizar Pedido
+                          <h1 className="text-white font-Poppins font-bold "> Finalizar Pedido </h1>
                         </button>
                       </div>
                     </div>
@@ -219,7 +219,7 @@ export default function Home() {
         <div className="flex gap-4 w-full overflow-x-auto pb-4">
           <button
             onClick={() => setSelectedCategory("all")}
-            className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${
+            className={`text-[#f66c0e] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#f66c0e] ${
               selectedCategory === "all" ? "bg-[#FFECE4]" : "bg-white"
             }`}
           >
@@ -236,7 +236,7 @@ export default function Home() {
               <button
                 key={type.name}
                 onClick={() => setSelectedCategory(type.name)}
-                className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${
+                className={`text-[#f66c0e] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#f66c0e] ${
                   selectedCategory === type.name ? "bg-[#FFECE4]" : "bg-white"
                 }`}
               >
@@ -275,7 +275,7 @@ export default function Home() {
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => handleQuantityChange(product.id, -1)}
-                  className="w-8 h-8 rounded-full bg-[#FF9633] text-white flex items-center justify-center text-2xl"
+                  className="w-8 h-8 rounded-full bg-[#FF9633] hover:bg-[#F54B00] hover:scale-95 transition-all text-white flex items-center justify-center text-2xl"
                 >
                   -
                 </button>
@@ -286,7 +286,7 @@ export default function Home() {
                 {typeof product.stock === 'number' && (quantities[product.id] || 0) < product.stock ? (
                   <button
                     onClick={() => handleQuantityChange(product.id, 1)}
-                    className="w-8 h-8 rounded-full bg-[#FF9633] text-white flex items-center justify-center text-2xl"
+                    className="w-8 h-8 rounded-full hover:bg-[#F54B00] hover:scale-95 transition-all bg-[#FF9633] text-white flex items-center justify-center text-2xl"
                   >
                     +
                   </button>

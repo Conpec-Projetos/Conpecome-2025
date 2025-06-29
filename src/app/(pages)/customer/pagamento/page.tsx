@@ -3,14 +3,15 @@
 import { useRouter, useSearchParams } from "next/navigation";
 
 import arrowLeft from "@/assets/images/arrow-left.png";
-import Conpecome from "../../../../assets/images/CONPECOME.png";
-import Conpec from "../../../../assets/images/Conpec.png";
-import pedido from "../../../../assets/images/Pedido.png";
+import Conpecome from "@/assets/images/CONPECOME.png";
+import Conpec from "@/assets/images/Conpec.png";
+import pedido from "@/assets/images/Pedido.png";
+import copy from "@/assets/images/copiar-texto.png"
 
 import { useEffect, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 
-import { db } from "../../../../firebase/firebase-config";
+import { db } from "@/firebase/firebase-config";
 
 export default function Pagamento() {
   const router = useRouter();
@@ -48,21 +49,21 @@ export default function Pagamento() {
   }
 
   const handleFinalizarPedido = async () => {
-    const dataHora = new Date().toLocaleString("pt-BR");
-
-    const pedido = {
-      comprador: nome,
-      email: email,
-      dataHora: dataHora,
-      produtos: produtos.map((item) => ({
-        nome: item.name,
-        quantidade: item.quantity,
-        preco: (item.price)/100,
-      })),
-    };
+    const dataHora = new Date().toLocaleDateString("pt-BR");;
 
     try {
-      await addDoc(collection(db, "purchases"), pedido);
+      for (const item of produtos) {
+        const pedidoIndividual = {
+          comprador: nome,
+          email: email,
+          dataHora: dataHora,
+          nome: item.name,
+          quantidade: item.quantity,
+          preco: item.price / 100,
+        };
+      await addDoc(collection(db, "purchases"), pedidoIndividual);    
+    }
+      
       router.push("/");
     } catch (error) {
       console.error("Erro ao enviar pedido:", error);
@@ -108,12 +109,13 @@ export default function Pagamento() {
       </div>
 
       <div className="h-48 w-full flex flex-row justify-center items-center gap-6">
-        <button className="bg-white w-64 h-12 rounded-full border-[#FF5C01] border-2 shadow-md flex justify-center items-center">
+        <button className="bg-white w-64 h-12 rounded-full border-[#f66c0e] border-2 shadow-md flex justify-center items-center">
           <h1 className="text-gray-600 font-bold text-sm">código</h1>
         </button>
 
-        <button className="bg-[#FF5C01] h-12 w-1/12 rounded-full flex justify-center items-center shadow-md hover:bg-[#F66C0E]">
-          <h1 className="text-white text-xl font-Poppins font-bold">Copiar</h1>
+        <button className="bg-[#f66c0e] h-12 w-1/12 rounded-full flex justify-around items-center shadow-md hover:bg-[#F54B00] transition duration-[175ms]">
+          <img src={copy.src} alt="copy" className="h-4 w-4 ml-2 invert"/>
+          <h1 className="text-white text-xl font-Poppins font-bold mr-2">Copiar</h1>
         </button>
       </div>
 
@@ -151,10 +153,10 @@ export default function Pagamento() {
 
         <button
           onClick={handleFinalizarPedido}
-          className="bg-[#FF5C01] h-16 w-32 rounded-full flex justify-center items-center shadow-md m-2 hover:bg-[#F66C0E]"
+          className="bg-[#f66c0e] h-12 w-32 group rounded-full flex justify-center items-center shadow-md m-2 hover:bg-[#F54B00]  transition duration-[175ms] "
         >
-          <h1 className="text-white font-Poppins font-bold text-md">Já paguei</h1>
-        </button>
+          <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.05]">Já paguei </span>
+          </button>
       </div>
     </div>
   );

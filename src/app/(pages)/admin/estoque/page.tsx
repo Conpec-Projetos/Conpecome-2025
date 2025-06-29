@@ -2,14 +2,14 @@
 import Image, { StaticImageData } from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 
-import Logo from '@/app/assets/Conpec.png'
-import Seta from '@/app/assets/Vector.png'
-import Relogio from '@/app/assets/Group.png'
-import BotaoSair from '@/app/assets/Sair.png'
-import IconTodos from '@/app/assets/IconTodos.png'
-import IconDoces from '@/app/assets/IconDoces.png'
-import IconBebidas from '@/app/assets/IconBebidas.png'
-import IconSalgados from '@/app/assets/IconSalgados.png'
+import Logo from '@/assets/images/Conpec.png'
+import Seta from '@/assets/images/Vector.png'
+import Relogio from '@/assets/images/Group.png'
+import BotaoSair from '@/assets/images/Sair.png'
+import IconTodos from '@/assets/images/IconTodos.png'
+import IconDoces from '@/assets/images/IconDoces.png'
+import IconBebidas from '@/assets/images/IconBebidas.png'
+import IconSalgados from '@/assets/images/IconSalgados.png'
 
 import FoodButton from '@/app/components/foodbutton'
 import Product from '@/app/components/product'
@@ -135,8 +135,8 @@ export default function Estoque_ADM() {
           <Image src={Logo} alt='Logo' width={70} height={70} unoptimized={true}/>
         </button>
         <div className='flex flex-col m-5'>
-          <h1 className='text-6xl text-[#FF3D00] font-pixelify-sans font-bold'>CONPECOME</h1>
-          <div className='text-[#FF3D00] font-poppins font-bold'>Já pode aomossar?</div>
+          <h1 className='text-6xl text-[#f66c0e] font-pixelify-sans font-bold'>CONPECOME</h1>
+          <div className='text-[#f66c0e] font-poppins font-bold'>Já pode aomossar?</div>
         </div>
 
         <div className='h-full w-3/6 flex items-center pt-14 ml-10 justify-around'>

@@ -15,10 +15,10 @@ export default function Login(){
 
             <header className="h-9 flex items-center justify-between top-5 p-9 relative">
                 
-                <Image onClick={router.back} src={ArrowLeft} alt="arrow" className="text-[#FF3D00] h-[40px] w-auto z-10 mb-5"/>
+                <Image onClick={router.back} src={ArrowLeft} alt="arrow" className="text-[#f66c0e] h-[40px] w-auto z-10 mb-5"/>
                 {/* Mesma seta do Figma, porem ta cortando um pouco a ponta e não sei o pq, resolver depois ou usar o React Icons */}
 
-                <div className="font-pixelify text-[55px] text-[#FF3D00] left-32 absolute font-bold">
+                <div className="font-pixelify text-[55px] text-[#f66c0e] left-32 absolute font-bold">
                     CONPECOME
                 </div>
                 
@@ -28,7 +28,7 @@ export default function Login(){
 
             <div className="flex justify-center items-center relative mt-20 mb-20">
                 
-                <h1 className="font-pixelify text-[#FF3D00] text-[40px] font-bold ">
+                <h1 className="font-pixelify text-[#f66c0e] text-[40px] font-bold ">
                     Login
                 </h1>
             </div>
@@ -46,9 +46,9 @@ export default function Login(){
                         <input type="text" placeholder="Inserir senha" className=" text-[#ff7c0287] placeholder-[#ff7c0287] font-poppins col-span-3 h-14 rounded-full px-8 py-5 text-[10px] font-extrabold border-2 border-[#ff5a0179] focus:border-[#ff5a01c9] focus:outline-none" />
                     </div>
                         <div className="font-poppins text-[#FF9633] font-extrabold underline text-[12px] col-start-2">Esqueci minha senha</div>
-                        <button className="font-poppins rounded-full bg-[#ff5a01c3] col-start-2 h-12 mt-10 font-extrabold"
+                        <button className="bg-[#f66c0e] group h-12 w-32 rounded-full col-start-2 mt-10 shadow-md m-2 hover:bg-[#F54B00]  transition duration-[175ms]"
                             onClick={() => {router.push("/admin/estoque")}}>
-                                Enviar</button>
+                            <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.08]">Enviar </span>          </button>
 
                 </div>
 

@@ -1,9 +1,9 @@
 import Image from "next/image";
-import EditIcon from "@/app/assets/mingcute_edit-line.svg";
-import ImageUploadIcon from "@/app/assets/uil_image-upload.svg";
-import IconSalgados from "@/app/assets/IconSalgados.png";
-import IconDoces from "@/app/assets/IconDoces.png";
-import IconBebidas from "@/app/assets/IconBebidas.png";
+import EditIcon from "@/assets/images/mingcute_edit-line.svg";
+import ImageUploadIcon from "@/assets/images/uil_image-upload.svg";
+import IconSalgados from "@/assets/images/IconSalgados.png";
+import IconDoces from "@/assets/images/IconDoces.png";
+import IconBebidas from "@/assets/images/IconBebidas.png";
 import { useRef, useState } from "react";
 import { LocalProduct } from "@/interfaces/productsInterfaces";
 
@@ -98,7 +98,7 @@ export default function CardAddProduct({
 
   return (
     <div
-      className="w-3/4 max-w-sm font-poppins font-bold border border-[#F54B00] 
+      className="w-3/4 max-w-sm font-poppins font-bold border border-[#f66c0e]
                     rounded-xl p-4 flex gap-4"
     >
       <button
@@ -131,7 +131,7 @@ export default function CardAddProduct({
           className="hidden"
         />
       </button>
-      <div className="text-[#FF9633] overflow-hidden">
+      <div className="text-[#f66c0e] overflow-hidden">
         <div className="flex items-center mb-1">
           {editField === "name" ? (
             <input
@@ -141,7 +141,7 @@ export default function CardAddProduct({
               onBlur={() => setEditField(null)}
               onKeyDown={handleEditKeyDown}
               autoFocus
-              className="text-sm mr-1 bg-transparent border-b border-[#FF9633] outline-none"
+              className="text-sm mr-1 bg-transparent border-b border-[#f66c0e] outline-none"
               placeholder="Inserir nome"
             />
           ) : (
@@ -165,7 +165,7 @@ export default function CardAddProduct({
               onBlur={() => setEditField(null)}
               onKeyDown={handleEditKeyDown}
               autoFocus
-              className="text-sm mr-1 bg-transparent border-b border-[#FF9633] outline-none"
+              className="text-sm mr-1 bg-transparent border-b border-[#f66c0e] outline-none"
               placeholder="Inserir preço"
             />
           ) : (
@@ -188,7 +188,7 @@ export default function CardAddProduct({
               onClick={() => handleTypeChange("SALGADO")}
               className={`transition hover:scale-95 ${
                 productType === "SALGADO"
-                  ? "border border-[#FF9633] rounded-2xl"
+                  ? "border border-[#f66c0e] rounded-2xl"
                   : ""
               }`}
             >
@@ -205,7 +205,7 @@ export default function CardAddProduct({
               onClick={() => handleTypeChange("DOCE")}
               className={`transition hover:scale-95 ${
                 productType === "DOCE"
-                  ? "border border-[#FF9633] rounded-2xl"
+                  ? "border border-[#f66c0e] rounded-2xl"
                   : ""
               }`}
             >
@@ -218,7 +218,7 @@ export default function CardAddProduct({
               onClick={() => handleTypeChange("BEBIDA")}
               className={`transition hover:scale-95 ${
                 productType === "BEBIDA"
-                  ? "border border-[#FF9633] rounded-2xl"
+                  ? "border border-[#f66c0e] rounded-2xl"
                   : ""
               }`}
             >
@@ -236,14 +236,14 @@ export default function CardAddProduct({
           <div className="flex items-center gap-3 sm:gap-5">
             <button
               onClick={decrementQuantity}
-              className="w-6 h-6 rounded-full bg-[#FF9633] hover:bg-[#F54B00] hover:scale-95 transition-all flex items-center justify-center text-white"
+              className="w-6 h-6 rounded-full bg-[#f66c0e] hover:bg-[#F54B00] hover:scale-95 transition-all flex items-center justify-center text-white"
             >
               -
             </button>
-            <div className="w-6 text-center text-[#FF9633]">{quantity}</div>
+            <div className="w-6 text-center text-[#f66c0e]">{quantity}</div>
             <button
               onClick={incrementQuantity}
-              className="w-6 h-6 rounded-full bg-[#FF9633] hover:bg-[#F54B00] hover:scale-95 transition-all flex items-center justify-center text-white"
+              className="w-6 h-6 rounded-full bg-[#f66c0e] hover:bg-[#F54B00] hover:scale-95 transition-all flex items-center justify-center text-white"
             >
               +
             </button>
@@ -254,7 +254,7 @@ export default function CardAddProduct({
               className={`w-6 h-6 rounded-full ${
                 disableDelete
                   ? "bg-[#8A8A8A] cursor-not-allowed transition-colors"
-                  : "bg-[#FF9633] hover:bg-[#F54B00] hover:scale-95 transition-all"
+                  : "bg-[#f66c0e] hover:bg-[#F54B00] hover:scale-95 transition-all"
               } flex items-center justify-center text-white`}
             >
               x

@@ -1,9 +1,9 @@
 'use client'
 import Image from "next/image"
-import vector from "../../../../assets/images/Vector.png"
-import logo from "../../../../assets/images/Conpec.png"
-import lupa from "../../../../assets/images/lupa-conpecome.png"
-import adicionar from "../../../../assets/images/Adicionar.png"
+import vector from "@/assets/images/Vector.png"
+import logo from "@/assets/images/Conpec.png"
+import lupa from "@/assets/images/lupa-conpecome.png"
+import adicionar from "@/assets/images/Adicionar.png"
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useRouter } from "next/navigation"
 import ExportToExcellButton from "@/app/components/Excel/ExcelComponent"
@@ -94,7 +94,7 @@ export default function HistoricoPedidos() {
           />
         </button>
         
-        <div className="text-6xl font-pixelify text-[#FF3D00] left-32 absolute">
+        <div className="text-6xl font-pixelify text-[#f66c0e] left-32 absolute">
           CONPECOME
         </div>
     
@@ -111,7 +111,7 @@ export default function HistoricoPedidos() {
 
       <div>
 
-        <div className="text-4xl font-pixelify text-[#FF3D00] flex flex-row justify-center py-0.5">
+        <div className="text-4xl font-pixelify text-[#f66c0e] flex flex-row justify-center py-0.5">
         Histórico de Pedidos
         </div>
 

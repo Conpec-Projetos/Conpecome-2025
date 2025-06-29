@@ -1,7 +1,7 @@
 import React from "react";
 import ReactExport from "react-data-export";
 import Image from "next/image";
-import adicionar from "../../../assets/images/Adicionar.png"
+import adicionar from "@/assets/images/Adicionar.png"
 import { useState } from 'react';
 
 const ExcelFile = ReactExport.ExcelFile;

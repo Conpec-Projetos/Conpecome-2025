@@ -145,7 +145,7 @@ export default function AddProduct() {
     >
       <div>
         <Header />
-        <div className="text-4xl font-bold text-[#FF3D00] text-center mb-8 font-pixelify-sans">
+        <div className="text-4xl font-bold text-[#f66c0e] text-center mb-8 font-pixelify-sans">
           Adicionar Produto
         </div>
         <div className="flex flex-col gap-4 items-center">
@@ -165,7 +165,7 @@ export default function AddProduct() {
           <button
             onClick={() => allProductsValid() && setShowConfirmPopUp(true)}
             disabled={!allProductsValid()}
-            className={`bg-[#FF7D02] ${
+            className={`bg-[#f66c0e] ${
               !allProductsValid()
                 ? "bg-[#8A8A8A] cursor-not-allowed transition-colors"
                 : "hover:bg-[#FF3D00] hover:scale-95 transition-all"
@@ -175,7 +175,7 @@ export default function AddProduct() {
           </button>
           <button
             onClick={addProduct}
-            className="bg-[#FF7D02] hover:bg-[#FF3D00] hover:scale-95 rounded-full w-12 h-12 flex items-center justify-center text-2xl"
+            className="bg-[#f66c0e] hover:bg-[#FF3D00] hover:scale-95 transition duration-[175ms] rounded-full w-12 h-12 flex items-center justify-center text-2xl"
           >
             +
           </button>
@@ -184,7 +184,7 @@ export default function AddProduct() {
       {showConfirmPopUp && (
         <div className="font-poppins font-bold fixed inset-0 flex items-center justify-center z-50">
           <div
-            className="absolute inset-0 bg-[#FF7D02] bg-opacity-30"
+            className="absolute inset-0 bg-[#f66c0e] bg-opacity-30"
             onClick={() => setShowConfirmPopUp(true)}
           />
           <div className="border border-white bg-[#FFAA54] rounded-xl w-80 text-center text-white relative z-10">

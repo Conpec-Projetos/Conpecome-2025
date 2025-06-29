@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { StaticImageData } from "next/image";
 import { FC, useState, useRef } from "react";
-import EditIcon from "@/app/assets/EditIcon.png";
+import EditIcon from "@/assets/images/EditIcon.png";
 // Update the path below to the correct relative path if needed
 import { ProductItem } from '@/services/dataAcess/productService';
 
@@ -72,7 +72,7 @@ const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove,
 
     return (
         
-    <div className="bg-[#ffece4] rounded-2xl border-2 border-[#F54B00] h-[250px] w-full flex flex-row">
+    <div className="bg-[#ffece4] rounded-2xl border-2 border-[#f66c0e] h-[250px] w-full flex flex-row">
         <div className="flex items-center justify-center h-full w-1/3 pb-11">
             <Image src={product.imageURL} alt={product.name} width={160} height={160}/>
             <input
@@ -88,9 +88,9 @@ const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove,
         <div className='h-full w-2/3 pl-14 pt-8 space-y-10'>
             <div className='flex flex-row space-x-7'>
 
-                {editando == false ? <div className='text-[#FF9633] font-poppins font-bold text-2xl'>{product.name}</div> :
+                {editando == false ? <div className='text-[#f66c0e] font-poppins font-bold text-2xl'>{product.name}</div> :
                 <input ref={ClickRef}
-                  className='text-[#FF9633] font-poppins font-bold text-2xl border-2 border-[#F54B00] w-52'
+                  className='text-[#f66c0e] font-poppins font-bold text-2xl border-2 border-[#f66c0e] w-52'
                   value={form.name}
                   name='name'
                   onChange={handleChange}
@@ -100,9 +100,9 @@ const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove,
                 <button className='pt-1'><Image src={EditIcon} width={26} height={26} alt='Editar' onClick={handleClick}/></button>
             </div>
             <div className='flex flex-row space-x-6'>
-                {editando == false ? <div className='text-[#FF9633] font-poppins font-bold text-2xl'>R$ {product.price.toFixed(2).replace('.', ',')}</div> : 
+                {editando == false ? <div className='text-[#f66c0e] font-poppins font-bold text-2xl'>R$ {product.price.toFixed(2).replace('.', ',')}</div> : 
                 <input ref={ClickRef}
-                  className='text-[#FF9633] font-poppins font-bold text-2xl border-2 border-[#F54B00] w-52'
+                  className='text-[#f66c0e] font-poppins font-bold text-2xl border-2 border-[#f66c0e] w-52'
                   value={form.price}
                   name='price'
                   onChange={handleChange}
@@ -111,16 +111,16 @@ const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove,
                 <button className='pt-1'><Image src={EditIcon} width={26} height={26} alt='Editar' onClick={handleClick}/></button>
             </div>
             <div className='flex flex-row justify-between w-4/5'>
-                <button className='bg-[#FF9633] h-12 w-12 rounded-full text-2xl font-poppins' onClick={() => onDecrement(product.id)}>
+                <button className='bg-[#f66c0e] hover:bg-[#F54B00] hover:scale-95 transition-all flex items-center justify-center text-white h-12 w-12 rounded-full text-2xl font-poppins' onClick={() => onDecrement(product.id)}>
                     -
                 </button>
-                <div className='text-[#FF9633] font-poppins font-bold text-2xl p-2 w-11'>
+                <div className='text-[#f66c0e] font-poppins font-bold text-2xl p-2 w-11'>
                     {product.stock}
                 </div>
-                <button className='bg-[#FF9633] font-poppins h-12 w-12 rounded-full text-2xl' onClick={() => onIncrement(product.id)}>
+                <button className='bg-[#f66c0e] font-poppins hover:bg-[#F54B00] hover:scale-95 transition-all flex items-center justify-center text-white h-12 w-12 rounded-full text-2xl' onClick={() => onIncrement(product.id)}>
                     +
                 </button>
-                <button className='bg-[#FF9633] font-poppins h-12 w-12 rounded-full text-2xl ml-10' onClick={() => onRemove(product.id)}>
+                <button className='bg-[#f66c0e] hover:bg-[#F54B00] hover:scale-95 transition-all flex items-center justify-center text-white font-poppins h-12 w-12 rounded-full text-2xl ml-10' onClick={() => onRemove(product.id)}>
                     ×
                 </button>
             </div>

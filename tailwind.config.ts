@@ -13,6 +13,7 @@ const config = {
       fontFamily: {
         pixelify: ['var(--font-pixelify)'],
         poppins: ['var(--font-poppins)'],
+        pixel: ["Pixelify Sans", 'cursive'],
         'Pixelify-Sans': ['Pixelify-Sans'],
         'Poppins-bold': ['Poppins-bold'],
         'Poppins-extrabold': ['Poppins-extrabold'],
