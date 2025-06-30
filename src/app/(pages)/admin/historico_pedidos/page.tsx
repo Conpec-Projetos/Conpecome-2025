@@ -94,7 +94,7 @@ export default function HistoricoPedidos() {
           />
         </button>
         
-        <div className="text-6xl font-pixelify text-[#FF3D00] left-32 absolute">
+        <div className="text-6xl font-pixelify-sans text-[#FF3D00] left-32 absolute">
           CONPECOME
         </div>
     
@@ -111,7 +111,7 @@ export default function HistoricoPedidos() {
 
       <div>
 
-        <div className="text-4xl font-pixelify text-[#FF3D00] flex flex-row justify-center py-0.5">
+        <div className="text-4xl font-pixelify-sans text-[#FF3D00] flex flex-row justify-center py-0.5">
         Histórico de Pedidos
         </div>
 

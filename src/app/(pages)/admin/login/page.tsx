@@ -18,7 +18,7 @@ export default function Login(){
                 <Image onClick={router.back} src={ArrowLeft} alt="arrow" className="text-[#FF3D00] h-[40px] w-auto z-10 mb-5"/>
                 {/* Mesma seta do Figma, porem ta cortando um pouco a ponta e não sei o pq, resolver depois ou usar o React Icons */}
 
-                <div className="font-pixelify text-[55px] text-[#FF3D00] left-32 absolute font-bold">
+                <div className="font-pixelify-sans text-[55px] text-[#FF3D00] left-32 absolute font-bold">
                     CONPECOME
                 </div>
                 
@@ -28,7 +28,7 @@ export default function Login(){
 
             <div className="flex justify-center items-center relative mt-20 mb-20">
                 
-                <h1 className="font-pixelify text-[#FF3D00] text-[40px] font-bold ">
+                <h1 className="font-pixelify-sans text-[#FF3D00] text-[40px] font-bold ">
                     Login
                 </h1>
             </div>
