@@ -113,7 +113,13 @@ export default function Home() {
                       <div key={item.id} className="flex items-center justify-between py-2 border-b border-[#FFE8DE]">
                         <div className="flex items-center gap-2">
                           <Image
-                            src={`/carrossel/assets/${item.imgUrl}`}
+                            src={
+                              item.imageURL?.startsWith('http') || item.imageURL?.startsWith('data:image/')
+                                ? item.imageURL
+                                : item.imageURL
+                                  ? `/${item.imageURL.replace(/^\/+/, '')}`
+                                  : '/placeholder.png'
+                            }
                             alt={item.name}
                             width={40}
                             height={40}
