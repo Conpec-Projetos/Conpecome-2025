@@ -4,8 +4,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getProducts, getProductTypes } from "../../../../services/dataAcess/productService";
 import type { ProductItem, ProductType } from "../../../../services/dataAcess/productService";
+import FoodButton from '@/app/components/foodbutton'
 import logoConpec from "../../../../assets/images/logo-conpec.svg";
 import todosIcon from "../../../../assets/images/product_types/todos.png";
+import IconTodos from '@/app/assets/IconTodos.png'
+import IconDoces from '@/app/assets/IconDoces.png'
+import IconBebidas from '@/app/assets/IconBebidas.png'
+import IconSalgados from '@/app/assets/IconSalgados.png'
 import searchIcon from "../../../../assets/images/search.png";
 import cartIcon from "../../../../assets/images/shopping_cart.png";
 import TextField from "@/app/components/text-field";
@@ -98,7 +103,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('@/assets/images/background.png')] bg-top bg-repeat">
+    <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('@/assets/images/background.png')]">
       {/* navbar */}
       <header className="flex items-center justify-between px-4 py-6 bg-[#FFE8DE] rounded-b-3xl">
         <div className="flex items-center gap-2">
@@ -113,7 +118,7 @@ export default function Home() {
               <h1 className="font-pixelify-sans text-5xl text-[#FF3D00]">
                 CONPECOME
               </h1>
-              <p className="text-sm text-[#FF3D00]">Já pode aomossar?</p>
+              <p className="text-[#FF3D00] font-poppins font-bold">Já pode aomossar?</p>
             </div>
           </a>
         </div>
@@ -121,7 +126,7 @@ export default function Home() {
           <div className="relative">
             <TextField
               placeholder="Pesquisar"
-              className="placeholder-gray-300 w-full py-2 pl-10"
+              className="w-full px-4 py-2 pl-10 rounded-full border border-gray-300 text-black font-poppins"
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
             />
@@ -144,18 +149,18 @@ export default function Home() {
             width={40}
             height={40}
           />
-          <span id="cart_total">{formatToBRL(cartTotal)}</span>
+          <span id="cart_total" className="font-poppins">{formatToBRL(cartTotal)}</span>
 
           {/* Cart Window */}
           {isCartOpen && (
             <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-[#FF9633] rounded-2xl shadow-lg z-50 p-4">
               <div className="flex flex-col gap-4">
-                <h3 className="text-xl font-bold text-[#FF3D00] border-b border-[#FF9633] pb-2">
+                <h3 className="text-xl font-poppins font-bold text-[#FF3D00] border-b border-[#FF9633] pb-2">
                   Carrinho
                 </h3>
 
                 {cartItems.length === 0 ? (
-                  <p className="text-center text-[#FF3D00] py-4">Seu carrinho está vazio</p>
+                  <p className="font-poppins text-center text-[#FF3D00] py-4">Seu carrinho está vazio</p>
                 ) : (
                   <>
                     <div className="max-h-64 overflow-y-auto">
@@ -170,10 +175,10 @@ export default function Home() {
                               className="object-contain"
                             />
                             <div>
-                              <p className="font-semibold text-[#FF3D00]">
+                              <p className="font-semibold font-poppins text-[#FF3D00] ">
                                 {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
                               </p>
-                              <p className="text-sm text-[#FF9633]">
+                              <p className="text-sm text-[#FF9633] font-poppins">
                                 {item.quantity}x {formatToBRL(item.price)}
                               </p>
                             </div>
@@ -187,7 +192,7 @@ export default function Home() {
 
                     <div className="border-t border-[#FF9633] pt-4 mt-2">
                       <div className="flex justify-between items-center mb-4">
-                        <span className="font-bold text-[#FF3D00]">Total:</span>
+                        <span className="font-bold font-poppins text-[#FF3D00]">Total:</span>
                         <span className="font-bold text-[#FF3D00]">{formatToBRL(cartTotal)}</span>
                       </div>
 
@@ -216,8 +221,12 @@ export default function Home() {
 
       <main className="flex flex-col sm:items-start p-8">
         {/* Category filters */}
-        <div className="flex gap-4 w-full overflow-x-auto pb-4">
-          <button
+        <div className="flex gap-4 w-full overflow-x-auto pb-4 ">
+          <FoodButton image={IconTodos} type='todos' onClick={() => setSelectedCategory("all")}></FoodButton>
+          <FoodButton image={IconSalgados} type='salgados' onClick={() => setSelectedCategory("SALGADO")}></FoodButton>
+          <FoodButton image={IconDoces} type='doces' onClick={() => setSelectedCategory("DOCE")}></FoodButton>
+          <FoodButton image={IconBebidas} type='bebidas' onClick={() => setSelectedCategory("BEBIDA")}></FoodButton>
+          {/* <button
             onClick={() => setSelectedCategory("all")}
             className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${
               selectedCategory === "all" ? "bg-[#FFECE4]" : "bg-white"
@@ -250,7 +259,7 @@ export default function Home() {
                 <span>{type.displayName}</span>
               </button>
             );
-          })}
+          })} */}
         </div>
 
         {/* Products grid */}
@@ -268,14 +277,14 @@ export default function Home() {
                 height={200}
                 className="w-full h-48 object-contain"
               />
-              <h3 className="text-xl font-semibold">{product.name.charAt(0).toUpperCase() + product.name.slice(1)}</h3>
-              <p className="font-semibold">
+              <h3 className="text-xl font-semibold font-poppins">{product.name.charAt(0).toUpperCase() + product.name.slice(1)}</h3>
+              <p className="font-semibold font-poppins">
                 {formatToBRL(product.price)}
               </p>
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => handleQuantityChange(product.id, -1)}
-                  className="w-8 h-8 rounded-full bg-[#FF9633] text-white flex items-center justify-center text-2xl"
+                  className="w-8 h-8 rounded-full bg-[#FF9633] text-white font-poppins flex items-center justify-center text-2xl"
                 >
                   -
                 </button>
@@ -286,7 +295,7 @@ export default function Home() {
                 {typeof product.stock === 'number' && (quantities[product.id] || 0) < product.stock ? (
                   <button
                     onClick={() => handleQuantityChange(product.id, 1)}
-                    className="w-8 h-8 rounded-full bg-[#FF9633] text-white flex items-center justify-center text-2xl"
+                    className="w-8 h-8 rounded-full bg-[#FF9633] text-white font-poppins flex items-center justify-center text-2xl"
                   >
                     +
                   </button>

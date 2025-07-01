@@ -58,84 +58,84 @@ export default function Estoque_ADM() {
   //     stock: 7,
   //   },
   // ]
-  const [estoqueInicial, setEstoqueInicial] = useState<ProductItem[]>([])
-  const [estoqueAlterado, setEstoqueAlterado] = useState<ProductItem[]>([])
-  const [estoqueDebounced, setEstoqueDebounced] = useState<ProductItem[]>([])
+  const [initialProducts, setInitialProducts] = useState<ProductItem[]>([])
+  const [filteredProducts, setFilteredProducts] = useState<ProductItem[]>([])
+  const [debouncedProducts, setdebouncedProducts] = useState<ProductItem[]>([])
   const removeIDRef = useRef<string>('')
 
   useEffect(() => {
     getProductsAction().then((products) => {
-    setEstoqueInicial(products)
-    setEstoqueAlterado(products)
+    setInitialProducts(products)
+    setFilteredProducts(products)
     })
   }, [])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setEstoqueDebounced(estoqueInicial)
+      setdebouncedProducts(initialProducts)
     }, 500)
 
     return () => {
       clearTimeout(timeout)
     }
-  }, [estoqueInicial])
+  }, [initialProducts])
   
   useEffect(() => {
     if (!removeIDRef.current){
-    estoqueDebounced.forEach(product => {
+    debouncedProducts.forEach(product => {
       updateProductsAction(product)
     })}
     else {
       removeProductsAction(removeIDRef.current)
     }
-  }, [estoqueDebounced])
+  }, [debouncedProducts])
   
 
   const increment = (id: string) => {
-    setEstoqueInicial(products => products.map((product) => product.id === id ? { ...product, stock: product.stock + 1 } : product))
-    setEstoqueAlterado(products => products.map((product) => product.id === id ? { ...product, stock: product.stock + 1 } : product))
+    setInitialProducts(products => products.map((product) => product.id === id ? { ...product, stock: product.stock + 1 } : product))
+    setFilteredProducts(products => products.map((product) => product.id === id ? { ...product, stock: product.stock + 1 } : product))
   }
 
   const decrement = (id: string) => {
     // Estou usando operadoproducts ternários para verificar se estou decrementando a stock do product com id certo e se sua stock já não está em zero.
-    setEstoqueInicial(products => products.map((product) => product.id === id ? product.stock == 0 ? product : { ...product, stock: product.stock - 1 } : product))
-    setEstoqueAlterado(products => products.map((product) => product.id === id ? product.stock == 0 ? product : { ...product, stock: product.stock - 1 } : product))
+    setInitialProducts(products => products.map((product) => product.id === id ? product.stock == 0 ? product : { ...product, stock: product.stock - 1 } : product))
+    setFilteredProducts(products => products.map((product) => product.id === id ? product.stock == 0 ? product : { ...product, stock: product.stock - 1 } : product))
   }
 
   const remove = (id: string) => {
-    setEstoqueInicial(products => products.filter((product) => product.id != id))
-    setEstoqueAlterado(products => products.filter((product) => product.id != id))
+    setInitialProducts(products => products.filter((product) => product.id != id))
+    setFilteredProducts(products => products.filter((product) => product.id != id))
     removeIDRef.current = id
   }
 
   const edit = (newProduct: ProductItem) => {
-    setEstoqueInicial((products) => products.map(product => (product.id === newProduct.id ? newProduct : product)))
-    setEstoqueAlterado((products) => products.map(product => (product.id === newProduct.id ? newProduct : product)))
+    setInitialProducts((products) => products.map(product => (product.id === newProduct.id ? newProduct : product)))
+    setFilteredProducts((products) => products.map(product => (product.id === newProduct.id ? newProduct : product)))
   }
 
   const handleFoodButtonClick = (type: string) => {
     if (type == 'todos')
-      setEstoqueAlterado(() => estoqueInicial)
+      setFilteredProducts(() => initialProducts)
     else
       if (type == 'salgados') {
-        setEstoqueAlterado(() => estoqueInicial.filter((product) => product.type === 'SALGADO'))
+        setFilteredProducts(() => initialProducts.filter((product) => product.type === 'SALGADO'))
       }
     else
       if (type == 'bebidas')
-        setEstoqueAlterado(() => estoqueInicial.filter((product) => product.type === 'BEBIDA'))
+        setFilteredProducts(() => initialProducts.filter((product) => product.type === 'BEBIDA'))
     else
-      setEstoqueAlterado(() => estoqueInicial.filter(product => product.type === 'DOCE')) 
+      setFilteredProducts(() => initialProducts.filter(product => product.type === 'DOCE')) 
   }
 
-
+  
   return (
-    <main className="bg-[#fff4ef] bg-[url('/assets/images/background.png')] h-screen w-full overflow-x-hidden">
+    <main className="bg-[#fff4ef] bg-[url('@/assets/images/background.png')] h-screen w-full overflow-x-hidden">
      <header className='rounded-2xl h-[151px] w-screen bg-[#FFE8D7] flex flex-row items-center'>
         <button className='w-32 h-[63px]' onClick={() => {router.push("..");}}>
           <Image src={Logo} alt='Logo' width={70} height={70} unoptimized={true}/>
         </button>
-        <div className='flex flex-col m-5'>
-          <h1 className='text-6xl text-[#FF3D00] font-pixelify-sans font-bold'>CONPECOME</h1>
+        <div className='flex flex-col m-5 font-bold'>
+          <h1 className='font-pixelify-sans text-5xl text-[#FF3D00]'>CONPECOME</h1>
           <div className='text-[#FF3D00] font-poppins font-bold'>Já pode aomossar?</div>
         </div>
 
@@ -170,7 +170,7 @@ export default function Estoque_ADM() {
     </div>
 
     <div className='w-2/5 mb-2 ml-36 space-y-3'>
-      {estoqueAlterado.map((product) => (
+      {filteredProducts.map((product) => (
         <Product key={product.id} product={product} onIncrement={increment} onDecrement={decrement} onRemove={remove} onEdit={edit}></Product>
       ))}
     </div>

@@ -14,7 +14,7 @@ export default function Login(){
 
             <div className="flex justify-center items-center relative mt-8 mb-8">
                 
-                <h1 className="font-pixelify text-[#FF3D00] text-[40px] font-bold ">
+                <h1 className="font-pixelify-sans text-[#FF3D00] text-[40px] font-bold ">
                     Login
                 </h1>
             </div>
