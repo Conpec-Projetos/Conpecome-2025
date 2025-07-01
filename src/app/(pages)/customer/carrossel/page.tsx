@@ -96,6 +96,8 @@ export default function Home() {
         showCart={true}
         cartTotal={cartTotal}
         onCartClick={() => setIsCartOpen(!isCartOpen)}
+        searchTerm={searchTerm}
+        onSearchTermChange={setSearchTerm}
       >
         {/* Cart Window */}
         {isCartOpen && (
