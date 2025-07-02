@@ -13,6 +13,7 @@ import IconSalgados from '@/app/assets/IconSalgados.png'
 
 import FoodButton from '@/app/components/foodbutton'
 import Product from '@/app/components/product'
+import MainHeader from "@/app/components/ui/main_header";
 
 import { useRouter } from 'next/navigation'
 import { addProductsAction, getProductsAction, removeProductsAction, updateProductsAction } from '@/services/actions/productsAction'
@@ -129,52 +130,24 @@ export default function Estoque_ADM() {
 
   
   return (
-    <main className="bg-[#fff4ef] bg-[url('@/assets/images/background.png')] h-screen w-full overflow-x-hidden">
-     <header className='rounded-2xl h-[151px] w-screen bg-[#FFE8D7] flex flex-row items-center'>
-        <button className='w-32 h-[63px]' onClick={() => {router.push("..");}}>
-          <Image src={Logo} alt='Logo' width={70} height={70} unoptimized={true}/>
-        </button>
-        <div className='flex flex-col m-5 font-bold'>
-          <h1 className='font-pixelify-sans text-5xl text-[#FF3D00]'>CONPECOME</h1>
-          <div className='text-[#FF3D00] font-poppins font-bold'>Já pode aomossar?</div>
-        </div>
-
-        <div className='h-full w-3/6 flex items-center pt-14 ml-10 justify-around'>
-          <button className=' w-[235px] font-poppins underline text-[#FF7D02] justify-between font-bold flex flex-row'
-            onClick={() => {router.push("./add-product");}}>
-            Adicionar Novo Produto <Image src={Seta} alt='' width={25} height={20}/>
-          </button>
-
-          <button className='w-52 font-poppins underline text-[#FF7D02] justify-between font-bold flex flex-row'
-            onClick={() => {router.push("./historico_pedidos");}}>
-            Histórico de pedidos <Image src={Relogio} alt='' width={25} height={20} objectFit='contain'/>
-            </button>
-        </div>
-
-        <div className='h-full w-2/3 flex items-center justify-end pr-16 space-x-10'>
-
-          <button
-            onClick={router.back}
-          >
-          <Image src={BotaoSair} alt='Botão para Sair' width={90} height={96} unoptimized={true}/>
-          </button>
-        </div>
-
-    </header>
-
-    <div className='h-1/6 mb-1 mt-6 ml-36 flex flex-row space-x-2'>
-      <FoodButton image={IconTodos} type='todos' onClick={handleFoodButtonClick}></FoodButton>
-      <FoodButton image={IconSalgados} type='salgados' onClick={handleFoodButtonClick}></FoodButton>
-      <FoodButton image={IconDoces} type='doces' onClick={handleFoodButtonClick}></FoodButton>
-      <FoodButton image={IconBebidas} type='bebidas' onClick={handleFoodButtonClick}></FoodButton>
-    </div>
-
-    <div className='w-2/5 mb-2 ml-36 space-y-3'>
+    <main className="bg-[#fff4ef] bg-[url('/assets/images/background.png')] h-screen w-full overflow-x-hidden">
+      <MainHeader
+        showAdminActions={true}
+        onAddProduct={() => router.push("./add-product")}
+        onHistorico={() => router.push("./historico_pedidos")}
+        onLogout={() => router.back()}
+      />
+      <div className='h-1/6 mb-1 mt-6 ml-36 flex flex-row space-x-2'>
+        <FoodButton image={IconTodos} type='todos' onClick={handleFoodButtonClick}></FoodButton>
+        <FoodButton image={IconSalgados} type='salgados' onClick={handleFoodButtonClick}></FoodButton>
+        <FoodButton image={IconDoces} type='doces' onClick={handleFoodButtonClick}></FoodButton>
+        <FoodButton image={IconBebidas} type='bebidas' onClick={handleFoodButtonClick}></FoodButton>
+      </div>
+      <div className='w-2/5 mb-2 ml-36 space-y-3'>
       {filteredProducts.map((product) => (
         <Product key={product.id} product={product} onIncrement={increment} onDecrement={decrement} onRemove={remove} onEdit={edit}></Product>
       ))}
     </div>
-
     </main>
   );
 }

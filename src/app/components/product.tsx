@@ -74,7 +74,19 @@ const Product: FC<ProductProps> = ({product, onDecrement, onIncrement, onRemove,
         
     <div className="bg-[#ffece4] rounded-2xl border-2 border-[#F54B00] h-[250px] w-full flex flex-row">
         <div className="flex items-center justify-center h-full w-1/3 pb-11">
-            <Image src={product.imageURL} alt={product.name} width={160} height={160}/>
+            {/* Enhanced image src handling */}
+            <Image 
+                src={
+                  product.imageURL?.startsWith('http') || product.imageURL?.startsWith('data:image/')
+                    ? product.imageURL
+                    : product.imageURL
+                      ? `/${product.imageURL.replace(/^\/+/, '')}`
+                      : '/placeholder.png' // fallback image
+                }
+                alt={product.name}
+                width={160} 
+                height={160}
+            />
             <input
               type="file"
               ref={fileInputRef}

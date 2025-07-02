@@ -5,15 +5,12 @@ import { useRouter } from "next/navigation";
 import { getProducts, getProductTypes } from "../../../../services/dataAcess/productService";
 import type { ProductItem, ProductType } from "../../../../services/dataAcess/productService";
 import FoodButton from '@/app/components/foodbutton'
-import logoConpec from "../../../../assets/images/logo-conpec.svg";
 import todosIcon from "../../../../assets/images/product_types/todos.png";
 import IconTodos from '@/app/assets/IconTodos.png'
 import IconDoces from '@/app/assets/IconDoces.png'
 import IconBebidas from '@/app/assets/IconBebidas.png'
 import IconSalgados from '@/app/assets/IconSalgados.png'
-import searchIcon from "../../../../assets/images/search.png";
-import cartIcon from "../../../../assets/images/shopping_cart.png";
-import TextField from "@/app/components/text-field";
+import MainHeader from "@/app/components/ui/main_header";
 
 // Helper to get category icon
 const getCategoryIcon = (type: ProductType): string => {
@@ -95,129 +92,84 @@ export default function Home() {
     </div>;
   }
 
-
-  const irParaPaginaDeInfo = () => {
-      localStorage.setItem("carrinho", JSON.stringify(cartItems));
-
-      router.push("./info");
-  };
-
   return (
-    <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('@/assets/images/background.png')]">
-      {/* navbar */}
-      <header className="flex items-center justify-between px-4 py-6 bg-[#FFE8DE] rounded-b-3xl">
-        <div className="flex items-center gap-2">
-          <Image
-            src={logoConpec.src}
-            alt="Conpec Logo"
-            width={40}
-            height={40}
-          />
-          <a href="/">
-            <div className="flex flex-col font-bold">
-              <h1 className="font-pixelify-sans text-5xl text-[#FF3D00]">
-                CONPECOME
-              </h1>
-              <p className="text-[#FF3D00] font-poppins font-bold">Já pode aomossar?</p>
-            </div>
-          </a>
-        </div>
-        <div className="flex-1 max-w-xl mx-8">
-          <div className="relative">
-            <TextField
-              placeholder="Pesquisar"
-              className="w-full px-4 py-2 pl-10 rounded-full border border-gray-300 text-black font-poppins"
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-            />
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              <Image
-                src={searchIcon.src}
-                alt="Search"
-                width={20}
-                height={20}
-              />
+    <div className="min-h-screen w-screen bg-[#FFF5EF] bg-[url('@/assets/images/background.png')] bg-top bg-repeat">
+      <MainHeader
+        showCart={true}
+        cartTotal={cartTotal}
+        onCartClick={() => setIsCartOpen(!isCartOpen)}
+        searchTerm={searchTerm}
+        onSearchTermChange={setSearchTerm}
+      >
+        {/* Cart Window */}
+        {isCartOpen && (
+          <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-[#FF9633] rounded-2xl shadow-lg z-50 p-4">
+            <div className="flex flex-col gap-4">
+              <h3 className="text-xl font-bold text-[#FF3D00] border-b border-[#FF9633] pb-2">
+                Carrinho
+              </h3>
+              {cartItems.length === 0 ? (
+                <p className="text-center text-[#FF3D00] py-4">Seu carrinho está vazio</p>
+              ) : (
+                <>
+                  <div className="max-h-64 overflow-y-auto">
+                    {cartItems.map((item: any) => (
+                      <div key={item.id} className="flex items-center justify-between py-2 border-b border-[#FFE8DE]">
+                        <div className="flex items-center gap-2">
+                          <Image
+                            src={
+                              item.imageURL?.startsWith('http') || item.imageURL?.startsWith('data:image/')
+                                ? item.imageURL
+                                : item.imageURL
+                                  ? `/${item.imageURL.replace(/^\/+/, '')}`
+                                  : '/placeholder.png'
+                            }
+                            alt={item.name}
+                            width={40}
+                            height={40}
+                            className="object-contain"
+                          />
+                          <div>
+                            <p className="font-semibold text-[#FF3D00]">
+                              {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
+                            </p>
+                            <p className="text-sm text-[#FF9633]">
+                              {item.quantity}x {formatToBRL(item.price)}
+                            </p>
+                          </div>
+                        </div>
+                        <p className="font-semibold text-[#FF3D00]">
+                          {formatToBRL(item.price * item.quantity)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="border-t border-[#FF9633] pt-4 mt-2">
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="font-bold text-[#FF3D00]">Total:</span>
+                      <span className="font-bold text-[#FF3D00]">{formatToBRL(cartTotal)}</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={clearCart}
+                        className="flex-1 py-2 px-4 bg-white border border-[#FF3D00] text-[#FF3D00] rounded-full hover:bg-[#FFE8DE] transition-colors"
+                      >
+                        Limpar
+                      </button>
+                      <button
+                        className="flex-1 py-2 px-4 bg-[#FF3D00] text-white rounded-full hover:bg-[#FF9633] transition-colors"
+                        onClick={() => {router.push("./info");}}
+                      >
+                        Finalizar Pedido
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
-        </div>
-
-        <div className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-6 py-3 rounded-3xl text-[#F54B00] cursor-pointer relative"
-          onClick={() => setIsCartOpen(!isCartOpen)}>
-          <Image
-            src={cartIcon.src}
-            alt="Shopping Cart"
-            width={40}
-            height={40}
-          />
-          <span id="cart_total" className="font-poppins">{formatToBRL(cartTotal)}</span>
-
-          {/* Cart Window */}
-          {isCartOpen && (
-            <div className="absolute right-0 top-full mt-2 w-96 bg-white border border-[#FF9633] rounded-2xl shadow-lg z-50 p-4">
-              <div className="flex flex-col gap-4">
-                <h3 className="text-xl font-poppins font-bold text-[#FF3D00] border-b border-[#FF9633] pb-2">
-                  Carrinho
-                </h3>
-
-                {cartItems.length === 0 ? (
-                  <p className="font-poppins text-center text-[#FF3D00] py-4">Seu carrinho está vazio</p>
-                ) : (
-                  <>
-                    <div className="max-h-64 overflow-y-auto">
-                      {cartItems.map(item => (
-                        <div key={item.id} className="flex items-center justify-between py-2 border-b border-[#FFE8DE]">
-                          <div className="flex items-center gap-2">
-                            <Image
-                              src={`${item.imageURL}`}
-                              alt={item.name}
-                              width={40}
-                              height={40}
-                              className="object-contain"
-                            />
-                            <div>
-                              <p className="font-semibold font-poppins text-[#FF3D00] ">
-                                {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
-                              </p>
-                              <p className="text-sm text-[#FF9633] font-poppins">
-                                {item.quantity}x {formatToBRL(item.price)}
-                              </p>
-                            </div>
-                          </div>
-                          <p className="font-semibold text-[#FF3D00]">
-                            {formatToBRL(item.price * item.quantity)}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="border-t border-[#FF9633] pt-4 mt-2">
-                      <div className="flex justify-between items-center mb-4">
-                        <span className="font-bold font-poppins text-[#FF3D00]">Total:</span>
-                        <span className="font-bold text-[#FF3D00]">{formatToBRL(cartTotal)}</span>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <button
-                          onClick={clearCart}
-                          className="flex-1 py-2 px-4 bg-white border border-[#FF3D00] text-[#FF3D00] rounded-full hover:bg-[#FFE8DE] transition-colors"
-                        >
-                          Limpar
-                        </button>
-                        <button
-                          className="flex-1 py-2 px-4 bg-[#FF3D00] text-white rounded-full hover:bg-[#FF9633] transition-colors"
-                          onClick={irParaPaginaDeInfo}
-                        >
-                          Finalizar Pedido
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-      </header>
+        )}
+      </MainHeader>
 
       <main className="flex flex-col sm:items-start p-8">
         {/* Category filters */}
