@@ -77,7 +77,7 @@ export default function Info() {
           </div>
 
           <button
-            className="bg-[#f66c0e] h-12 w-32 rounded-full group col-start-2 mt-10 shadow-md m-2 hover:bg-[#FF3D00] transition duration-[175ms]"
+            className=" h-12 w-32 group col-start-2 mt-10  m-2 hover:bg-[#FF3D00] botao-laranja"
             onClick={handleEnviar}
           >
             <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.08]">Enviar </span>          </button>

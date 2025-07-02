@@ -42,21 +42,21 @@ export default function CardSellProduct({ onDelete }: { onDelete: () => void }) 
           <div className="flex items-center gap-2 sm:gap-5">
             <button
               onClick={decrementQuantity}
-              className="w-6 h-6 rounded-full bg-[#f66c0e] hover:bg-[#f66c0e]hover:scale-105 transition-all flex items-center justify-center text-white"
+              className="w-6 h-6 rounded-full  hover:scale-105  flex items-center botao-laranja justify-center text-white"
             >
               -
             </button>
             <div className="mx-3 text-[#f66c0e]">{quantity}</div>
             <button
               onClick={incrementQuantity}
-              className="w-6 h-6 rounded-full bg-[#f66c0e] hover:bg-[#f66c0e]hover:scale-105 transition-all flex items-center justify-center text-white"
+              className="w-6 h-6 rounded-full  hover:scale-105  flex items-center botao-laranja justify-center text-white"
             >
               +
             </button>
             <div className="mx-3" />
             <button
               onClick={onDelete}
-              className="w-6 h-6 rounded-full bg-[#f66c0e] hover:bg-[#f66c0e]hover:scale-105 transition-all flex items-center justify-center text-white"
+              className="w-6 h-6 rounded-full  hover:scale-105 flex botao-laranja items-center justify-center text-white"
             >
               x
             </button>

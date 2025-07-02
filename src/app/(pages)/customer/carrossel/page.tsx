@@ -199,7 +199,7 @@ export default function Home() {
                           <h1 className="font-Poppins font-bold">Limpar</h1>
                         </button>
                         <button
-                          className="flex-1 py-2 px-4 bg-[#f66c0e] shadow-md text-white rounded-full hover:bg-[#FF3D00] transition duration-[175ms]"
+                          className="flex-1 py-2 px-4  text-white rounded-full botao-laranja"
                           onClick={irParaPaginaDeInfo}
                         >
                           <h1 className="text-white font-Poppins font-bold "> Finalizar Pedido </h1>

@@ -13,6 +13,9 @@
   --background: #ffffff;
   --foreground: #171717;
 }
+  .botao-laranja {
+    @apply  bg-[#f66c0e] rounded-full hover:bg-[#F54B00] shadow-md transition duration-[175ms]
+}
 
 @layer utilities {
   .font-pixelify-sans {

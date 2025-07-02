@@ -113,7 +113,7 @@ export default function Pagamento() {
           <h1 className="text-gray-600 font-bold text-sm">código</h1>
         </button>
 
-        <button className="bg-[#f66c0e] h-12 w-1/12 rounded-full flex justify-around items-center shadow-md hover:bg-[#F54B00] transition duration-[175ms]">
+        <button className="h-12 w-1/12  flex justify-around items-center botao-laranja">
           <img src={copy.src} alt="copy" className="h-4 w-4 ml-2 invert"/>
           <h1 className="text-white text-xl font-Poppins font-bold mr-2">Copiar</h1>
         </button>
@@ -153,7 +153,7 @@ export default function Pagamento() {
 
         <button
           onClick={handleFinalizarPedido}
-          className="bg-[#f66c0e] h-12 w-32 group rounded-full flex justify-center items-center shadow-md m-2 hover:bg-[#F54B00]  transition duration-[175ms] "
+          className="h-12 w-32 group  flex justify-center items-center  m-2 botao-laranja "
         >
           <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.05]">Já paguei </span>
           </button>

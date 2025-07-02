@@ -46,7 +46,7 @@ export default function Login(){
                         <input type="text" placeholder="Inserir senha" className=" text-[#ff7c0287] placeholder-[#ff7c0287] font-poppins col-span-3 h-14 rounded-full px-8 py-5 text-[10px] font-extrabold border-2 border-[#ff5a0179] focus:border-[#ff5a01c9] focus:outline-none" />
                     </div>
                         <div className="font-poppins text-[#FF9633] font-extrabold underline text-[12px] col-start-2">Esqueci minha senha</div>
-                        <button className="bg-[#f66c0e] group h-12 w-32 rounded-full col-start-2 mt-10 shadow-md m-2 hover:bg-[#F54B00]  transition duration-[175ms]"
+                        <button className=" group h-12 w-32 col-start-2 mt-10  m-2 botao-laranja"
                             onClick={() => {router.push("/admin/estoque")}}>
                             <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.08]">Enviar </span>          </button>
 

@@ -236,14 +236,14 @@ export default function CardAddProduct({
           <div className="flex items-center gap-3 sm:gap-5">
             <button
               onClick={decrementQuantity}
-              className="w-6 h-6 rounded-full bg-[#f66c0e] hover:bg-[#F54B00] hover:scale-95 transition-all flex items-center justify-center text-white"
+              className="w-6 h-6 hover:scale-95 flex botao-laranja items-center justify-center text-white"
             >
               -
             </button>
             <div className="w-6 text-center text-[#f66c0e]">{quantity}</div>
             <button
               onClick={incrementQuantity}
-              className="w-6 h-6 rounded-full bg-[#f66c0e] hover:bg-[#F54B00] hover:scale-95 transition-all flex items-center justify-center text-white"
+              className="w-6 h-6  hover:scale-95 botao-laranja flex items-center justify-center text-white"
             >
               +
             </button>

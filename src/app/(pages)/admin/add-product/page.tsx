@@ -175,7 +175,7 @@ export default function AddProduct() {
           </button>
           <button
             onClick={addProduct}
-            className="bg-[#f66c0e] hover:bg-[#FF3D00] hover:scale-95 transition duration-[175ms] rounded-full w-12 h-12 flex items-center justify-center text-2xl"
+            className=" hover:scale-95 botao-laranja w-12 h-12 flex items-center justify-center text-2xl"
           >
             +
           </button>
