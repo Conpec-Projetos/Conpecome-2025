@@ -32,9 +32,9 @@ export default function Login(){
                         <TextField placeholder="Inserir senha"/>
                     </div>
                         <div className="font-poppins text-[#FF9633] font-extrabold underline text-[12px] col-start-2">Esqueci minha senha</div>
-                        <button className="font-poppins rounded-full bg-[#ff5a01c3] col-start-2 h-12 mt-10 font-extrabold"
+                        <button className=" group h-12 w-32 col-start-2 mt-10  m-2 botao-laranja"
                             onClick={() => {router.push("/admin/estoque")}}>
-                                Enviar</button>
+                            <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.08]">Enviar </span>          </button>
 
                 </div>
 

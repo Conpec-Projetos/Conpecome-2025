@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image"
-import lupa from "../../../../assets/images/lupa-conpecome.png"
-import adicionar from "../../../../assets/images/Adicionar.png"
+import lupa from "@/assets/images/lupa-conpecome.png"
+import adicionar from "@/assets/images/Adicionar.png"
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from "next/navigation"
 import { db } from "@/firebase/firebase-config"

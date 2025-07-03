@@ -38,7 +38,7 @@ export default function Info() {
       <div className="flex justify-center items-start h-full">
         <div className="w-1/3 grid grid-cols-3 grid-rows-2 gap-6">
           <div className="grid grid-cols-1 col-span-3 gap-3 items-center">
-            <label className="text-[#FF7D02] col-span-1 font-poppins text-[16px] font-extrabold ml-5">
+            <label className="text-[#f66c0e] col-span-1 font-poppins text-[16px] font-extrabold ml-5">
               Nome
             </label>
             <TextField
@@ -51,7 +51,7 @@ export default function Info() {
           </div>
 
           <div className="grid grid-cols-1 gap-3 col-span-3 items-center">
-            <label className="text-[#FF7D02] col-span-1 font-poppins text-[16px] font-extrabold ml-5">
+            <label className="text-[#f66c0e] col-span-1 font-poppins text-[16px] font-extrabold ml-5">
               Email
             </label>
             <TextField
@@ -64,11 +64,10 @@ export default function Info() {
           </div>
 
           <button
-            className="font-poppins rounded-full bg-[#ff5a01c3] col-start-2 h-12 mt-10 font-extrabold text-white hover:bg-[#ff5a01]"
+            className=" h-12 w-32 group col-start-2 mt-10  m-2 hover:bg-[#FF3D00] botao-laranja"
             onClick={handleEnviar}
           >
-            Enviar
-          </button>
+            <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.08]">Enviar </span>          </button>
         </div>
       </div>
     </main>

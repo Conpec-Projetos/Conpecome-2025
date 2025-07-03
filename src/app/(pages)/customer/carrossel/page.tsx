@@ -2,15 +2,15 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getProducts, getProductTypes } from "../../../../services/dataAcess/productService";
-import type { ProductItem, ProductType } from "../../../../services/dataAcess/productService";
 import FoodButton from '@/app/components/foodbutton'
-import todosIcon from "../../../../assets/images/product_types/todos.png";
 import IconTodos from '@/app/assets/IconTodos.png'
 import IconDoces from '@/app/assets/IconDoces.png'
 import IconBebidas from '@/app/assets/IconBebidas.png'
 import IconSalgados from '@/app/assets/IconSalgados.png'
 import MainHeader from "@/app/components/ui/main_header";
+import { getProducts, getProductTypes } from "@/services/dataAcess/productService";
+import type { ProductItem, ProductType } from "@/services/dataAcess/productService";
+import todosIcon from "@/assets/images/product_types/todos.png";
 
 // Helper to get category icon
 const getCategoryIcon = (type: ProductType): string => {
@@ -88,7 +88,7 @@ export default function Home() {
 
   if (loading) {
     return <div className="min-h-screen w-screen bg-[#FFF5EF] flex items-center justify-center">
-      <p className="text-[#FF3D00] text-xl">Carregando...</p>
+      <p className="text-[#f66c0e] text-xl">Carregando...</p>
     </div>;
   }
 
@@ -180,7 +180,7 @@ export default function Home() {
           <FoodButton image={IconBebidas} type='bebidas' onClick={() => setSelectedCategory("BEBIDA")}></FoodButton>
           {/* <button
             onClick={() => setSelectedCategory("all")}
-            className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${
+            className={`text-[#f66c0e] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#f66c0e] ${
               selectedCategory === "all" ? "bg-[#FFECE4]" : "bg-white"
             }`}
           >
@@ -197,7 +197,7 @@ export default function Home() {
               <button
                 key={type.name}
                 onClick={() => setSelectedCategory(type.name)}
-                className={`text-[#F54B00] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#F54B00] ${
+                className={`text-[#f66c0e] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#f66c0e] ${
                   selectedCategory === type.name ? "bg-[#FFECE4]" : "bg-white"
                 }`}
               >
@@ -236,7 +236,7 @@ export default function Home() {
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => handleQuantityChange(product.id, -1)}
-                  className="w-8 h-8 rounded-full bg-[#FF9633] text-white font-poppins flex items-center justify-center text-2xl"
+                  className="w-8 h-8 rounded-full bg-[#FF9633] hover:bg-[#F54B00] hover:scale-95 transition-all text-white flex items-center justify-center text-2xl"
                 >
                   -
                 </button>
@@ -247,7 +247,7 @@ export default function Home() {
                 {typeof product.stock === 'number' && (quantities[product.id] || 0) < product.stock ? (
                   <button
                     onClick={() => handleQuantityChange(product.id, 1)}
-                    className="w-8 h-8 rounded-full bg-[#FF9633] text-white font-poppins flex items-center justify-center text-2xl"
+                    className="w-8 h-8 rounded-full hover:bg-[#F54B00] hover:scale-95 transition-all bg-[#FF9633] text-white flex items-center justify-center text-2xl"
                   >
                     +
                   </button>
