@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { Analytics, getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 
 //Now import this 
 import 'firebase/firestore';
@@ -32,3 +33,4 @@ if (typeof window !== 'undefined') {
 
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+export const auth = getAuth(app);
