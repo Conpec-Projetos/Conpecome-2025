@@ -5,6 +5,8 @@ import Header from "@/app/components/ui/header"
 import TextField from "@/app/components/text-field";
 import { auth } from "@/firebase/firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
+
 
 export default function Login(){
     const router = useRouter();
@@ -26,7 +28,7 @@ export default function Login(){
         }
     }, [error]);
 
-    const handleLogin = async () => {
+    const handleLogin = async () => { //Auth de login
         setError("");
         try {
             await signInWithEmailAndPassword(auth, email, senha);
@@ -39,6 +41,19 @@ export default function Login(){
     const handleSubmit = (e: React.FormEvent) => { 
         e.preventDefault();
         handleLogin();
+    };
+
+    const handleForgotPassword = async () => { //Auth do email de reset de senha
+        if (!email) {
+            setError("Digite seu email para redefinir a senha.");
+            return;
+        }
+        try {
+            await sendPasswordResetEmail(auth, email);
+            setError("Email de redefinição enviado!");
+        } catch (err) {
+            setError("Erro ao enviar email de redefinição.");
+        }
     };
 
     return(
@@ -71,7 +86,12 @@ export default function Login(){
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSenha(e.target.value)}
                         />
                     </div>
-                    <div className="font-poppins text-[#FF9633] font-extrabold underline text-[12px] col-start-2">Esqueci minha senha</div>
+                    <div
+                        onClick={handleForgotPassword}
+                        className="cursor-pointer font-poppins text-[#FF9633] font-extrabold underline text-[12px] col-start-2"
+                    >
+                        Esqueci minha senha
+                    </div>
                     {error && (
                         <div className={`col-span-3 text-red-500 text-center font-poppins font-semibold mb-2 transition-opacity duration-500 ${fade ? "opacity-0" : "opacity-100"}`}>
                             {error}
