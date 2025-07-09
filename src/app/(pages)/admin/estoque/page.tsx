@@ -2,10 +2,6 @@
 import Image, { StaticImageData } from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 
-import Logo from '@/assets/images/Conpec.png'
-import Seta from '@/assets/images/Vector.png'
-import Relogio from '@/assets/images/Group.png'
-import BotaoSair from '@/assets/images/Sair.png'
 import IconTodos from '@/assets/images/IconTodos.png'
 import IconDoces from '@/assets/images/IconDoces.png'
 import IconBebidas from '@/assets/images/IconBebidas.png'
@@ -130,7 +126,7 @@ export default function Estoque_ADM() {
 
   
   return (
-    <main className="bg-[#fff4ef] bg-[url('/assets/images/background.png')] h-screen w-full overflow-x-hidden">
+    <main className="bg-[#fff4ef] bg-[url('@/assets/images/background.png')] h-screen w-full overflow-x-hidden">
       <MainHeader
         showAdminActions={true}
         onAddProduct={() => router.push("./add-product")}

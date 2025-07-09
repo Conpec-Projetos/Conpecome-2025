@@ -3,10 +3,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import FoodButton from '@/app/components/foodbutton'
-import IconTodos from '@/app/assets/IconTodos.png'
-import IconDoces from '@/app/assets/IconDoces.png'
-import IconBebidas from '@/app/assets/IconBebidas.png'
-import IconSalgados from '@/app/assets/IconSalgados.png'
+import IconTodos from '@/assets/images/IconTodos.png'
+import IconDoces from '@/assets/images/IconDoces.png'
+import IconBebidas from '@/assets/images/IconBebidas.png'
+import IconSalgados from '@/assets/images/IconSalgados.png'
 import MainHeader from "@/app/components/ui/main_header";
 import { getProducts, getProductTypes } from "@/services/dataAcess/productService";
 import type { ProductItem, ProductType } from "@/services/dataAcess/productService";

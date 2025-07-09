@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import logoConpec from "@/app/assets/logo-conpec.svg";
-import seta from "@/app/assets/Vector.png";
-import relogio from "@/app/assets/Group.png";
-import botaoSair from "@/app/assets/Sair.png";
+import logoConpec from "@/assets/images/logo-conpec.svg";
+import seta from "@/assets/images/Vector.png";
+import relogio from "@/assets/images/Group.png";
+import botaoSair from "@/assets/images/Sair.png";
 import cart from "@/assets/images/shopping_cart.png";
 
 import TextField from "../text-field";
