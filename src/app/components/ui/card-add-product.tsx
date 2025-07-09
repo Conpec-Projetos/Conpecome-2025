@@ -6,6 +6,7 @@ import IconDoces from "@/app/assets/IconDoces.png";
 import IconBebidas from "@/app/assets/IconBebidas.png";
 import { useRef, useState } from "react";
 import { LocalProduct } from "@/interfaces/productsInterfaces";
+import EditableTextField from "../editable-text-field";
 
 export default function CardAddProduct({
   product,
@@ -29,7 +30,6 @@ export default function CardAddProduct({
   const [productName, setProductName] = useState(product.name || "");
   const [productPrice, setProductPrice] = useState(product.price || 0);
   const [productType, setProductType] = useState(product.type || "");
-  const [editField, setEditField] = useState<string | null>(null);
 
   const updateParent = (
     field: string,
@@ -65,29 +65,6 @@ export default function CardAddProduct({
       setImageUrl(url);
       updateParent("imageURL", url);
       updateParent("imageFile", file);
-    }
-  };
-
-  const formatPriceInBRL = (cents: number): string => {
-    return `R$ ${(cents / 100).toFixed(2).replace(".", ",")}`;
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newName = e.target.value;
-    setProductName(newName);
-    updateParent("name", newName);
-  };
-
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, ""); // Regex to remove non-numeric characters
-    const cents = value ? parseInt(value, 10) : 0;
-    setProductPrice(cents);
-    updateParent("price", cents);
-  };
-
-  const handleEditKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      setEditField(null);
     }
   };
 
@@ -131,57 +108,24 @@ export default function CardAddProduct({
           className="hidden"
         />
       </button>
-      <div className="text-[#FF9633] overflow-hidden">
-        <div className="flex items-center mb-1">
-          {editField === "name" ? (
-            <input
-              type="text"
-              value={productName}
-              onChange={handleNameChange}
-              onBlur={() => setEditField(null)}
-              onKeyDown={handleEditKeyDown}
-              autoFocus
-              className="text-sm mr-1 bg-transparent border-b border-[#FF9633] outline-none"
-              placeholder="Inserir nome"
-            />
-          ) : (
-            <button
-              onClick={() => setEditField("name")}
-              className="w-full flex items-center hover:text-[#F54B00] transition-colors"
-            >
-              <div className="text-sm mr-1 truncate">
-                {productName || "Inserir nome"}
-              </div>
-              <Image src={EditIcon} alt="Edit" />
-            </button>
-          )}
-        </div>
-        <div className="flex items-center mb-1">
-          {editField === "price" ? (
-            <input
-              type="text"
-              value={productPrice === 0 ? "" : formatPriceInBRL(productPrice)}
-              onChange={handlePriceChange}
-              onBlur={() => setEditField(null)}
-              onKeyDown={handleEditKeyDown}
-              autoFocus
-              className="text-sm mr-1 bg-transparent border-b border-[#FF9633] outline-none"
-              placeholder="Inserir preço"
-            />
-          ) : (
-            <button
-              onClick={() => setEditField("price")}
-              className="w-full flex items-center hover:text-[#F54B00] transition-colors"
-            >
-              <div className="truncate text-sm mr-1">
-                {productPrice > 0
-                  ? formatPriceInBRL(productPrice)
-                  : "Inserir preço"}
-              </div>
-              <Image src={EditIcon} alt="Edit" />
-            </button>
-          )}
-        </div>
+      <div className="text-[#FF9633] text-sm overflow-hidden">
+        <EditableTextField
+          value={productName}
+          placeholder="Inserir nome"
+          onUpdate={(value) => {
+            setProductName(String(value));
+            updateParent("name", value);
+          }}
+        />
+        <EditableTextField
+          value={productPrice}
+          placeholder="Inserir preço"
+          fieldType="price"
+          onUpdate={(value) => {
+            setProductPrice(Number(value));
+            updateParent("price", value);
+          }}
+        />
         <div className="mb-4">
           <div className="flex sm:gap-4">
             <button

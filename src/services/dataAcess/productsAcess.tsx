@@ -17,7 +17,7 @@ export async function addProductsAcess(body: ProductItem){
 }
 
 export async function updateProductsAcess(body: ProductItem){
-    const response = await updateDoc(doc(db, 'products', body.id), {name: body.name, imageURL: body.imageURL, stock: body.stock, price: body.price * 100, type: body.type})
+    const response = await updateDoc(doc(db, 'products', body.id), {name: body.name, imageURL: body.imageURL, stock: body.stock, price: body.price, type: body.type})
     return response
 }
 

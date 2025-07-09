@@ -9,7 +9,7 @@ export async function getProductsAction(){
     const products: ProductItem[] = []
     response.forEach((doc) => {
         const productData = doc.data() as ProductItem
-        products.push({...productData, price: productData.price / 100, id: doc.id})
+        products.push({...productData, price: productData.price, id: doc.id})
     })
 
     return products
