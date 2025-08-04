@@ -11,6 +11,7 @@
   "dependencies": {
     "firebase": "^11.9.1",
     "firebase-tools": "^14.7.0",
+    "lucide-react": "^0.536.0",
     "next": "^15.3.4",
     "react": "^19.1.0",
     "react-data-export": "^0.6.0",

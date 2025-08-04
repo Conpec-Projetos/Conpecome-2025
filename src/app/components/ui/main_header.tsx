@@ -5,6 +5,7 @@ import seta from "@/assets/images/Vector.png";
 import relogio from "@/assets/images/Group.png";
 import botaoSair from "@/assets/images/Sair.png";
 import cart from "@/assets/images/shopping_cart.png";
+import { LogIn, LogOut, ShoppingCart } from "lucide-react";
 
 import TextField from "../text-field";
 
@@ -37,10 +38,9 @@ export default function MainHeader({
   return (
     <header className="w-full h-[151px] bg-[#FFE8DE] flex flex-row items-center justify-between px-8 rounded-b-3xl">
       <div className="flex items-center gap-6">
-        <button className="w-32 h-[63px]" onClick={() => router.push("..")}> 
-          <Image src={logoConpec} alt="Logo" width={70} height={70} unoptimized={true} />
-        </button>
-        <div className="flex flex-col m-5">
+        <Image src={logoConpec} alt="Logo" width={70} height={70} unoptimized={true} className="w-32 h-[63px]"/>
+        
+        <div className="hidden lg:flex flex-col m-5">
           <h1 className="text-6xl text-[#FF3D00] font-pixelify-sans font-bold">CONPECOME</h1>
           <div className="text-[#FF3D00] font-poppins font-bold">Já pode aomossar?</div>
         </div>
@@ -72,25 +72,45 @@ export default function MainHeader({
       <div className="flex items-center gap-8">
         {showCart && cartTotal !== undefined && onCartClick && (
           <div
-            className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-6 py-3 rounded-3xl text-[#F54B00] cursor-pointer relative"
+            className="shadow-md flex items-center gap-2 bg-[#FFD8B6] border border-[#F54B00] px-6 py-3 rounded-3xl text-[#F54B00] cursor-pointer relative group"
             onClick={onCartClick}
           >
-            <Image
-              src={cart}
-              alt="Shopping Cart"
-              width={40}
-              height={40}
-            />
+            <ShoppingCart className="w-10 h-10 text-[#F54B00] group-hover:text-[#c2410c] transition-colors" />
             <span id="cart_total">R$ {(cartTotal / 100).toFixed(2).replace('.', ',')}</span>
             {children}
           </div>
         )}
-        {showAdminActions && (
-          <button onClick={onLogout || router.back}>
-            <Image src={botaoSair} alt="Botão para Sair" width={90} height={96} unoptimized={true}/>
-          </button>
+        {showAdminActions ? (
+          <div
+            className="flex items-center gap-2 cursor-pointer group"
+            onClick={() => router.push("/")}
+            >
+              <LogOut
+                className="w-10 h-10 text-[#FF3D00] group-hover:text-[#c2410c] transition-colors"
+              />
+              <span className="text-[#FF3D00] font-poppins font-semibold text-lg group-hover:text-[#c2410c] transition-colors">
+                Sair
+              </span>
+            </div>
+        ) : (
+            <div
+            className="flex items-center gap-2 cursor-pointer group"
+            onClick={() => router.push("admin/login")}
+            >
+              <LogIn
+                className="w-10 h-10 text-[#FF3D00] group-hover:text-[#c2410c] transition-colors"
+              />
+              <span className="text-[#FF3D00] font-poppins font-semibold text-lg group-hover:text-[#c2410c] transition-colors">
+                Entrar
+              </span>
+            </div>
         )}
       </div>
     </header>
   );
 }
+
+// router.push("admin/login");
+// <button onClick={() => router.push("admin/login")}>
+          //   <Image src={botaoSair} alt="Botão para Entrar" width={90} height={96} unoptimized={true}/>
+          // </button>

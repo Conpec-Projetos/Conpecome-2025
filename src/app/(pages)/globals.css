@@ -11,6 +11,10 @@
   --foreground: #171717;
 }
 
+/* main {
+  @apply flex flex-col items-center justify-center min-h-screen p-4;
+}  */
+
 .botao-laranja {
     @apply  bg-[#f66c0e] rounded-full hover:bg-[#F54B00] shadow-md transition duration-[175ms]
 }

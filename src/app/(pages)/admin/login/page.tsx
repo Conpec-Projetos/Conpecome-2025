@@ -57,14 +57,14 @@ export default function Login(){
     };
 
     return(
-        <main className="min-h-screen w-screen bg-[#FFF4EF]">
+        <div className="min-h-screen w-screen bg-[#FFF4EF]">
             <Header />
             <div className="flex justify-center items-center relative mt-8 mb-8">
                 <h1 className="font-pixelify-sans text-[#FF3D00] text-[40px] font-bold ">
                     Login
                 </h1>
             </div>
-            <div className="flex justify-center items-start h-full">
+            <main className="flex justify-center items-start h-full">
                 <form
                     className="w-1/3 grid grid-cols-3 grid-rows-2 gap-6"
                     onSubmit={handleSubmit}
@@ -104,7 +104,7 @@ export default function Login(){
                         <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.08]">Enviar </span>
                     </button>
                 </form>
-            </div>
-        </main>
+            </main>
+        </div>
     );
 }
