@@ -158,7 +158,7 @@ export default function Home() {
                       </button>
                       <button
                         className="flex-1 py-2 px-4 bg-[#FF3D00] text-white rounded-full hover:bg-[#FF9633] transition-colors"
-                        onClick={() => {router.push("./info");}}
+                        onClick={() => {router.push("customer/info");}}
                       >
                         Finalizar Pedido
                       </button>

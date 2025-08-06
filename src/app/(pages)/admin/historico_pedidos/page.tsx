@@ -8,6 +8,7 @@ import { db } from "@/firebase/firebase-config"
 import { collection, getDocs } from "firebase/firestore"
 import Header from "@/app/components/ui/header"
 import TextField from "@/app/components/text-field"
+import { Download, Search } from "lucide-react"
 
 interface pedido {
   id: string;
@@ -15,6 +16,8 @@ interface pedido {
   nome: string;
   preco: number;
   quantidade: number;
+  dataHora: string;
+  email: string;
 }
 
 interface Item {
@@ -28,9 +31,18 @@ interface Mes {
   itens: Item[];
 }
 
+function getMonthName(monthNumber: number): string {
+  // monthNumber: 1–12
+  const date = new Date(2000, monthNumber - 1); // JS months are 0-based
+  return date.toLocaleString('pt-BR', { month: 'long' });
+}
+
 export default function HistoricoPedidos() {
 
   const [Pedidos, setPedidos] = useState<pedido[]>([]);
+  const [mesesDict, setMesesDict] = useState<Record<string, Item[]>>({});
+
+  const [search, setSearch] = useState('');
 
   const HistoricoCollectionRef = collection(db, "purchases");
   
@@ -43,120 +55,137 @@ export default function HistoricoPedidos() {
     getPedidos();
   },[])
 
-  const totalGeralPedidos = useMemo(() => {
-      return Pedidos.reduce((acumulador, pedido) => acumulador + pedido.preco, 0);
-    }, [Pedidos]);
+  useEffect(() => {
+    // Agrupa os pedidos por mês e ano
+    const meses: Record<string, Item[]> = {};
+    Pedidos
+    .filter(pedido => (
+      pedido.comprador.toLowerCase().includes(search.trim().toLowerCase()) // Filtra por cliente
+    ))
+    .forEach(pedido => {
+      const [, mes, ano] = pedido.dataHora.split('/');
+      const mesAno = `${ano}/${mes}`; // Formato: "YYYY/MM"
+      if (!meses[mesAno]) {
+        meses[mesAno] = [];
+      }
+      meses[mesAno].push({
+        cliente: pedido.comprador,
+        produto: pedido.nome, 
+        valor: pedido.preco,
+      } as Item);
+    });
+    console.log(meses);
+    setMesesDict(meses);
+  }, [Pedidos, search]);
 
-  const router = useRouter();
-  // dados iniciais
-  const [meses] = useState<Mes[]>([
-    {
-      label: 'Fevereiro',
-      ano: 2025,
-      itens: [
-        
-        { cliente: 'João',  produto: 'Sonho de Valsa', valor: 1.50 },
-        { cliente: 'João',  produto: 'Toddynho',       valor: 0.89 },
-        { cliente: 'Maria', produto: 'KitKat',         valor: 1.20 },
-      ],
-    },
-    {
-      label: 'Janeiro',
-      ano: 2025,
-      itens: [
-        { cliente: 'Maria', produto: 'KitKat',   valor: 1.20 },
-        { cliente: 'João',  produto: 'Toddynho', valor: 0.89 },
-      ],
-    },
-  ]);
+  const downloadCSV = () => {
+    const csvContent = "data:text/csv;charset=utf-8," +
+      "dataHora,comprador,email,nome,quantidade,preco individual\n" +
+      Pedidos.slice()
+      .sort((a, b) => {
+        // Convert dd/mm/yyyy to Date objects for comparison
+        const [da, ma, ya] = a.dataHora.split('/');
+        const [db, mb, yb] = b.dataHora.split('/');
+        const dateA = new Date(+ya, +ma - 1, +da);
+        const dateB = new Date(+yb, +mb - 1, +db);
+        return dateB.getTime() - dateA.getTime(); // Newest first
+      })
+      .map(pedido =>
+        `"${pedido.dataHora}","${pedido.comprador}","${pedido.email}","${pedido.nome}","${pedido.quantidade}","${pedido.preco}"`
+      ).join("\n");
 
-  const [search, setSearch] = useState('');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "order_history.csv");
+    document.body.appendChild(link);
+    link.click();
+  };
 
-  // filtra itens pelo nome do cliente
-  const mesesFiltrados = meses.map(m => ({
-    ...m,
-    itens: m.itens.filter(it =>
-      it.cliente.toLowerCase().includes(search.trim().toLowerCase())
-    )
-  })).filter(m => m.itens.length > 0);
+
 
   return (
-    <main className="bg-[#FFF4EF] min-h-screen w-full">
+    <div className="bg-[#FFF4EF] min-h-screen w-full flex flex-col">
 
       <Header />
 
-      <div>
-
-        <div className="text-5xl font-pixelify text-[#FF3D00] flex flex-row justify-center py-1">
-        Histórico de Pedidos
-        </div>
-
-        <div className="flex items-center left-40 absolute w-1/4 max-w-md">
-            <TextField 
-              placeholder="Cliente"
-              className="placeholder-gray-400 w-full pl-14 text-[15px]"
-              value={search}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-            />
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              <Image
-                src={lupa}
-                alt="lupa"
-                width={40}
-                height={40}
-              />
-            </div>
+      <main className="flex flex-col items-center justify-start ">
+        <div className="w-full">
+          <div className="text-5xl font-pixelify-sans text-[#FF3D00] flex flex-row justify-center py-1 text-center">
+            Histórico de Pedidos
           </div>
 
-      </div>
+            <div className="relative flex items-center pl-2 pr-20 sm:pl-[5rem] w-full">
+              <Search className="absolute left-[1.3rem] sm:left-[5.8rem] top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+              <input
+                className="default-input placeholder-gray-400 max-w-md pl-14 text-[15px]"
+                placeholder="Cliente"
+                value={search}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+              />
+            </div>
+
+        </div>
+          
         
-      
-      <div className="w-3/5 px-20 py-12">
-        {mesesFiltrados.map((mes, i) => {
-          const total = mes.itens.reduce((sum, it) => sum + it.valor, 0);
-
-          return (
-            <div key={i}>
-              {/* cabeçalho do mês */}
-              <h3 className="text-2xl font-Poppins font-bold text-[#FF9633] uppercase py-6">
-                {mes.label} – {mes.ano}
-              </h3>
-
-              {/* grid de itens */}
-              <div className="px-10 space-y-2">
-                {Pedidos.map((pedido) => (
-                  <div key={pedido.id}
-                       className="flex flex-row justify-between font-Poppins font-bold text-2xl">
-                    <span className="text-[#FF9633]">{pedido.comprador}</span>
-                    <span className="text-[#FF9633]">{pedido.nome}</span>
-                    <span className="text-[#FF9633]">R${pedido.preco.toFixed(2)}</span>
-                  </div>
-                ))}
-
-                {/* total do mês */}
-                <div className="grid grid-cols-[1fr_1fr_auto] font-Poppins font-extrabold text-[#FF9633] text-2xl ">
-                  <span>Total</span><span></span>
-                  <span>R${totalGeralPedidos.toFixed(2)}</span>
-                </div>
+        <div className="w-4/5 h-full px-0 md:px-16 py-12  flex-1 flex flex-col justify-start ">
+          {mesesDict && Object.keys(mesesDict).length === 0 ? (
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="text-2xl font-Poppins font-bold text-[#FF9633] text-center">
+              Nenhum pedido encontrado.
               </div>
             </div>
-          );
-        })}
-      </div>
+          ) : (
+            <div className="w-full h-full max-w-4xl flex flex-col justify-start">
+              {
+              Object.keys(mesesDict)
+                .sort((a, b) => b.localeCompare(a)) // Ordena descendente
+                .map((mesAno, index) => {
+                const [ano, mesNum] = mesAno.split("/");
+                const mesNome = getMonthName(parseInt(mesNum) + 1);
+                const items = mesesDict[mesAno]
 
-      <section >
-        <div className="flex justify-end px-12">
-          <button>
-            <Image 
-              src={adicionar}
-              alt="adicionar"
-              className="py-16"
-              width={80}
-              height={80}
-            />
+                const total = items.reduce((sum, item) => sum + (item.valor/100), 0);
+
+                return (
+                  <div key={index}>
+                  
+                    <h3 className="text-2xl font-Poppins font-bold text-[#FF9633] uppercase py-6">
+                      {mesNome.toLocaleUpperCase()} – {ano}
+                    </h3>
+
+                    <div className="pr-6 md:px-10 space-y-2">
+                      {items.map((item, i) => (
+                      <div key={i} className="flex flex-row justify-between font-Poppins font-bold text-xl md:text-2xl space-x-1">
+                        <span className="text-[#FF9633]">{item.cliente}</span>
+                        <span className="text-[#FF9633] text-center">{item.produto}</span>
+                        <span className="text-[#FF9633]">R${(item.valor/100).toFixed(2)}</span>
+                      </div>
+                      ))}
+
+                      <div className="grid grid-cols-[1fr_1fr_auto] font-Poppins font-extrabold text-[#FF9633] text-2xl ">
+                      <span>Total</span><span></span>
+                      <span>R${total.toFixed(2)}</span>
+                      </div>
+                    </div>
+
+                  </div>
+                );
+                })
+              }
+            </div>
+          )}
+        </div>
+
+        <div className="fixed bottom-8 right-8 z-50">
+          <button className="botao-laranja flex flex-col items-center justify-center w-20 h-20 rounded-full shadow-lg"
+            onClick={downloadCSV}>
+            <Download className="text-white" size={60} />
           </button>
         </div>
-      </section>
-    </main>
+
+      </main>
+
+    </div>
   );
 }
