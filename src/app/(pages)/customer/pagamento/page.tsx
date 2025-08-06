@@ -51,7 +51,7 @@ export default function Pagamento() {
   }
 
   const handleFinalizarPedido = async () => {
-    const dataHora = new Date().toLocaleDateString("pt-BR");;
+    const dataHora = new Date().toLocaleDateString("pt-BR");
 
     try {
       for (const item of produtos) {
@@ -61,7 +61,7 @@ export default function Pagamento() {
           dataHora: dataHora,
           nome: item.name,
           quantidade: item.quantity,
-          preco: item.price / 100,
+          preco: item.price,
         };
       await addDoc(collection(db, "purchases"), pedidoIndividual);    
     }
