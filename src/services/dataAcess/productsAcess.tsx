@@ -1,6 +1,7 @@
 import Product from "@/app/components/product";
-import { db } from "@/firebase/firebase-config";
-import { query, collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore'; // Importe os métodos necessários do Firestore
+import { db, storage } from "@/firebase/firebase-config";
+import { query, collection, doc, getDocs, addDoc, updateDoc, deleteDoc, getDoc } from 'firebase/firestore'; // Importe os métodos necessários do Firestore
+import { getStorage, ref, deleteObject } from "firebase/storage";
 import { ProductItem } from "./productService";
 
 
@@ -22,6 +23,17 @@ export async function updateProductsAcess(body: ProductItem){
 }
 
 export async function removeProductsAcess(id: string){
+    const productDoc = doc(db, 'products', id);
+    const productData = await getDoc(productDoc);
+
+    deleteImage(productData.data()?.imageURL || '');
+
     const response = await deleteDoc(doc(db, 'products', id))
     return response
 }
+
+const deleteImage = async (imageURL: string) => {
+  const imageRef = ref(storage, imageURL.replace(/.*\/o\/(.*?)\?.*/, '$1').replace(/%2F/g, '/'));
+
+  await deleteObject(imageRef);
+};
