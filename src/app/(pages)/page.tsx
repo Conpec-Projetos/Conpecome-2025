@@ -58,6 +58,15 @@ export default function Home() {
     setIsCartOpen(false);
   };
 
+  const finishOrder = () => {
+    if (cartTotal > 0) {
+      localStorage.setItem("carrinho", JSON.stringify(cartItems));
+
+      router.push("/customer/info");
+
+    }
+  }
+
   const handleQuantityChange = (productId: string, delta: number) => {
     setQuantities(prev => ({
       ...prev,
@@ -158,7 +167,7 @@ export default function Home() {
                       </button>
                       <button
                         className="flex-1 py-2 px-4 bg-[#FF3D00] text-white rounded-full hover:bg-[#FF9633] transition-colors"
-                        onClick={() => {router.push("customer/info");}}
+                        onClick={finishOrder}
                       >
                         Finalizar Pedido
                       </button>

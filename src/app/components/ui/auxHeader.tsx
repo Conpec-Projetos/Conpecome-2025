@@ -3,7 +3,7 @@ import LogoConpec from "@/assets/images/logo-conpec.svg";
 import ArrowIcon from "@/assets/images/arrow-icon.svg";
 import { useRouter } from "next/navigation";
 
-export default function Header() {
+export default function AuxHeader() {
   const router = useRouter();
   return (
     <header className="w-full p-4">
@@ -12,7 +12,7 @@ export default function Header() {
           <button onClick={router.back} className="w-[35px] sm:w-[65px] mr-10 hover:scale-105 transition-transform">
             <Image src={ArrowIcon} alt="arrow-left" />
           </button>
-          <div className="text-6xl font-bold text-[#f66c0e] font-pixelify-sans hidden sm:block">
+          <div className="text-6xl font-bold text-[#f66c0e] font-pixelify-sans hidden md:block">
             CONPECOME
           </div>
         </div>

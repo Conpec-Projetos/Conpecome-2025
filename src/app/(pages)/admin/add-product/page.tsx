@@ -1,6 +1,6 @@
 "use client";
 import CardAddProduct from "@/app/components/ui/card-add-product";
-import Header from "@/app/components/ui/header";
+import AuxHeader from "@/app/components/ui/auxHeader";
 import { addProductsAction } from "@/firebase/services/actions/productsAction";
 import { LocalProduct, ProductType } from "@/interfaces/productsInterfaces";
 import { useState, useEffect } from "react";
@@ -144,7 +144,7 @@ export default function AddProduct() {
       style={{ paddingRight: scrollbarVisible ? 0 : getScrollbarWidth() }}
     >
       <div>
-        <Header />
+        <AuxHeader />
         <div className="text-4xl font-bold text-[#f66c0e] text-center mb-8 font-pixelify-sans">
           Adicionar Produto
         </div>

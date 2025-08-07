@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/app/components/ui/header"
+import AuxHeader from "@/app/components/ui/auxHeader"
 import TextField from "@/app/components/text-field";
 import { auth } from "@/firebase/firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -58,7 +58,7 @@ export default function Login(){
 
     return(
         <div className="min-h-screen w-screen bg-[#FFF4EF]">
-            <Header />
+            <AuxHeader />
             <div className="flex justify-center items-center relative mt-8 mb-8">
                 <h1 className="font-pixelify-sans text-[#FF3D00] text-[40px] font-bold ">
                     Login
@@ -88,7 +88,7 @@ export default function Login(){
                     </div>
                     <div
                         onClick={handleForgotPassword}
-                        className="cursor-pointer font-poppins text-[#FF9633] font-extrabold underline text-[12px] col-start-2"
+                        className="cursor-pointer font-poppins text-[#FF9633] font-extrabold underline text-[12px] col-start-2 text-center"
                     >
                         Esqueci minha senha
                     </div>
