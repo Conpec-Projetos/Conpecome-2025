@@ -17,7 +17,7 @@ export async function getProductsAction(){
     return products
 }
 
-export async function updateProductsAction(body: any){
+export async function updateProductsAction(body: ProductType){
     const response = await updateProductsAccess(body)
     return response
 }

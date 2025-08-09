@@ -33,7 +33,7 @@ export default function Login(){
         try {
             await signInWithEmailAndPassword(auth, email, senha);
             router.push("/admin/estoque");
-        } catch (err) {
+        } catch {
             setError("Email ou senha inválidos.");
         }
     };
@@ -51,7 +51,7 @@ export default function Login(){
         try {
             await sendPasswordResetEmail(auth, email);
             setError("Email de redefinição enviado!");
-        } catch (err) {
+        } catch {
             setError("Erro ao enviar email de redefinição.");
         }
     };

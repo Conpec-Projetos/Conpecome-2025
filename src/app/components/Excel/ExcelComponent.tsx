@@ -19,7 +19,8 @@ interface Mes {
   itens: Item[];
 }
 
-const [meses] = useState<Mes[]>([
+const ExportToExcellButton = () => {
+  const [meses] = useState<Mes[]>([
     {
       label: 'Fevereiro',
       ano: 2025,
@@ -38,28 +39,26 @@ const [meses] = useState<Mes[]>([
         { cliente: 'João',  produto: 'Toddynho', valor: 0.89 },
       ],
     }
-])
-const ExportToExcellButton = () => {
+  ]);
 
-    const ExportButtonElement = (
-        <button>
-            <Image 
-              src={adicionar}
-              alt="adicionar"
-              className="py-16"
-              width={80}
-              height={80}
-            />
-          </button>
-    )
-    return (
-        <ExcelFile element={ExportButtonElement}>
-             <ExcelSheet data={[meses]} name="meses">
-                <ExcelColumn label="Nome" value="clientes"  />
-             </ExcelSheet>
-        </ExcelFile>
-
-    )
+  const ExportButtonElement = (
+    <button>
+      <Image 
+        src={adicionar}
+        alt="adicionar"
+        className="py-16"
+        width={80}
+        height={80}
+      />
+    </button>
+  );
+  return (
+    <ExcelFile element={ExportButtonElement}>
+      <ExcelSheet data={[meses]} name="meses">
+        <ExcelColumn label="Nome" value="clientes"  />
+      </ExcelSheet>
+    </ExcelFile>
+  );
 }
 
 export default ExportToExcellButton;

@@ -1,5 +1,4 @@
 'use client'
-import Image, { StaticImageData } from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 
 import IconTodos from '@/assets/images/IconTodos.png'
@@ -14,6 +13,7 @@ import MainHeader from "@/app/components/ui/main_header";
 import { useRouter } from 'next/navigation'
 import { getProductsAction, removeProductsAction, updateProductsAction } from '@/firebase/services/actions/productsAction'
 import { ProductType } from '@/interfaces/productsInterfaces'
+import bg from '@/assets/images/background.png'
 
 export default function Estoque_ADM() {
   const router = useRouter()
@@ -60,7 +60,8 @@ export default function Estoque_ADM() {
   };
 
   return (
-    <div className="bg-[#fff4ef] bg-[url('@/assets/images/background.png')] h-screen w-full overflow-x-hidden">
+    <div className="bg-[#fff4ef h-screen w-full overflow-x-hidden"
+      style={{ backgroundImage: `url(${bg.src})` }}>
       <MainHeader
         showAdminActions={true}
         onAddProduct={() => router.push("./add-product")}

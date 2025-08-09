@@ -10,12 +10,7 @@ import IconSalgados from '@/assets/images/IconSalgados.png'
 import MainHeader from "@/app/components/ui/main_header";
 import { getProducts, getProductTypes } from "@/services/dataAcess/productService";
 import type { ProductItem, ProductType } from "@/services/dataAcess/productService";
-import todosIcon from "@/assets/images/product_types/todos.png";
-
-// Helper to get category icon
-const getCategoryIcon = (type: ProductType): string => {
-  return type.imgUrl || todosIcon.src;
-};
+import bg from "@/assets/images/background.png";
 
 const formatToBRL = (cents: number) => {
   return `R$ ${(cents / 100).toFixed(2).replace('.', ',')}`;
@@ -32,6 +27,8 @@ export default function Home() {
   const [cartTotal, setCartTotal] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {console.log(productTypes)}, [productTypes]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,7 +99,8 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#FFF5EF] bg-[url('@/assets/images/background.png')] bg-top bg-repeat">
+    <div className="min-h-screen w-full bg-[#FFF5EF] bg-top bg-repeat"
+    style={{ backgroundImage: `url(${bg.src})` }}>
       <MainHeader
         showCart={true}
         cartTotal={cartTotal}
@@ -122,7 +120,7 @@ export default function Home() {
               ) : (
                 <>
                   <div className="max-h-64 overflow-y-auto">
-                    {cartItems.map((item: any) => (
+                    {cartItems.map((item: ProductItem & { quantity: number }) => (
                       <div key={item.id} className="flex items-center justify-between py-2 border-b border-[#FFE8DE]">
                         <div className="flex items-center gap-2">
                           <Image

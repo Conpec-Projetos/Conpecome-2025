@@ -3,8 +3,6 @@ import { useRouter } from "next/navigation";
 import logoConpec from "@/assets/images/logo-conpec.svg";
 import seta from "@/assets/images/Vector.png";
 import relogio from "@/assets/images/Group.png";
-import botaoSair from "@/assets/images/Sair.png";
-import cart from "@/assets/images/shopping_cart.png";
 import { LogIn, LogOut, ShoppingCart } from "lucide-react";
 
 import TextField from "../text-field";
@@ -25,7 +23,6 @@ interface MainHeaderProps {
 export default function MainHeader({
   onAddProduct,
   onHistorico,
-  onLogout,
   showAdminActions = false,
   showCart = false,
   cartTotal,
@@ -50,7 +47,7 @@ export default function MainHeader({
               placeholder="Pesquisar"
               className="placeholder-gray-300 w-full py-2 pl-10"
               value={searchTerm}
-              onChange={e => onSearchTermChange && onSearchTermChange(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchTermChange && onSearchTermChange(e.target.value)}
             />
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" /></svg>

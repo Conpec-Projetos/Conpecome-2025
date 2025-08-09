@@ -1,6 +1,5 @@
 import { addProductsAcess, getProductsAcess, removeProductsAcess, updateProductsAcess } from "../dataAcess/productsAcess";
 
-import Product from '@/app/components/product'
 import { ProductItem } from "../dataAcess/productService";
 
 
@@ -15,12 +14,12 @@ export async function getProductsAction(){
     return products
 }
 
-export async function addProductsAction(body: any){
+export async function addProductsAction(body: ProductItem){
     const response = await addProductsAcess(body)
     return response.id
 }
 
-export async function updateProductsAction(body: any){
+export async function updateProductsAction(body: ProductItem){
     const response = await updateProductsAcess(body)
     return response
 }

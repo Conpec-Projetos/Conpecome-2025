@@ -2,15 +2,11 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 
-import arrowLeft from "@/assets/images/arrow-left.png";
-import Conpecome from "@/assets/images/CONPECOME.png";
-import Conpec from "@/assets/images/Conpec.png";
 import QRcode from "@/assets/images/QRcode.jpeg";
-import copy from "@/assets/images/copiar-texto.png"
 import { Copy } from "lucide-react";
 import { copyToClipboard } from "@/app/components/copyClipboard";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "@/firebase/firebase-config";
@@ -18,7 +14,16 @@ import { db } from "@/firebase/firebase-config";
 import AuxHeader from "../../../components/ui/auxHeader"
 import { doc, updateDoc, increment } from "firebase/firestore";
 
+
 export default function Pagamento() {
+  return (
+    <Suspense>
+      <PagamentoContent />
+    </Suspense>
+  );
+}
+
+function PagamentoContent() {
   const [copied, setCopied] = useState(false);
 
   const router = useRouter();
@@ -166,14 +171,12 @@ export default function Pagamento() {
           </h2>
         </div>
 
-        
-
         <button
           onClick={handleFinalizarPedido}
           className="h-12 w-32 group  flex justify-center items-center  m-2 botao-laranja "
         >
           <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.05]">Já paguei </span>
-          </button>
+        </button>
       </div>
     </div>
   );

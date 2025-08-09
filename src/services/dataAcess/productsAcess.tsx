@@ -1,7 +1,6 @@
-import Product from "@/app/components/product";
 import { db, storage } from "@/firebase/firebase-config";
-import { query, collection, doc, getDocs, addDoc, updateDoc, deleteDoc, getDoc } from 'firebase/firestore'; // Importe os métodos necessários do Firestore
-import { getStorage, ref, deleteObject } from "firebase/storage";
+import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc, getDoc } from 'firebase/firestore'; // Importe os métodos necessários do Firestore
+import { ref, deleteObject } from "firebase/storage";
 import { ProductItem } from "./productService";
 
 

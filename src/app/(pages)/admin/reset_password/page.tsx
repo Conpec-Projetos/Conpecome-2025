@@ -21,9 +21,7 @@ const ResetPasswordPage = () => {
         }
     }, []);
 
-    interface HandlePasswordResetEvent extends React.FormEvent<HTMLFormElement> {}
-
-    const handlePasswordReset = async (e: HandlePasswordResetEvent): Promise<void> => {
+    const handlePasswordReset = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         if (newPassword !== confirmPassword) {
             setError('Senhas não coincidem.');
@@ -42,7 +40,7 @@ const ResetPasswordPage = () => {
             await confirmPasswordReset(auth, oobCode, newPassword);
             setSuccess(true);
             setError("");
-        } catch (err: unknown) {
+        } catch {
             setError("Algum erro inesperado ocorreu");
             setSuccess(false);
         }

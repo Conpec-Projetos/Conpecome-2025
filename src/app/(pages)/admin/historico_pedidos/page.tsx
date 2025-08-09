@@ -1,13 +1,8 @@
 'use client'
-import Image from "next/image"
-import lupa from "@/assets/images/lupa-conpecome.png"
-import adicionar from "@/assets/images/Adicionar.png"
-import { useEffect, useState, useMemo } from 'react';
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from 'react';
 import { db } from "@/firebase/firebase-config"
 import { collection, getDocs } from "firebase/firestore"
 import AuxHeader from "@/app/components/ui/auxHeader"
-import TextField from "@/app/components/text-field"
 import { Download, Search } from "lucide-react"
 
 interface pedido {
@@ -25,11 +20,6 @@ interface Item {
   produto: string;
   valor: number;
 }
-interface Mes {
-  label: string;
-  ano: number;
-  itens: Item[];
-}
 
 function getMonthName(monthNumber: number): string {
   // monthNumber: 1–12
@@ -43,12 +33,10 @@ export default function HistoricoPedidos() {
   const [mesesDict, setMesesDict] = useState<Record<string, Item[]>>({});
 
   const [search, setSearch] = useState('');
-
-  const HistoricoCollectionRef = collection(db, "purchases");
   
   useEffect(() => {
     const getPedidos = async () => {
-      const data = await getDocs(HistoricoCollectionRef);
+      const data = await getDocs(collection(db, "purchases"));
       console.log(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
       setPedidos(data.docs.map((doc) => ({...doc.data(), id: doc.id})) as pedido[]);
     }

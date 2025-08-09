@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { FC, useState, useRef } from "react";
-import EditIcon from "@/assets/images/mingcute_edit-line.svg";
 import { ProductType, ProductAddType } from "@/interfaces/productsInterfaces";
 import { Pencil, Check, X, SquarePen } from "lucide-react";
 import { updateProductsAction, removeProductsAction } from '@/firebase/services/actions/productsAction';
@@ -30,7 +29,7 @@ const Product: FC<ProductProps> = ({product, setProducts}) => {
     })
 
     // Reference to hidden file input element
-    const fileInputRef = useRef<any>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     // Auxiliar functions
 
