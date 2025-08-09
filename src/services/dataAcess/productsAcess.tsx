@@ -18,6 +18,15 @@ export async function addProductsAcess(body: ProductItem){
 }
 
 export async function updateProductsAcess(body: ProductItem){
+    const productDoc = doc(db, 'products', body.id);
+    const productSnapshot = await getDoc(productDoc);
+    const currentImageURL = productSnapshot.data()?.imageURL;
+
+    if (currentImageURL !== body.imageURL) {
+        await deleteImage(currentImageURL);
+    }
+
+
     const response = await updateDoc(doc(db, 'products', body.id), {name: body.name, imageURL: body.imageURL, stock: body.stock, price: body.price * 100, type: body.type})
     return response
 }
@@ -32,8 +41,8 @@ export async function removeProductsAcess(id: string){
     return response
 }
 
-const deleteImage = async (imageURL: string) => {
-  const imageRef = ref(storage, imageURL.replace(/.*\/o\/(.*?)\?.*/, '$1').replace(/%2F/g, '/'));
-
+const deleteImage = async (id: string) => {
+  const imageRef = ref(storage, `images/products/${id}`);
   await deleteObject(imageRef);
 };
+

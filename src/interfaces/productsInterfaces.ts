@@ -11,7 +11,7 @@ export interface LocalProduct { // Only for React state management
 export interface ProductType {
     uuid: string;
     imageURL: string;
-    imageFile: File;
+    imageFile?: File;
     name: string;
     price: number;
     stock: number;
