@@ -1,7 +1,7 @@
 "use client";
 import { SetStateAction, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/app/components/ui/header"
+import AuxHeader from "@/app/components/ui/auxHeader"
 import TextField from "@/app/components/text-field";
 import { auth } from "@/firebase/firebase-config";
 import { confirmPasswordReset } from "firebase/auth";
@@ -50,7 +50,7 @@ const ResetPasswordPage = () => {
 
     return (
         <main className="min-h-screen w-screen bg-[#FFF4EF]">
-            <Header />
+            <AuxHeader />
             <div className="flex justify-center items-center relative mt-8 mb-8">
                 <h1 className="font-pixelify-sans text-[#FF3D00] text-[40px] font-bold ">
                     Nova senha

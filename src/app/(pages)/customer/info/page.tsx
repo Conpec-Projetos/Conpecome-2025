@@ -1,12 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Header from "@/app/components/ui/header"
+import AuxHeader from "@/app/components/ui/auxHeader"
 import TextField from "@/app/components/text-field";
 
 export default function Info() {
   const router = useRouter();
   const [espaco, setEspaco] = useState({ nome: "", email: "" });
+  const allowedDomains = ["conpec.com.br"];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -18,16 +19,25 @@ export default function Info() {
       alert("Por favor, preencha nome e email.");
       return;
     }
+    if (!isValidEmail(espaco.email)) {
+      alert("Por favor, insira um email válido com o domínio conpec");
+      return;
+    }
 
     const nomeEncoded = encodeURIComponent(espaco.nome);
     const emailEncoded = encodeURIComponent(espaco.email);
     router.push(`/customer/pagamento?nome=${nomeEncoded}&email=${emailEncoded}`);
   };
 
+  const isValidEmail = (email: string) => {
+    const domain = email.split("@")[1];
+    return allowedDomains.includes(domain);
+  };
+
   return (
     <main className="min-h-screen w-screen bg-[#FFF4EF]">
       
-      <Header />
+      <AuxHeader />
 
       <div className="flex justify-center items-center relative mt-8 mb-8">
         <h1 className="font-pixelify-bold text-[#FF3D00] text-[40px] font-bold">
@@ -59,7 +69,7 @@ export default function Info() {
               name="email"
               value={espaco.email}
               onChange={handleInputChange}
-              placeholder="Inserir Email"
+              placeholder="Inserir Email Conpec"
             />
           </div>
 

@@ -6,7 +6,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from "next/navigation"
 import { db } from "@/firebase/firebase-config"
 import { collection, getDocs } from "firebase/firestore"
-import Header from "@/app/components/ui/header"
+import AuxHeader from "@/app/components/ui/auxHeader"
 import TextField from "@/app/components/text-field"
 import { Download, Search } from "lucide-react"
 
@@ -71,7 +71,7 @@ export default function HistoricoPedidos() {
       meses[mesAno].push({
         cliente: pedido.comprador,
         produto: pedido.nome, 
-        valor: pedido.preco,
+        valor: pedido.preco * pedido.quantidade,
       } as Item);
     });
     console.log(meses);
@@ -107,7 +107,7 @@ export default function HistoricoPedidos() {
   return (
     <div className="bg-[#FFF4EF] min-h-screen w-full flex flex-col">
 
-      <Header />
+      <AuxHeader />
 
       <main className="flex flex-col items-center justify-start ">
         <div className="w-full">
@@ -145,7 +145,7 @@ export default function HistoricoPedidos() {
                 const mesNome = getMonthName(parseInt(mesNum) + 1);
                 const items = mesesDict[mesAno]
 
-                const total = items.reduce((sum, item) => sum + (item.valor/100), 0);
+                const total = items.reduce((sum, item) => sum + ((item.valor)/100), 0);
 
                 return (
                   <div key={index}>
@@ -157,9 +157,9 @@ export default function HistoricoPedidos() {
                     <div className="pr-6 md:px-10 space-y-2">
                       {items.map((item, i) => (
                       <div key={i} className="flex flex-row justify-between font-Poppins font-bold text-xl md:text-2xl space-x-1">
-                        <span className="text-[#FF9633]">{item.cliente}</span>
-                        <span className="text-[#FF9633] text-center">{item.produto}</span>
-                        <span className="text-[#FF9633]">R${(item.valor/100).toFixed(2)}</span>
+                        <span className="text-[#FF9633] w-2/6">{item.cliente}</span>
+                        <span className="text-[#FF9633] text-center w-1/2">{item.produto}</span>
+                        <span className="text-[#FF9633] w-1/6">R${(item.valor/100).toFixed(2)}</span>
                       </div>
                       ))}
 
