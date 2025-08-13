@@ -185,44 +185,9 @@ export default function Home() {
           <FoodButton image={IconSalgados} type='salgados' onClick={() => setSelectedCategory("SALGADO")}></FoodButton>
           <FoodButton image={IconDoces} type='doces' onClick={() => setSelectedCategory("DOCE")}></FoodButton>
           <FoodButton image={IconBebidas} type='bebidas' onClick={() => setSelectedCategory("BEBIDA")}></FoodButton>
-          {/* <button
-            onClick={() => setSelectedCategory("all")}
-            className={`text-[#f66c0e] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#f66c0e] ${
-              selectedCategory === "all" ? "bg-[#FFECE4]" : "bg-white"
-            }`}
-          >
-            <Image
-              src={todosIcon.src}
-              alt="Todos"
-              width={52}
-              height={52}
-            />
-            <span>Todos</span>
-          </button>
-          {productTypes && productTypes.length > 0 && productTypes.map((type) => {
-            return (
-              <button
-                key={type.name}
-                onClick={() => setSelectedCategory(type.name)}
-                className={`text-[#f66c0e] flex flex-col items-center justify-center gap-2 px-6 py-3 rounded-xl border border-[#f66c0e] ${
-                  selectedCategory === type.name ? "bg-[#FFECE4]" : "bg-white"
-                }`}
-              >
-                <Image
-                  src={getCategoryIcon(type)}
-                  alt={type.name}
-                  width={52}
-                  height={52}
-                  unoptimized
-                />
-                <span>{type.displayName}</span>
-              </button>
-            );
-          })} */}
         </div>
 
-        {/* Products grid */}
-        
+        {/* Products grid */}        
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 text-[#FF9633] place-items-center gap-10 w-full px-8">
           {filteredProducts.map((product) => (
             <div
