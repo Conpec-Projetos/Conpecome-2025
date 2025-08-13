@@ -25,7 +25,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Conpecome 🥪",
+  title: "Conpecome",
   description: "Mate a fome em um clique!",
 };
 
