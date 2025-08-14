@@ -1,5 +1,7 @@
 import Image from "next/image";
 import type { ProductItem } from "@/services/dataAcess/productService";
+import { X } from "lucide-react";
+import { Button } from "./ui/button";
 
 interface CartWindowProps {
   cartItems: (ProductItem & { quantity: number })[];
@@ -7,6 +9,7 @@ interface CartWindowProps {
   formatToBRL: (value: number) => string;
   clearCart: () => void;
   finishOrder: () => void;
+  closeCart: () => void;
 }
 
 export const CartWindow: React.FC<CartWindowProps> = ({
@@ -15,13 +18,24 @@ export const CartWindow: React.FC<CartWindowProps> = ({
   formatToBRL,
   clearCart,
   finishOrder,
+  closeCart,
 }) => {
   return (
     <div className="absolute right-0 top-full mt-2 w-full sm:w-96 bg-white border border-[#FF9633] rounded-2xl shadow-lg z-50 p-4">
       <div className="flex flex-col gap-4">
-        <h3 className="text-xl font-bold text-[#FF3D00] border-b border-[#FF9633] pb-2">
-          Carrinho
-        </h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-bold text-[#FF3D00] border-b border-[#FF9633] pb-2">
+            Carrinho
+          </h3>
+          <Button
+            size={"icon"}
+            variant={"destructive"}
+            onClick={closeCart}
+            className="hover:scale-105 cursor-pointer transition-transform rounded-full"
+          >
+            <X size={24} className="text-white" />
+          </Button>
+        </div>
 
         {cartItems.length === 0 ? (
           <p className="text-center text-[#FF3D00] py-4">
@@ -42,8 +56,8 @@ export const CartWindow: React.FC<CartWindowProps> = ({
                         item.imageURL?.startsWith("data:image/")
                           ? item.imageURL
                           : item.imageURL
-                          ? `/${item.imageURL.replace(/^\/+/, "")}`
-                          : "/placeholder.png"
+                            ? `/${item.imageURL.replace(/^\/+/, "")}`
+                            : "/placeholder.png"
                       }
                       alt={item.name}
                       width={40}
@@ -52,8 +66,7 @@ export const CartWindow: React.FC<CartWindowProps> = ({
                     />
                     <div>
                       <p className="font-semibold text-[#FF3D00]">
-                        {item.name.charAt(0).toUpperCase() +
-                          item.name.slice(1)}
+                        {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
                       </p>
                       <p className="text-sm text-[#FF9633]">
                         {item.quantity}x {formatToBRL(item.price)}

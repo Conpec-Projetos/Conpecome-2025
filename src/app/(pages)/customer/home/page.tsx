@@ -117,6 +117,7 @@ export default function CustomerHome() {
             formatToBRL={formatToBRL}
             clearCart={clearCart}
             finishOrder={finishOrder}
+            closeCart={() => setIsCartOpen(false)}
           />
         )}
       </MainHeader>
@@ -186,6 +187,7 @@ export default function CustomerHome() {
                 formatToBRL={formatToBRL}
                 clearCart={clearCart}
                 finishOrder={finishOrder}
+                closeCart={() => setIsCartOpen(false)}
               />
             )}
           </div>
