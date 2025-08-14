@@ -52,13 +52,30 @@ export default function CardAddProduct({
 
   const handleUploadButtonClick = () => fileInputRef.current?.click();
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setImageUrl(url);
-      updateParent("imageURL", url);
-      updateParent("imageFile", file);
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(file);
+      img.onload = async () => {
+        const canvas = document.createElement("canvas");
+        const MAX_WIDTH = 800;
+        const scale = Math.min(1, MAX_WIDTH / img.width);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext("2d");
+        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+        // Compress to JPEG, quality 0.7
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const compressedFile = new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' });
+            const url = URL.createObjectURL(compressedFile);
+            setImageUrl(url);
+            updateParent("imageURL", url);
+            updateParent("imageFile", compressedFile);
+          }
+        }, "image/jpeg", 0.65);
+      };
     }
   };
 

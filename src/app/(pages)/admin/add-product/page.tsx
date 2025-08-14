@@ -59,7 +59,9 @@ export default function AddProduct() {
       (product) =>
         product.name &&
         product.name.trim() !== "" &&
+        product.price &&
         product.price > 0 &&
+        product.stock &&
         product.stock > 0 &&
         product.type &&
         product.type.trim() !== "" &&
@@ -70,18 +72,20 @@ export default function AddProduct() {
   const handleConfirmChanges = async () => {
     try {
       setIsSubmitting(true);
-      for (const product of products) {
-        const productData = {
-          uuid: "",
-          imageURL: product.imageURL,
-          imageFile: product.imageFile,
-          name: product.name,
-          price: product.price,
-          stock: product.stock,
-          type: product.type,
-        };
-        await addProductsAction(productData as ProductType);
-      }
+      await Promise.all(
+        products.map(product => {
+          const productData = {
+            uuid: "",
+            imageURL: product.imageURL,
+            imageFile: product.imageFile,
+            name: product.name,
+            price: product.price,
+            stock: product.stock,
+            type: product.type,
+          };
+          return addProductsAction(productData as ProductType);
+        })
+      );
       setShowConfirmPopUp(false);
       setProducts([
         {
@@ -222,6 +226,18 @@ export default function AddProduct() {
           </div>
         </div>
       )}
+    {/* Loading Spinner Overlay */}
+    {isSubmitting && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+        <div className="flex flex-col items-center gap-2">
+          <svg className="animate-spin h-12 w-12 text-[#f66c0e]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+          </svg>
+          <span className="text-white font-poppins font-bold">Enviando produtos...</span>
+        </div>
+      </div>
+    )}
     </div>
   );
 }
