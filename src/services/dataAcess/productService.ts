@@ -43,7 +43,6 @@ export const getProducts = async (): Promise<ProductItem[]> => {
   const snapshot = await getDocs(query(productsRef));
   return snapshot.docs.map((docSnap) => {
     const data = docSnap.data();
-    // Attach local typeData based on type name
     const typeData = productTypes.find(pt => pt.name === data.type);
     return {
       ...data,

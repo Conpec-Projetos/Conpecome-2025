@@ -1,5 +1,5 @@
 import { db, storage } from "@/firebase/firebase-config";
-import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc, getDoc } from 'firebase/firestore'; // Importe os métodos necessários do Firestore
+import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc, getDoc } from 'firebase/firestore';
 import { ref, deleteObject } from "firebase/storage";
 import { ProductItem } from "./productService";
 

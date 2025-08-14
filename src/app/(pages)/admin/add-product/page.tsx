@@ -1,9 +1,13 @@
 "use client";
-import CardAddProduct from "@/app/components/ui/card-add-product";
-import AuxHeader from "@/app/components/ui/auxHeader";
+import CardAddProduct from "@/components/card-add-product";
+import AuxHeader from "@/components/header/auxHeader";
+import { Button } from "@/components/ui/button";
 import { addProductsAction } from "@/firebase/services/actions/productsAction";
 import { LocalProduct, ProductType } from "@/interfaces/productsInterfaces";
+import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 export default function AddProduct() {
   const [products, setProducts] = useState<LocalProduct[]>([
@@ -18,6 +22,7 @@ export default function AddProduct() {
   ]);
   const [showConfirmPopUp, setShowConfirmPopUp] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const addProduct = () => {
     setProducts([
@@ -67,7 +72,7 @@ export default function AddProduct() {
       setIsSubmitting(true);
       for (const product of products) {
         const productData = {
-          uuid: "", // Will be set by Firebase
+          uuid: "",
           imageURL: product.imageURL,
           imageFile: product.imageFile,
           name: product.name,
@@ -88,7 +93,10 @@ export default function AddProduct() {
           type: "",
         },
       ]);
-      alert("Produtos adicionados com sucesso!");
+      toast.success("Produtos adicionados com sucesso!");
+      setTimeout(() => {
+        router.push("/admin/estoque");
+      }, 1500);
     } catch (error) {
       console.error("Error adding products:", error);
       alert("Erro ao adicionar produtos.");
@@ -97,10 +105,8 @@ export default function AddProduct() {
     }
   };
 
-  // Scrollbar visible
   const [scrollbarVisible, setScrollbarVisible] = useState(true);
 
-  //Verify if the scrollbar is visible when adding or removing products
   useEffect(() => {
     const handleScroll = () => {
       setScrollbarVisible(
@@ -109,16 +115,13 @@ export default function AddProduct() {
     };
 
     window.addEventListener("resize", handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
 
     return () => {
       window.removeEventListener("resize", handleScroll);
     };
   }, [products]);
 
-  /**
-   * Get the width of the scrollbar in pixels.
-   */
   const getScrollbarWidth = () => {
     const outer = document.createElement("div");
     outer.style.visibility = "hidden";
@@ -140,7 +143,7 @@ export default function AddProduct() {
 
   return (
     <div
-      className="bg-[#FFF4EF] w-full min-h-screen flex flex-col pl-10 pb-6 overflow-x-hidden"
+      className="bg-[#FFF4EF] w-full min-h-screen flex flex-col"
       style={{ paddingRight: scrollbarVisible ? 0 : getScrollbarWidth() }}
     >
       <div>
@@ -160,8 +163,9 @@ export default function AddProduct() {
           ))}
         </div>
       </div>
+      
       <div className="mt-auto flex justify-center">
-        <div className="text-white py-4 px-6 flex items-center justify-between w-full max-w-sm">
+        <div className="text-white flex py-2 px-4 items-center justify-between gap-2 w-full sm:max-w-sm">
           <button
             onClick={() => allProductsValid() && setShowConfirmPopUp(true)}
             disabled={!allProductsValid()}
@@ -169,22 +173,20 @@ export default function AddProduct() {
               !allProductsValid()
                 ? "bg-[#8A8A8A] cursor-not-allowed transition-colors"
                 : "hover:bg-[#FF3D00] hover:scale-95 transition-all"
-            } font-poppins font-bold rounded-full px-14 py-3`}
+            } font-poppins font-bold rounded-full px-10 py-3`}
           >
             Confirmar Alterações
           </button>
-          <button
-            onClick={addProduct}
-            className=" hover:scale-95 botao-laranja w-12 h-12 flex items-center justify-center text-2xl"
-          >
-            +
-          </button>
+          <Button onClick={addProduct} size={"icon"} variant={"conpec"}>
+            <Plus className="text-white" size={40} />
+          </Button>
         </div>
       </div>
+
       {showConfirmPopUp && (
         <div className="font-poppins font-bold fixed inset-0 flex items-center justify-center z-50">
           <div
-            className="absolute inset-0 bg-[#f66c0e] bg-opacity-30"
+            className="absolute inset-0 bg-conpec-tertiary opacity-60"
             onClick={() => setShowConfirmPopUp(true)}
           />
           <div className="border border-white bg-[#FFAA54] rounded-xl w-80 text-center text-white relative z-10">

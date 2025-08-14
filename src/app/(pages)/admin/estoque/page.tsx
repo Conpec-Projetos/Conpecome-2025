@@ -1,90 +1,82 @@
-'use client'
-import { useEffect, useRef, useState } from 'react'
+"use client";
+import { useEffect, useRef, useState } from "react";
+import Product from "@/components/product";
 
-import IconTodos from '@/assets/images/IconTodos.png'
-import IconDoces from '@/assets/images/IconDoces.png'
-import IconBebidas from '@/assets/images/IconBebidas.png'
-import IconSalgados from '@/assets/images/IconSalgados.png'
-
-import FoodButton from '@/app/components/foodbutton'
-import Product from '@/app/components/product'
-import MainHeader from "@/app/components/ui/main_header";
-
-import { useRouter } from 'next/navigation'
-import { getProductsAction, removeProductsAction, updateProductsAction } from '@/firebase/services/actions/productsAction'
-import { ProductType } from '@/interfaces/productsInterfaces'
-import bg from '@/assets/images/background.png'
+import { useRouter } from "next/navigation";
+import {
+  getProductsAction,
+  removeProductsAction,
+  updateProductsAction,
+} from "@/firebase/services/actions/productsAction";
+import { ProductType } from "@/interfaces/productsInterfaces";
+import bg from "@/assets/images/background.png";
+import AdminHeader from "@/components/header/AdminHeader";
+import CategoryCarousel from "@/components/CategoryCarousel";
 
 export default function Estoque_ADM() {
-  const router = useRouter()
-  
-  const [initialProducts, setInitialProducts] = useState<ProductType[]>([])
-  const [debouncedProducts, setdebouncedProducts] = useState<ProductType[]>([])
-  const removeIDRef = useRef<string>('')
-  const [filteredType, setFilteredType] = useState<string>('TODOS')
+  const router = useRouter();
 
-  /* Get all products from firebase */
+  const [initialProducts, setInitialProducts] = useState<ProductType[]>([]);
+  const [debouncedProducts, setdebouncedProducts] = useState<ProductType[]>([]);
+  const removeIDRef = useRef<string>("");
+  const [filteredType, setFilteredType] = useState<string>("all");
+
   useEffect(() => {
     getProductsAction().then((products) => {
-    setInitialProducts(products)
-    })
-  }, [])
+      setInitialProducts(products);
+    });
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setdebouncedProducts(initialProducts)
-    }, 500)
+      setdebouncedProducts(initialProducts);
+    }, 500);
 
     return () => {
-      clearTimeout(timeout)
-    }
-  }, [initialProducts])
-  
+      clearTimeout(timeout);
+    };
+  }, [initialProducts]);
+
   useEffect(() => {
-    if (!removeIDRef.current){
-    debouncedProducts.forEach(product => {
-      updateProductsAction(product)
-    })}
-    else {
-      removeProductsAction(removeIDRef.current)
+    if (!removeIDRef.current) {
+      debouncedProducts.forEach((product) => {
+        updateProductsAction(product);
+      });
+    } else {
+      removeProductsAction(removeIDRef.current);
     }
-  }, [debouncedProducts])
-
-
-  const handleFoodButtonClick = (type: string) => {
-    setFilteredType(type);
-  }
+  }, [debouncedProducts]);
 
   const filter = (type: string) => {
-    return filteredType === "TODOS" ? true : type === filteredType;
+    return filteredType === "all" ? true : type === filteredType;
   };
 
   return (
-    <div className="bg-[#fff4ef h-screen w-full overflow-x-hidden"
-      style={{ backgroundImage: `url(${bg.src})` }}>
-      <MainHeader
-        showAdminActions={true}
-        onAddProduct={() => router.push("./add-product")}
-        onHistorico={() => router.push("./historico_pedidos")}
-        onLogout={() => router.back()}
+    <div
+      className="bg-[#fff4ef h-screen w-full overflow-x-hidden"
+      style={{ backgroundImage: `url(${bg.src})` }}
+    >
+      <AdminHeader
+        onAddProduct={() => router.push("add-product")}
+        onHistorico={() => router.replace("history")}
       />
-      <main>
-        <div className='h-1/6 mb-1 mt-6 ml-36 flex flex-row space-x-2'>
-          <FoodButton image={IconTodos} type='TODOS' onClick={handleFoodButtonClick}></FoodButton>
-          <FoodButton image={IconSalgados} type='SALGADO' onClick={handleFoodButtonClick}></FoodButton>
-          <FoodButton image={IconDoces} type='DOCE' onClick={handleFoodButtonClick}></FoodButton>
-          <FoodButton image={IconBebidas} type='BEBIDA' onClick={handleFoodButtonClick}></FoodButton>
-        </div>
-        <div className='w-2/5 mb-2 ml-36 space-y-3'>
-          {
-            initialProducts.filter(product => filter(product.type))
-              .map((product) => (
-                <Product key={product.uuid} product={product} setProducts={setInitialProducts} />
-              ))
-          }
+      <main className="p-2">
+        <CategoryCarousel
+          selectedCategory={filteredType}
+          setSelectedCategory={setFilteredType}
+        />
+        <div className="w-full flex flex-col gap-2 justify-center items-center">
+          {initialProducts
+            .filter((product) => filter(product.type))
+            .map((product) => (
+              <Product
+                key={product.uuid}
+                product={product}
+                setProducts={setInitialProducts}
+              />
+            ))}
         </div>
       </main>
-      
     </div>
   );
 }

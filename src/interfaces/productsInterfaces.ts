@@ -1,4 +1,4 @@
-export interface LocalProduct { // Only for React state management
+export interface LocalProduct {
   id: number;
   imageURL: string;
   imageFile?: File;

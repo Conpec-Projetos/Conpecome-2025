@@ -1,8 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import AuxHeader from "@/app/components/ui/auxHeader"
-import TextField from "@/app/components/text-field";
+import AuxHeader from "@/components/header/auxHeader";
+import TextField from "@/components/text-field";
+import { Button } from "@/components/ui/button";
 
 export default function Info() {
   const router = useRouter();
@@ -26,7 +27,9 @@ export default function Info() {
 
     const nomeEncoded = encodeURIComponent(espaco.nome);
     const emailEncoded = encodeURIComponent(espaco.email);
-    router.push(`/customer/pagamento?nome=${nomeEncoded}&email=${emailEncoded}`);
+    router.push(
+      `/customer/pagamento?nome=${nomeEncoded}&email=${emailEncoded}`
+    );
   };
 
   const isValidEmail = (email: string) => {
@@ -36,7 +39,6 @@ export default function Info() {
 
   return (
     <main className="min-h-screen w-screen bg-[#FFF4EF]">
-      
       <AuxHeader />
 
       <div className="flex justify-center items-center relative mt-8 mb-8">
@@ -45,8 +47,8 @@ export default function Info() {
         </h1>
       </div>
 
-      <div className="flex justify-center items-start h-full">
-        <div className="w-1/3 grid grid-cols-3 grid-rows-2 gap-6">
+      <div className="flex justify-center items-start h-full w-full">
+        <div className="w-full flex flex-col justify-center items-center gap-6">
           <div className="grid grid-cols-1 col-span-3 gap-3 items-center">
             <label className="text-[#f66c0e] col-span-1 font-poppins text-[16px] font-extrabold ml-5">
               Nome
@@ -73,11 +75,16 @@ export default function Info() {
             />
           </div>
 
-          <button
-            className=" h-12 w-32 group col-start-2 mt-10  m-2 hover:bg-[#FF3D00] botao-laranja"
-            onClick={handleEnviar}
-          >
-            <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.08]">Enviar </span>          </button>
+          <div className="flex flex-row justify-center">
+            <Button
+              size={"conpec"}
+              variant={"conpec"}
+              disabled={!espaco.nome || !espaco.email}
+              onClick={handleEnviar}
+            >
+              Enviar
+            </Button>
+          </div>
         </div>
       </div>
     </main>

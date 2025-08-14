@@ -4,15 +4,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import QRcode from "@/assets/images/QRcode.jpeg";
 import { Copy } from "lucide-react";
-import { copyToClipboard } from "@/app/components/copyClipboard";
+import { copyToClipboard } from "@/components/copyClipboard";
 
 import { useEffect, useState, Suspense } from "react";
 import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "@/firebase/firebase-config";
 
-import AuxHeader from "../../../components/ui/auxHeader"
+import AuxHeader from "../../../../components/header/auxHeader"
 import { doc, updateDoc, increment } from "firebase/firestore";
+import { Button } from "@/components/ui/button";
 
 
 export default function Pagamento() {
@@ -114,26 +115,16 @@ function PagamentoContent() {
         </div>
       </div>
 
-      <div className="h-48 w-full flex flex-1 flex-col md:flex-row justify-center items-center gap-6 px-4 md:px-0">
-        <div className="bg-white w-full max-w-[32rem] h-12 rounded-full border-[#f66c0e] border-2 shadow-md flex justify-center items-center px-3">
-          <h1 className="text-gray-600 font-bold text-xs select-none text-center leading-snug"
-            style={{
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}>
-              {CONPECPIX}
-          </h1>
-        </div>
-
-        <button className="h-12 w-[8rem]  flex justify-around items-center botao-laranja" onClick={copypix}>
+      <div className="h-48 mt-2 w-full flex flex-1 flex-col md:flex-row justify-center items-center gap-6 px-4 md:px-0">
+        <Button
+          variant={"conpec"}
+          size={"conpec"}
+          className="flex justify-around items-center" onClick={copypix}>
           <Copy className="h-4 w-4 ml-2 invert"/>
           <h1 className={`w-2/3 text-white text-xl font-Poppins font-bold mr-2 ${copied ? "text-emerald-100" : "text-white"}`}>
             {copied ? "Copiado!" : "Copiar"}
           </h1>
-        </button>
+        </Button>
       </div>
 
       <div className="bg-[#ff7c022e] gap-1 h-full w-full rounded-t-3xl flex flex-col items-center text-center pb-8 px-4">
@@ -171,12 +162,14 @@ function PagamentoContent() {
           </h2>
         </div>
 
-        <button
+        <Button
+          variant={"conpec"}
           onClick={handleFinalizarPedido}
-          className="h-12 w-32 group  flex justify-center items-center  m-2 botao-laranja "
+          size={"conpec"}
+          className="flex justify-center items-center font-poppins font-bold text-white"
         >
-          <span className="text-white font-Poppins font-bold text-lg block transition duration-[175ms] group-hover:scale-[1.05]">Já paguei </span>
-        </button>
+          Já Paguei
+        </Button>
       </div>
     </div>
   );

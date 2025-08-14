@@ -19,7 +19,7 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        conpec: "botao-laranja text-white font-bold font-poppins text-base",
+        conpec: "bg-conpec-primary cursor-pointer rounded-full hover:bg-[#F54B00] shadow-md transition duration-150 text-white font-bold font-poppins text-base",
         success: "bg-green-600 text-white hover:bg-green-700",
       },
       size: {
