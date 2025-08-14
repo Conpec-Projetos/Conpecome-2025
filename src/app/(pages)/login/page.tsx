@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import AuxHeader from "@/components/header/auxHeader";
 import TextField from "@/components/text-field";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function Login() {
   const { user, loading, login, resetPassword } = useAuth();
@@ -12,32 +13,26 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [error, setError] = useState("");
-  const [fade, setFade] = useState(false);
 
   useEffect(() => {
     if (!loading && user) {
       router.replace("/admin/estoque");
       return;
     }
-    if (error) {
-      setFade(false);
-      const fadeTimer = setTimeout(() => setFade(true), 2500);
-      const clearTimer = setTimeout(() => setError(""), 3000);
-      return () => {
-        clearTimeout(fadeTimer);
-        clearTimeout(clearTimer);
-      };
-    }
-  }, [error, user, loading, router]);
+  }, [user, loading, router]);
 
   const handleLogin = async () => {
-    setError("");
-    try {
-      login(email, senha);
-      router.push("/admin/estoque");
-    } catch {
-      setError("Email ou senha inválidos.");
+    if (!email || !senha) {
+      toast.error("Preencha todos os campos.");
+      return;
+    }
+    login(email, senha);
+    if (user) {
+      setTimeout(() => {
+        setEmail("");
+        setSenha("");
+        router.replace("/admin/estoque");
+      }, 1000);
     }
   };
 
@@ -48,15 +43,10 @@ export default function Login() {
 
   const handleForgotPassword = async () => {
     if (!email) {
-      setError("Digite seu email para redefinir a senha.");
+      toast.error("Por favor, insira seu email.");
       return;
     }
-    try {
-      await resetPassword(email);
-      setError("Email de redefinição enviado!");
-    } catch {
-      setError("Erro ao enviar email de redefinição.");
-    }
+    resetPassword(email);
   };
 
   if (loading || user) {
@@ -106,20 +96,13 @@ export default function Login() {
           >
             Esqueci minha senha
           </div>
-          {error && (
-            <div
-              className={`text-red-500 text-center font-poppins font-semibold mb-2 transition-opacity duration-500 ${fade ? "opacity-0" : "opacity-100"}`}
-            >
-              {error}
-            </div>
-          )}
           <Button
             type="submit"
             variant={"conpec"}
             size={"conpec"}
             className="w-full"
           >
-              Entrar
+            Entrar
           </Button>
         </form>
       </main>

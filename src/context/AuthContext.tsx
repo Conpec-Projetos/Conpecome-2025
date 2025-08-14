@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState, ReactNode } from "react
 import { onAuthStateChanged, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
 import type { User } from "firebase/auth";
 import { auth } from "@/firebase/firebase-config";
+import { toast } from "sonner";
 
 type AuthContextType = {
   user: User | null;
@@ -33,16 +34,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setTimeout(() => {
+        toast.success("Login realizado com sucesso!");
+      }, 1000);
+    } catch {
+      toast.error("Erro ao fazer login. Tente novamente.");
+    }
   };
 
   const logout = async () => {
     await signOut(auth);
+    toast.info("Você foi desconectado.");
     setUser(null);
   };
 
   const resetPassword = async (email: string) => {
-    await sendPasswordResetEmail(auth, email);
+    try {
+      await sendPasswordResetEmail(auth, email);
+      toast.info("Email de redefinição enviado com sucesso!");
+    } catch {
+      toast.error("Erro ao enviar email de redefinição. Tente novamente.");
+    }
   };
 
   return (
