@@ -17,7 +17,7 @@ export default function AdminHeader({ onAddProduct, onHistorico }: AdminHeaderPr
     <header className="w-full bg-[#FFE8DE] px-4 md:px-8 py-4 rounded-b-3xl">
 
       <div className="flex flex-row items-center justify-between gap-4 md:gap-6 w-full">
-        <div className="flex flex-row items-center gap-4 md:gap-6">
+        <div className="flex flex-row items-center gap-4 md:gap-6" onClick={() => router.push("/")}>
           <Image
             src={logoConpec}
             alt="Logo"
