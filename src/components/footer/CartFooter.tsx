@@ -1,6 +1,4 @@
-import { on } from "events";
 import { ShoppingCart } from "lucide-react";
-import { use, useEffect } from "react";
 
 interface CartButtonProps {
   cartTotal: number;

@@ -6,11 +6,9 @@ import CategoryCarousel from "@/components/CategoryCarousel";
 import MainHeader from "@/components/header/CustomerHeader";
 import {
   getProducts,
-  getProductTypes,
 } from "@/services/dataAcess/productService";
 import type {
   ProductItem,
-  ProductType,
 } from "@/services/dataAcess/productService";
 import bg from "@/assets/images/background.png";
 import { CartWindow } from "@/components/CartWindow";
@@ -24,7 +22,6 @@ const formatToBRL = (cents: number) => {
 export default function CustomerHome() {
   const router = useRouter();
   const [products, setProducts] = useState<ProductItem[]>([]);
-  const [productTypes, setProductTypes] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -34,18 +31,12 @@ export default function CustomerHome() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    console.log("Cart clicked. Current cart items:", quantities);
-  }, [isCartOpen]);
-
-  useEffect(() => {
     const fetchData = async () => {
       try {
-        const [productsData, typesData] = await Promise.all([
+        const [productsData] = await Promise.all([
           getProducts(),
-          getProductTypes(),
         ]);
         setProducts(productsData);
-        setProductTypes(typesData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {

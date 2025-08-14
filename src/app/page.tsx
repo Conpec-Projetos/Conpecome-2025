@@ -3,10 +3,6 @@ import { useRouter } from "next/navigation";
 import bg from "@/assets/images/background.png";
 import { Button } from "@/components/ui/button";
 
-const formatToBRL = (cents: number) => {
-  return `R$ ${(cents / 100).toFixed(2).replace(".", ",")}`;
-};
-
 export default function Home() {
   const router = useRouter();
 
